@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion cycles</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des cycles ou parcours de formation</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_cycle">   
+                        <p:growl id="growl_cycle" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <h:outputLabel for="codeCycle" value="Code cycle : * "/>
+                                <p:inputText id="codeCycle" value="#{cycleBean.cycle.codeCycle}" title="Code du cycle" size="45" maxlength="3" readonly="#{cycleBean.champCleNonAuto}" style="margin-left: 52px; height: 18px; border-radius: 4px"/>
+                                <p:inputText id="codeCycleCache" value="#{cycleBean.codeCycleCache}" size="20" style="visibility: hidden"/>
+                            </h:panelGrid>
+                            <h:panelGrid  columns="2" cellpadding="3">    
+                                <h:outputLabel for="designation" value="Désignation : * "/>
+                                <p:inputText id="designation" value="#{cycleBean.cycle.designation}" size="80" title="Designation du cycle" maxlength="50" readonly="#{cycleBean.champLectureSeul}" style="margin-left: 51px; height: 18px; border-radius: 4px"/>
+                                <h:outputLabel for="description" value="Description :"/>
+                                <p:inputTextarea id="description" value="#{cycleBean.cycle.description}" cols="57" rows="3" autoResize="false" title="Description du cycle" maxlength="255" readonly="#{cycleBean.champLectureSeul}" style="margin-left: 51px; border-radius: 4px"/>                                
+                           </h:panelGrid>      
+                            <h:panelGrid columns="4">
+                                <h:outputLabel for="nombreNiveau" value="Nombre de niveau : * "/>
+                                <p:inputMask mask="9" id="nombreNiveau" value="#{cycleBean.cycle.nombreNiveau}" style="margin-left: 26px; margin-right: 26px; height: 18px; border-radius: 4px; text-align: right; font-size: 13px"/>
+                                <p:outputLabel value="Cycle actif:" for="actif" />
+                                <p:selectOneMenu id="actif" value="#{cycleBean.cycle.actif}" style="margin-left: 26px; width: 80px; border-radius: 4px">
+                                    <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                    <f:selectItem itemLabel="NON" itemValue="NON" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>                            
+                        </p:panel>
+                        
+                         <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                           
+                             <p:commandButton value="Nouveau" action="#{cycleBean.nouveau}" update="form_cycle" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{cycleBean.valider}" disabled="#{cycleBean.btnValiderDesactive}" update="form_cycle" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{cycleBean.preparation_modifier}" disabled="#{cycleBean.btnModifierDesactive}" update="form_cycle" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{cycleBean.supprimer}" disabled="#{cycleBean.btnSupprimerDesactive}" update="form_cycle" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{cycleBean.annuler}" update="form_cycle" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+   
+                        <p:dataTable value="#{cycleBean.listCycle}" var="item" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">                            
+                            <p:column width="85">
+                                <f:facet name="header">
+                                    <h:outputText value="Cycle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeCycle}"/>
+                            </p:column>
+                            <p:column width="180">
+                                <f:facet name="header">
+                                    <h:outputText value="Désignation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.designation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Nb niveau "/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombreNiveau}"/>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>                            
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_cycle" action="#{cycleBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{cycleBean.cycle}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                       
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

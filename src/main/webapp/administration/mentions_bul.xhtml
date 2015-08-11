@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Mentions des bulletins</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Mentions des bulletins</h1>
+                </div>
+
+                <f:view>
+                    <h:form>
+                        <h:panelGrid columns="1">
+                            <h:panelGroup>
+                                <p:tabView style="margin-top: 15px; padding-bottom: 15px; width: 785px">
+                                    <p:tab id="ment_Bul" title="Mentions">
+                                        <h:panelGrid columns="2">
+                                            <p:panel  header="Condition d'exclusion" styleClass="panel_backg" style="width: 345px; margin-left: 4px; margin-top: 15px">
+                                                <h:panelGrid columns="4">
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne de composition inférieure à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne annuelle inférieure à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Jours d'exclusion supérieurs à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Jours"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Heures d'absences supérieures à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Heures"/>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                            <p:panel header="Condition de non exclusion" styleClass="panel_backg" style="width: 345px; margin-left: 30px; margin-top: 15px">
+                                                <h:panelGrid columns="4">
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne de composition inférieure à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne annuelle inférieure à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Jours d'exclusion supérieurs à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Jours"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Heures d'absences supérieures à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Heures"/>
+
+                                                </h:panelGrid>
+                                            </p:panel>
+
+                                        </h:panelGrid>
+                                    </p:tab>
+                                    <p:tab id="d_pline" title="Discipline / Conduite">
+                                        <h:panelGrid columns="2">
+                                            <p:panel  header="Cas d'avertissement" styleClass="panel_backg" style="width: 345px; margin-left: 4px; margin-top: 15px">
+                                                <h:panelGrid columns="4">
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Heures d'absence supérieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value=" Heures"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Blâme si supérieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value=" Heures"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Jours exclusions supérieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Jours"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Blâme si supérieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Jours"/>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                            <p:panel  header="Jours d'exclusion" styleClass="panel_backg" style="width: 345px; margin-left: 30px; margin-top: 15px">
+                                                <h:panelGrid columns="4">
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne de composition superieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Moyenne annuelle superieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="/20"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Jours d'exclusion inférieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Jours"/>
+
+                                                    <p:selectBooleanCheckbox />
+                                                    <h:outputText value="Heures d'absences inférieur à "/>
+                                                    <p:inputText style="width: 20px;"/>
+                                                    <h:outputText value="Heures"/>
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </h:panelGrid>
+
+                                    </p:tab>
+                                </p:tabView>
+                            </h:panelGroup>
+                                                                                      
+                            <p:panel header="Tableau d'honneur" style="margin: 15px 0 50px 0; padding-bottom: 15px">
+                                <h:panelGrid columns="2">
+                                    <p:panel header="Condition d'accord de TH" styleClass="panel_backg" style="width: 345px; margin-left: 4px; margin-top: 15px; border-radius: 10px">
+                                        <h:panelGrid columns="4">
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Moyenne de composition inférieure à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="/20"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Moyenne annuelle inférieure à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="/20"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Jours d'exclusion supérieurs à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="Jours"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Heures d'absences supérieures à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="Heures"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:panel  header="Condition de refus de TH" styleClass="panel_backg" style="width: 345px; margin-left: 30px; margin-top: 15px">
+                                        <h:panelGrid columns="4">
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Moyenne de composition superieur à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="/20"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Moyenne annuelle superieur à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="/20"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Jours d'exclusion inférieur à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="Jours"/>
+
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value="Heures d'absences inférieur à "/>
+                                            <p:inputText style="width: 20px;"/>
+                                            <h:outputText value="Heures"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </h:panelGrid>
+                            </p:panel>                         
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

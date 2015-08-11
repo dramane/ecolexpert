@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion échéances</ui:define>
+
+            <ui:define name="left_content">                   
+                <div class="big_title_with_color">
+                    <h1>Gestion des échéances</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_echeance"> 
+                        <p:growl id="growl_echeance" sticky="false" globalOnly="false"/> 
+                        
+                        <h:panelGrid columns="1">                              
+                            <p:panel styleClass="panel_backg" style="padding: 10px 5px 10px 5px; margin: 10px 0px 0px 220px">
+                                <h:panelGrid columns="2">  
+                                <p:outputLabel value="Année academique : *" for="anneeaca"/>   
+                                <p:selectOneMenu id="anneeaca" value="#{echeanceBean.echeance.anneeaca}" disabled="#{echeanceBean.champLectureSeul}" style="width: 195px; margin-left: 10px">                                                                                    
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{academiqueBean.listAnneeAcademiq2}"/>                                                
+                                </p:selectOneMenu> 
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="2">  
+                            
+                            <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 10px 0px 0px 0px">
+                                <h:panelGrid columns="2">                            
+                                    <p:outputLabel value="Cycle: * " for="codeCycle" />                                    
+                                    <p:selectOneMenu id="codeCycle" value="#{echeanceBean.echeance.codeCycle}" disabled="#{echeanceBean.champLectureSeul}" style="width: 195px; margin-bottom: 3px">                                                
+                                        <p:ajax listener="#{echeanceBean.onCycleChange}" update="codeNiveau" />
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItems value="#{cycleBean.listCodeCycle}"/>                                                
+                                    </p:selectOneMenu> 
+
+                                    <h:outputLabel for="codeNiveau" value="Niveau : * "/>
+                                    <p:selectOneMenu id="codeNiveau" value="#{echeanceBean.echeance.codeNiveau}" disabled="#{echeanceBean.champLectureSeul}" style="width: 195px; margin-bottom: 3px">                                                                                                                             
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItems value="#{echeanceBean.listCodeNiveau}"/>                                                      
+                                    </p:selectOneMenu>  
+                    
+                                    <p:outputLabel value="Droit formation:" for="drtformat" />
+                                    <p:inputMask id="drtformat" value="#{echeanceBean.echeance.drtformat}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: orange; height: 18px; border-radius: 4px"/>                                                                   
+                                    <p:outputLabel value="Compte D'inscription:" for="compteDrtins"/>
+                                    <p:inputText id="compteDrtins" value="#{echeanceBean.echeance.compteDrtins}" size="34" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Compte Fournisseur:" for="compteFour" />
+                                    <p:inputText id="compteFour" value="#{echeanceBean.echeance.compteFour}" size="34" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Compte Produit:" for="compteProduit" style="margin-right: 50px; "/>
+                                    <p:inputText id="compteProduit" value="#{echeanceBean.echeance.compteProduit}" size="34" style="height: 18px; border-radius: 4px"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 10px 0px 0px 30px">
+                                <h:panelGrid columns="2">    
+                                    <p:outputLabel value="Prémier versement:" for="vers1" /> 
+                                    <p:inputMask id="vers1" value="#{echeanceBean.echeance.vers1}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Deuxième versement:" for="vers2" />
+                                    <p:inputMask id="vers2" value="#{echeanceBean.echeance.vers2}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Troisième versement:" for="vers3" />
+                                    <p:inputMask id="vers3" value="#{echeanceBean.echeance.vers3}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Quatrième versement:" for="vers4" />
+                                    <p:inputMask id="vers4" value="#{echeanceBean.echeance.vers4}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Cinquième versement:" for="vers5" />
+                                    <p:inputMask id="vers5" value="#{echeanceBean.echeance.vers5}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Sixième versement" for="vers6" style="margin-right: 50px; "/>
+                                    <p:inputMask id="vers6" value="#{echeanceBean.echeance.vers6}" mask="?9999999" size="28" style="font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>          
+                                </h:panelGrid>
+                            </p:panel>
+                            <!--champ de test caché-->
+                            <p:inputText id="codeEcheanceCache" value="#{echeanceBean.codeEcheanceCache}" size="20" style="visibility: hidden"/>
+                                              
+                        </h:panelGrid>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 5px 0 20px 0; padding:10px 0 10px 40px">                                           
+                            <p:commandButton value="Nouveau" action="#{echeanceBean.nouveau}" update="form_echeance" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{echeanceBean.valider}" disabled="#{echeanceBean.btnValiderDesactive}" update="form_echeance" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{echeanceBean.preparation_modifier}" disabled="#{echeanceBean.btnModifierDesactive}" update="form_echeance" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{echeanceBean.supprimer}" disabled="#{echeanceBean.btnSupprimerDesactive}" update="form_echeance" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{echeanceBean.annuler}" update="form_echeance" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                            
+                        <p:dataTable value="#{echeanceBean.listEcheance}" var="item" paginator="true" rows="25" paginatorPosition="bottom" scrollable="true" scrollHeight="300" style="margin: 10px 0 10px 0">                                                          
+                            <p:column width="45">
+                                <f:facet name="header">
+                                    <h:outputText value="Année"/>
+                                </f:facet>
+                                <h:outputText value="#{item.anneeaca}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Cycle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeCycle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Niveau"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeNiveau}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Drtformat"/>
+                                </f:facet>
+                                <h:outputText value="#{item.drtformat}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers1"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers1}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers2"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers2}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers3"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers3}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers4"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers4}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers5"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers5}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vers6"/>
+                                </f:facet>
+                                <h:outputText value="#{item.vers6}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CpteDrtins"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compteDrtins}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CpteFour"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compteFour}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CpteProduit"/>
+                                </f:facet>
+                                <h:outputText value="#{item.compteProduit}"/>
+                            </p:column>
+                            
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_echeance" action="#{echeanceBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{echeanceBean.echeance}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

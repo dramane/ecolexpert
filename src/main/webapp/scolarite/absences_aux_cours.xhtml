@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+            
+            <ui:define name="titre"> Absences aux cours </ui:define>
+
+            <ui:define name="left_content">
+                
+                <div class="big_title_with_color">
+                    <h1>Absences aux cours</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_abs_cours"> 
+                        <p:growl id="growl_abs_cours" globalOnly="false"/>
+                        
+                        <h:panelGrid columns="2">                                
+                            <p:panel styleClass="panel_backg" style="width: 350px; padding: 5px 6px; margin-right: 58px">
+                                <f:facet name="header">
+                                   Identité
+                               </f:facet>
+                               <h:panelGrid columns="2">
+                                   <h:outputText value="Cycle :"/>
+                                   <p:selectOneMenu id="cycle" value="#{absencesAuxCoursBean.cycle}" style="width: 190px;margin: 5px 0px 0px 0px;border-radius: 4px;">
+                                       <p:ajax listener="#{absencesAuxCoursBean.onCycleChange}" update="form_abs_cours" />
+                                       <f:selectItem itemLabel="" itemValue=""/>
+                                       <f:selectItems value="#{absencesAuxCoursBean.listCodeCycle}"/>     
+                                   </p:selectOneMenu>
+
+                                   <h:outputText value="Niveau :"/>
+                                   <p:selectOneMenu id="niveau" value="#{absencesAuxCoursBean.niveau}" style="width: 190px;margin: 5px 0px 0px 0px;border-radius: 4px;">
+                                       <p:ajax listener="#{absencesAuxCoursBean.onNiveauChange}" update="form_abs_cours" />
+                                       <f:selectItem itemLabel="" itemValue=""/>
+                                       <f:selectItems value="#{absencesAuxCoursBean.listCodeNiveau}"/> 
+                                   </p:selectOneMenu>
+
+                                   <h:outputText value="Classe :"/>
+                                   <p:selectOneMenu id="classe" value="#{absencesAuxCoursBean.classe}" style="width: 190px;margin: 5px 0px 0px 0px;border-radius: 4px;">
+                                       <p:ajax listener="#{absencesAuxCoursBean.onClasseChange}" update="form_abs_cours" />
+                                       <f:selectItem itemLabel="" itemValue=""/>
+                                       <f:selectItems value="#{absencesAuxCoursBean.listCodeClasse}"/> 
+                                   </p:selectOneMenu>
+
+                                   <h:outputText value="Etudiant :"/>
+                                   <p:selectOneMenu id="etudiant" style="width: 190px;margin: 5px 0px 0px 0px;border-radius: 4px;">
+                                       <f:selectItem itemLabel="" itemValue=""/>
+                                   </p:selectOneMenu>
+
+                                   <h:outputText value="Nature :"/>
+                                   <p:selectOneMenu id="nature" style="width: 190px; margin: 5px 0px 0px 0px; border-radius: 4px;">
+                                       <f:selectItem itemLabel="" itemValue=""/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </p:panel>
+                            
+                            <p:panel styleClass="panel_backg" style="width: 350px; padding: 5px 6px">
+                                <f:facet name="header">
+                                    Absence
+                                </f:facet>
+                                <h:panelGrid columns="2" cellpadding="3">
+                                    <h:outputText value="Date :"/>
+                                    <p:calendar id="dtAbsence" navigator="true" pattern="dd-MM-yyyy" mask="true" size="20" showOn="button" effect="slide"/>                                 
+
+                                    <h:outputText value="Heure déb :"/>
+                                    <p:calendar id="hAbsencedeb" pattern="HH:mm" timeOnly="true" size="20" showOn="button" effect="slide"/>                                  
+
+                                    <h:outputText value="Heure fin :"/>
+                                    <p:calendar id="hAbsencefin" pattern="HH:mm" timeOnly="true" size="20" showOn="button" effect="slide"/>
+
+                                    <h:outputText value="Motif :"/>
+                                    <p:selectOneMenu id="motif" style="width: 190px; border-radius: 4px;">
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                    </p:selectOneMenu>  
+
+                                    <h:outputText value="Justifié :"/>
+                                    <p:selectOneMenu id="justifier" style="width: 190px; border-radius: 4px;">
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItem itemLabel="OUI" itemValue="OUI"/>
+                                        <f:selectItem itemLabel="NON" itemValue="NON"/>
+                                    </p:selectOneMenu> 
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                        
+                        <p:panel styleClass="panel_backg" style="height: 450px; padding: 10px 0 0 10px; margin: 10px 5px 5px 5px">
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="padding: 10px 0 10px 10px; margin: 15px 5px 10px 5px">
+                            <p:commandButton value="Enregistrer" update="form_abs_cours" action="dd" icon="ui-icon-disk" style="height: 30px"/>
+                            <p:button value="Nouveau" outcome="absences_aux_cours" icon="ui-icon-plus" style="width: 110px; height: 30px; margin-left: 10px"/>
+                        </p:panel>
+                    </h:form>
+                </f:view>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

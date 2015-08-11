@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Parcours de formation</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Parcours de formation</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_parcours_formation">   
+                        <p:growl id="growl_parcours_formation" sticky="false" globalOnly="false"/> 
+                        <h:panelGrid columns="1" style="width: 802px; height: 650px; margin-top: 10px">
+                            <p:tabView styleClass="panel_backg">
+                                <p:tab title="PARCOURS DE FORMATION"> 
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey"> 
+                                        <h:panelGrid columns="2" cellspacing="5">
+                                            <p:outputLabel value="Libellé:" for="libelleParcours" />
+                                            <p:inputText id="libelleParcours" value="#{parcoursBean.parcours.libelleParcours}" size="90" maxlength="45" title="Libellé du parcours" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                            <p:outputLabel value="Description:" for="descriptionParcours" />
+                                            <p:inputTextarea id="descriptionParcours" value="#{parcoursBean.parcours.descriptionParcours}" title="Description du parcours" cols="65" rows="3" maxlength="70" autoResize="false" style="font-size: 12px; border-radius: 4px"/>                                                                                       
+                                            <p:outputLabel value="Cycle:" for="codeCycle" />
+                                            <p:selectOneMenu id="codeCycle" value="#{parcoursBean.parcours.codeCycle}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <f:selectItem itemLabel="Veuillez selectionner le cycle" itemValue=""/>
+                                                <f:selectItems value="#{cycleBean.listCodeCycle}"/>
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Spécialité:" for="codeSpecialite" />                                     
+                                            <p:selectOneMenu id="codeSpecialite" value="#{parcoursBean.parcours.codeSpecialite}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <f:selectItem itemLabel="Veuillez selectionner la spécialité" itemValue=""/>
+                                                <f:selectItems value="#{specialiteBean.listCodeSpecialite}"/>
+                                            </p:selectOneMenu>   
+                                            <p:outputLabel value="Profil parcours:" for="codeProfilParcours" />                                            
+                                            <p:selectOneMenu id="codeProfilParcours" value="#{parcoursBean.parcours.codeProfilParcours}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <f:selectItem itemLabel="Veuillez selectionner le profil" itemValue=""/>
+                                                <f:selectItems value="#{profilParcoursBean.listCodeProfilParcours}"/>
+                                            </p:selectOneMenu>  
+                                            <p:outputLabel value="Type parcours:" for="codeTypeParcours" />
+                                            <p:selectOneMenu id="codeTypeParcours" value="#{parcoursBean.parcours.codeTypeParcours}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <f:selectItem itemLabel="Veuillez selectionner le type" itemValue=""/>
+                                                <f:selectItems value="#{typeParcoursBean.listCodeTypeParcours}"/>
+                                            </p:selectOneMenu> 
+                                            <p:outputLabel value="Année création:" for="anneeAcademique" />
+                                            <p:selectOneMenu id="anneeAcademique" value="#{parcoursBean.parcours.anneeAcademique}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <f:selectItem itemLabel="Veuillez selectionner l'année" itemValue=""/>
+                                                <f:selectItems value="#{academiqueBean.listAnneeAcademiq2}"/>
+                                            </p:selectOneMenu> 
+                                            <p:outputLabel value="Nbre Semestre:" for="nbreSemestre" />
+                                            <p:inputMask id="nbreSemestre" mask="?99" size="45" value="#{parcoursBean.parcours.nbreSemestre}" title="Nombre de semestre du parcours" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                                                                                        
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:tab>
+                                
+                                <p:tab title="UE / ECUE / EQUIPE PEDAGOGIQUE">
+                                    <p:outputPanel id="panelG_ue_ecue_eqpp" style="margin: 0; padding: 0">
+                                        <p:panel id="panel_parcours" styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey"> 
+                                            <p:outputLabel value="UE (Unité d'Enseignement)" style="color: orange; font-size: 13px; margin-bottom: 10px"/>                              
+                                                <h:panelGrid columns="2" style="margin-top: 10px">                                                    
+                                                    <p:outputLabel value="Niveau:*" for="codeNiveau" />                                              
+                                                    <p:selectOneMenu id="codeNiveau" value="#{parcoursBean.parcours_Ue.codeNiveau}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                        <f:selectItem itemLabel="Veuillez selectionner le niveau" itemValue=""/>
+                                                        <f:selectItems value="#{niveauBean.listCodeNiveau}"/>
+                                                    </p:selectOneMenu>
+                                                    <p:outputLabel value="Semetre:*" for="codeSemetre" />      
+                                                    <p:selectOneMenu id="codeSemetre" value="#{parcoursBean.parcours_Ue.codeSemetre}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                        <f:selectItem itemLabel="Veuillez selectionner le semetre" itemValue=""/>
+                                                        <f:selectItems value="#{parcoursBean.listCodeSemetre}"/>
+                                                    </p:selectOneMenu> 
+                                                    <p:outputLabel value="Unité d'enseignement(UE):*" for="ue" />              
+                                                    <p:selectOneMenu id="ue" value="#{parcoursBean.parcours_Ue.ue}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                        <f:selectItem itemLabel="Veuillez selectionner l'UE" itemValue=""/>
+                                                        <f:selectItems value="#{ueBean.listCodeUe}"/>
+                                                    </p:selectOneMenu> 
+                                                    <p:outputLabel value="Type d'UE:*" for="codeTypeUe" />                                            
+                                                    <p:selectOneMenu id="codeTypeUe" value="#{parcoursBean.parcours_Ue.codeTypeUe}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                        <f:selectItem itemLabel="Veuillez selectionner le type de l'UE" itemValue=""/>
+                                                        <f:selectItems value="#{parcoursBean.listCodeTypeUe}"/>
+                                                    </p:selectOneMenu> 
+                                                    <p:outputLabel value="Crédit:*" for="creditUe" />                                                
+                                                    <p:inputMask id="creditUe" mask="?9999" size="45" value="#{parcoursBean.parcours_Ue.creditUe}" title="Nombre de crédit de l'UE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                              
+                                                    <p:outputLabel value="Coéficient:*" for="coeficientUe" />                                                
+                                                    <p:inputMask id="coeficientUe" mask="?9999" size="45" value="#{parcoursBean.parcours_Ue.coeficientUe}" title="Coéficient de l'UE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                              
+                                                    <p:outputLabel value="Heure CM:" for="heureCm" />                                              
+                                                    <p:inputMask id="heureCm" mask="?999" size="45" value="#{parcoursBean.parcours_Ue.heureCm}" title="Nombre d'heure de cours magistrale de UE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                              
+                                                    <p:outputLabel value="Heure TD:" for="heureTd" />                                                
+                                                    <p:inputMask id="heureTd" mask="?999" size="45" value="#{parcoursBean.parcours_Ue.heureTd}" title="Nombre d'heure de travaux dirigés de UE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                              
+                                                    <p:outputLabel value="Heure TP:" for="heureTp" />                                               
+                                                    <p:inputMask id="heureTp" mask="?999" size="45" value="#{parcoursBean.parcours_Ue.heureTp}" title="Nombre d'heure de travaux pratique de UE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                              
+                                                </h:panelGrid>                                   
+                                        </p:panel>
+
+                                        <p:panel id="panel_ecue" styleClass="panel_backg" style="margin: 15px 0px; border: 1px solid lightgrey"> 
+                                            <p:outputLabel value="ECUE (Elément Constitutif d'une Unité d'Enseignement)" style="color: orange; font-size: 13px"/>
+
+                                            <h:panelGrid columns="2" style="margin-top: 10px">
+                                                <p:outputLabel value="Libellé ECUE:*" for="libelleEcue"/>
+                                                <p:inputText id="libelleEcue" value="#{parcoursBean.ecue.libelleEcue}" size="103" maxlength="70" title="Libellé de l'ECUE" style="font-size: 12px; height: 18px; border-radius: 4px"/>                                                                                          
+                                            </h:panelGrid>    
+
+                                            <h:panelGrid columns="6">
+                                                <p:outputLabel value="Heure CM:" for="heureCm" /> 
+                                                <p:inputMask id="heureCmEcue" mask="?999" size="20" value="#{parcoursBean.ecue.heureCm}" title="Nombre d'heure de cours magistrale de ECUE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px; margin-left: 17px"/>                                                                          
+                                                <p:outputLabel value="Heure TD:" for="heureTd" style="margin-left: 20px"/>
+                                                <p:inputMask id="heureTdEcue" mask="?999" size="20" value="#{parcoursBean.ecue.heureTd}" title="Nombre d'heure de travaux dirigés de ECUE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                                                                                                                                              
+                                                <p:outputLabel value="Heure TP:" for="heureTpEcue" style="margin-left: 20px"/>
+                                                <p:inputMask id="heureTpEcue" mask="?999" size="20" value="#{parcoursBean.ecue.heureTp}" title="Nombre d'heure de travaux pratique de ECUE" style="text-align: right; font-size: 12px; height: 18px; border-radius: 4px"/>                                                                                                                                                                                                                                    
+
+                                                <!--<p:outputLabel value="UeParcours:" for="codeUeParcours1" />
+                                                <p:inputText id="codeUeParcours1" value="" />-->
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="margin: 10px 0">              
+                                                <p:commandButton id="btn_add" value="Ajouter" update="panel_ecue" action="#{parcoursBean.reinit_ecueTemporaire}" icon="ui-icon-plus">
+                                                    <p:collector value="#{parcoursBean.ecue}" addTo="#{parcoursBean.listEcueTemporaire}" unique="false"/>
+                                                </p:commandButton> 
+                                            </h:panelGrid>
+
+                                            <p:outputPanel id="ecue_output">
+                                                <p:dataTable id="table_ecue" value="#{parcoursBean.listEcueTemporaire}" var="item" style="margin: 10px 0">  
+                                                    <p:column width="60">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="code Ecue"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.codeEcue}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Libellé Ecue"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.libelleEcue}"/>
+                                                    </p:column>
+                                                    <p:column width="60">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Heure CM"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.heureCm}"/>
+                                                    </p:column>
+                                                    <p:column width="60">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Heure TD"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.heureTd}"/>
+                                                    </p:column>
+                                                    <p:column width="60">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="HeureTP"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.heureTp}"/>
+                                                    </p:column>
+                                                    <p:column width="70">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Ue_Parcours"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{item.codeUeParcours}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Action" width="30" style="width:6%; text-align: center">
+                                                        <p:commandButton value="" update="table_ecue" process="table_ecue" icon="ui-icon-trash" title="Supprimer">
+                                                            <p:collector value="#{item}" removeFrom="#{parcoursBean.listEcue}" unique="true"/>
+                                                        </p:commandButton>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:outputPanel>
+                                        </p:panel>
+
+                                        <p:panel id="panel_eqipp" styleClass="panel_backg" style="margin: 15px 0px; border: 1px solid lightgrey"> 
+                                            <p:outputLabel value="EQUIPE PEDAGOGIQUE" style="color: orange; font-size: 13px; margin-bottom: 10px"/>
+
+                                            <h:panelGrid columns="6" cellpadding="4">
+                                                <p:outputLabel value="Nom:" for="nomPedagog1" />
+                                                <p:inputText id="nomPedagog1" value="#{parcoursBean.equipePedagogiq.nomPedagog1}" size="30" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Prénom:" for="prenomPedagog1" style="margin-left: 10px"/>
+                                                <p:inputText id="prenomPedagog1" value="#{parcoursBean.equipePedagogiq.prenomPedagog1}" size="34" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Titre:" for="titrePedagog1" style="margin-left: 10px"/>
+                                                <p:inputText id="titrePedagog1" value="#{parcoursBean.equipePedagogiq.titrePedagog1}" size="28" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Nom:" for="nomPedagog2" />
+                                                <p:inputText id="nomPedagog2" value="#{parcoursBean.equipePedagogiq.nomPedagog2}" size="30" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Prénom:" for="prenomPedagog2" style="margin-left: 10px"/>
+                                                <p:inputText id="prenomPedagog2" value="#{parcoursBean.equipePedagogiq.prenomPedagog2}" size="34" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Titre:" for="titrePedagog2" style="margin-left: 10px"/>
+                                                <p:inputText id="titrePedagog2" value="#{parcoursBean.equipePedagogiq.titrePedagog2}" size="28" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Nom:" for="nomPedagog3" />
+                                                <p:inputText id="nomPedagog3" value="#{parcoursBean.equipePedagogiq.nomPedagog3}" size="30" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Prénom:" for="prenomPedagog3" style="margin-left: 10px"/>
+                                                <p:inputText id="prenomPedagog3" value="#{parcoursBean.equipePedagogiq.prenomPedagog3}" size="34" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                                <p:outputLabel value="Titre:" for="titrePedagog3" style="margin-left: 10px"/>
+                                                <p:inputText id="titrePedagog3" value="#{parcoursBean.equipePedagogiq.titrePedagog3}" size="28" maxlength="45" style="font-size: 12px; height: 18px; border-radius: 4px"/>                                       
+                                            </h:panelGrid>                                       
+                                        </p:panel>
+
+                                        <!--bouton de validation de l'UE,Ecue et l'equipe pedagogique dans une table memoire-->
+                                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 10px">  
+                                            <p:commandButton id="bt_add2" value="AJOUTER UE/ECUE/EQUIPE PEDAGOGIQUE" update="panelG_ue_ecue_eqpp" action="#{parcoursBean.reinit_parcours_Ue}" icon="ui-icon-plus" style="height: 30px">                                                                       
+                                                <p:collector value="#{parcoursBean.parcours_Ue}" addTo="#{parcoursBean.listParcours_Ue}" unique="false"/>
+                                            </p:commandButton> 
+                                        </p:panel>
+                                       
+                                        <p:dataTable id="table_parcours_ue" value="#{parcoursBean.listParcours_Ue}" var="item" rows="15" paginatorPosition="bottom">                                       
+                                            <p:column width="65">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Ue_Parcours"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeUeParcours}"/>
+                                            </p:column>                                            
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Parcours"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeParcours}"/>
+                                            </p:column>
+                                            <p:column width="45">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Niveau"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeNiveau}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Spécialité"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeSpecialite}"/>
+                                            </p:column>
+                                            <p:column width="45">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Semetre"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeSemetre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="UE"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.ue}"/>
+                                            </p:column>
+                                            <p:column width="45">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Type UE"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.codeTypeUe}"/>
+                                            </p:column>                                           
+                                        </p:dataTable>                                          
+                                    </p:outputPanel>
+                                </p:tab>
+                            </p:tabView> 
+                            
+                            <p:panel styleClass="panel_backg" style="background-color: orange; margin: 20px 0 20px 0; padding:10px 0 10px 10px">  
+                                <p:commandButton id="bt_enregistrer" value="ENREGISTRER LE PARCOURS" update=":form_parcours_formation" action="#{parcoursBean.enregistrer}" icon="ui-icon-disk" style="height: 30px"/>                                                                                                           
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

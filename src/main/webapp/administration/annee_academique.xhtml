@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Années académiques</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Années académiques</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_academique">  
+                        <p:growl id="growl" sticky="false" globalOnly="true"/>                       
+                        
+                        <p:panel id="panel_academique" styleClass="panel_backg" style="padding: 10px 5px 10px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="1" >
+                                <h:panelGrid columns="6" cellpadding="6">
+                                    <h:outputLabel for="annee" value="Année académique :" style="padding-right: 10px"/>
+                                    <p:inputMask id="annee" mask="9999/9999" value="#{academiqueBean.academique.anneeaca}" readonly="#{academiqueBean.champLectureSeul}" size="35" style="height: 18px; text-align: center; border-radius: 4px"/>
+                                    <h:outputLabel for="anneeprecedente" value="Année précédente :" style="padding-left: 15px; padding-right: 10px"/>
+                                    <p:inputText id="anneeprecedente" value="#{academiqueBean.academique.anneePre}" readonly="true"  size="35" style="height: 18px; text-align: center; border-radius: 4px"/>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="7" cellpadding="3">
+                                    <h:outputLabel for="dateDebut" value="Date début :" style="padding-right: 60px;"/>
+                                    <p:calendar id="dateDebut" value="#{academiqueBean.academique.dateDebut}" pattern="dd-MM-yyyy" mask="true" effect="slide" readonly="#{academiqueBean.champLectureSeul}" style="border-radius: 4px"/>
+                                    <h:outputLabel for="dateFin" value="Date Fin :" style="padding-left: 20px"/>
+                                    <p:calendar id="dateFin" value="#{academiqueBean.academique.dateFin}" pattern="dd-MM-yyyy" mask="true" effect="slide" readonly="#{academiqueBean.champLectureSeul}" style="border-radius: 4px" />     
+                                    
+                                    <h:outputLabel for="actif" value="Actif :" style="padding-left: 20px"/>
+                                    <p:selectOneMenu id="actif" value="#{academiqueBean.academique.actif}" disabled="#{academiqueBean.champLectureSeul}">                     
+                                        <f:selectItem itemLabel="Non" itemValue="Non" />
+                                        <f:selectItem itemLabel="Oui" itemValue="Oui" />
+                                    </p:selectOneMenu>
+                                    
+                                    <h:inputText value="#{academiqueBean.academique.idacademique}" style="visibility: hidden" size="8"/>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="3">
+                                    <h:outputLabel for="objectif" value="Objectif :" style="padding-right: 80px"/>
+                                    <p:inputTextarea id="objectif" rows="3" cols="75" value="#{academiqueBean.academique.objectif}" maxlength="250" counterTemplate="{0} characters remaining." autoResize="false" readonly="#{academiqueBean.champLectureSeul}" style="border-radius: 4px"/>                                        
+                                    <h:outputText id="display"/>                                    
+                                </h:panelGrid>
+                            </h:panelGrid>                                                       
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 15px 0 15px 0; padding:10px 0 10px 25px">                               
+                            <p:commandButton value="Nouveau" action="#{academiqueBean.nouveau}" update="form_academique" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{academiqueBean.valider}" disabled="#{academiqueBean.btnValiderDesactive}" update="form_academique" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{academiqueBean.preparation_modifier}" disabled="#{academiqueBean.btnModifierDesactive}" update="form_academique" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                               
+                                <!--<p:effect type="explode" event="load" for="btModifier"/>
+                            <p:effect type="explode" event="click" for="btSupprimer"/>                                
+                            </p:commandButton>                --> 
+                                <!--<input type="button" value="exemple" id="exemple"/>-->
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{academiqueBean.supprimer}" disabled="#{academiqueBean.btnSupprimerDesactive}" update="form_academique" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{academiqueBean.annuler}" update="form_academique" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <!-- data table d'affichage de l'année academique
+                        <h1><h:outputText value="List"/></h1>-->             
+                        <p:dataTable id="dataTable_academiq" value="#{academiqueBean.listAcademiques}" var="item" paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="200" style="margin: 10px 0 10px 0">
+                            <!--<p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Idacademique"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idacademique}"/>
+                            </p:column>-->
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <h:outputText value="Nannee"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nannee}"/>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Anneeaca"/>
+                                </f:facet>
+                                <h:outputText value="#{item.anneeaca}"/>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="AnneePre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.anneePre}"/>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="DateDebut"/>
+                                </f:facet>
+                                <h:outputText value="#{item.dateDebut}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="DateFin"/>
+                                </f:facet>
+                                <h:outputText value="#{item.dateFin}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Objectif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.objectif}"/>
+                            </p:column>
+                            <p:column width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_academique" action="#{academiqueBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{academiqueBean.academique}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

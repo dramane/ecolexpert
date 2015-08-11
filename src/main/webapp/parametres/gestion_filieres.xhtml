@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion filières / Mentions</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des filières / Mentions</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_filiere">   
+                        <p:growl id="growl_filiere" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <p:outputLabel value="FILIERE / MENTION" style="color: orange; font-size: 13px; margin-bottom: 10px"/>
+                            <h:panelGrid columns="3" cellpadding="3">  
+                                <h:outputLabel for="codeFiliere" value="Code Filière : * "/>
+                                <p:inputText id="codeFiliere" value="#{filiereBean.viewFiliereEquipeFormation.codeFiliere}" title="Code Filière" size="60" maxlength="50" readonly="#{filiereBean.champCleNonAuto}" style="font-size: 12px; margin-left: 60px; height: 18px; border-radius: 4px"/>
+                                <p:inputText id="codeFiliereCache" value="#{filiereBean.codeFiliereCache}" size="20" style="visibility: hidden"/>                            
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="3">  
+                                <h:outputLabel for="designation" value="Designation : * "/>
+                                <p:inputText id="designation" value="#{filiereBean.viewFiliereEquipeFormation.designation}" title="Designation" size="90" maxlength="50" readonly="#{filiereBean.champLectureSeul}" style="font-size: 12px; margin-left: 60px; height: 18px; border-radius: 4px"/>
+                                <h:outputLabel for="description" value="Description :"/>
+                                <p:inputTextarea id="description" value="#{filiereBean.viewFiliereEquipeFormation.description}" title="Description" cols="65" rows="3" maxlength="255" autoResize="false" readonly="#{filiereBean.champLectureSeul}" style="font-size: 12px; margin-left: 60px; border-radius: 4px"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4">                                                                
+                                <h:outputLabel for="codeDomaine" value="Domaine de formation : * "/>
+                                <p:selectOneMenu id="codeDomaine" value="#{filiereBean.viewFiliereEquipeFormation.codeDomaine}" style="font-size: 12px; width: 290px; margin: 10px 0 0 18px; border-radius: 4px">
+                                    <f:selectItem itemLabel="Veuillez selectionner le domaine" itemValue=""/>
+                                    <f:selectItems value="#{domaineFormationBean.listCodeDomaine}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Filière actif :" for="actif" style="margin: 0 35px 0 10px"/>
+                                <p:selectOneMenu id="actif" value="#{filiereBean.viewFiliereEquipeFormation.actif}" style="font-size: 12px; width: 80px; margin-top: 10px; border-radius: 4px">
+                                    <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                    <f:selectItem itemLabel="NON" itemValue="NON" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>                                                          
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 5px 0px; padding: 5px 0px 5px 5px">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="EQUIPE DE FORMATION" style="color: orange; font-size: 13px; margin-bottom: 10px;"/>
+                                <p:inputText id="codeEquipeForm" value="#{filiereBean.viewFiliereEquipeFormation.codeEquipeForm}" style="margin-left: 10px; visibility: hidden"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="6" cellpadding="4">      
+                                <h:outputLabel value="Nom formateur 1:" for="nomFormateur1" />
+                                <p:inputText id="nomFormateur1" value="#{filiereBean.viewFiliereEquipeFormation.nomFormateur1}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Prénom formateur 1:" for="prenomFormateur1" />
+                                <p:inputText id="prenomFormateur1" value="#{filiereBean.viewFiliereEquipeFormation.prenomFormateur1}" maxlength="45" size="30" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Titre formateur 1:" for="titreFormateur1" />
+                                <p:inputText id="titreFormateur1" value="#{filiereBean.viewFiliereEquipeFormation.titreFormateur1}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Nom formateur 2:" for="nomFormateur2" />
+                                <p:inputText id="nomFormateur2" value="#{filiereBean.viewFiliereEquipeFormation.nomFormateur2}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Prénom Formateur 2:" for="prenomFormateur2" />
+                                <p:inputText id="prenomFormateur2" value="#{filiereBean.viewFiliereEquipeFormation.prenomFormateur2}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" size="30" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Titre formateur 2:" for="titreFormateur2" />
+                                <p:inputText id="titreFormateur2" value="#{filiereBean.viewFiliereEquipeFormation.titreFormateur2}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Nom formateur 3:" for="nomFormateur3" />
+                                <p:inputText id="nomFormateur3" value="#{filiereBean.viewFiliereEquipeFormation.nomFormateur3}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Prénom formateur 3:" for="prenomFormateur3" />
+                                <p:inputText id="prenomFormateur3" value="#{filiereBean.viewFiliereEquipeFormation.prenomFormateur3}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" size="30" style="height: 18px; border-radius: 4px"/>
+                                <h:outputLabel value="Titre formateur 3:" for="titreFormateur3" />
+                                <p:inputText id="titreFormateur3" value="#{filiereBean.viewFiliereEquipeFormation.titreFormateur3}" maxlength="45" readonly="#{filiereBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>                                
+                            </h:panelGrid>
+                        </p:panel>   
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                           
+                            <p:commandButton value="Nouveau" action="#{filiereBean.nouveau}" update="form_filiere" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{filiereBean.valider}" disabled="#{filiereBean.btnValiderDesactive}" update="form_filiere" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{filiereBean.preparation_modifier}" disabled="#{filiereBean.btnModifierDesactive}" update="form_filiere" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{filiereBean.supprimer}" disabled="#{filiereBean.btnSupprimerDesactive}" update="form_filiere" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{filiereBean.annuler}" update="form_filiere" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{filiereBean.listViewFiliereEquipeFor}" var="item" rows="15" paginatorPosition="bottom" scrollable="true" scrollHeight="340" style="margin: 10px 0 10px 0">                            
+                            <p:column width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="Code filiere"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeFiliere}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Designation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.designation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column width="110">
+                                <f:facet name="header">
+                                    <h:outputText value="Domaine formation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeDomaine}"/>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_filiere" action="#{filiereBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{filiereBean.viewFiliereEquipeFormation}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

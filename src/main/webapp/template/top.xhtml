@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">    
+    <h:body>        
+        <div id="top">
+            <h:panelGrid columns="2">
+                <h:link outcome="/accueil" title="Accueil">
+                    <h:graphicImage value="/resources/images/logo_ECG_litle.png" alt="Accueil" title="Accueil"/>                            
+                </h:link>    
+                <h:panelGrid columns="2" style="padding-top: 40px; position: absolute; top: 10px; right: 10px"> 
+                    <label style="font-size: 13px; color: #FFFFFF"> #{session.getAttribute("nomUtilisateur")} #{session.getAttribute("prenomUtilisateur")}</label>
+                    <h:link outcome="/accueil" title="Paramètre">
+                        <h:graphicImage style="padding-left: 5px; width: 25px" value="/resources/images/logo_parametres.png" alt="Paramètre" title="Paramètre"/>                            
+                    </h:link>
+                </h:panelGrid> 
+            </h:panelGrid>
+        </div>          
+    </h:body>
+</html>
+

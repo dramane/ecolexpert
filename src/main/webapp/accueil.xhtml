@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"                
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/mon_template.xhtml">
+    
+    <ui:define name="titre">Accueil</ui:define>
+
+    <ui:define name="left_content">
+        <!--grand titre colore               
+        <div class="big_title_with_color">
+            <h1>Accueil</h1>
+        </div>-->  
+        
+        <div style="margin-bottom: 10px; padding-top: 5px">          
+            <h:panelGrid columns="3">
+                <p:panel id="admissions_inscriptions" header="Admissions / Inscriptions" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; text-align: center">
+                    <h:link outcome="/admission_inscription/admission_inscription" disabled="#{session.getAttribute('admission_inscription') != 'admission_inscription' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/inscription.png" height="150" alt="Admissions / Inscriptions" title="Gestion des admissions et inscriptions" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/admission_inscription/admission_inscription" value="Gestion des admissions et inscriptions" disabled="#{session.getAttribute('admission_inscription') != 'admission_inscription' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+
+                <p:panel id="activites_debut_semestre" header="Activités de début de semestre" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/activites_debut_semestre/debut_semestre" disabled="#{session.getAttribute('activites_debut_semestre') != 'activites_debut_semestre' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/emploi_du_temps.png" height="150" alt="Activités de début de semestre" title="Gestion des activités de début de semestre" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/activites_debut_semestre/debut_semestre" value="Gestion des activités de début de semestre" disabled="#{session.getAttribute('activites_debut_semestre') != 'activites_debut_semestre' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+
+                 <p:panel id="parcours_formation" header="Parcours de formation" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/parcours_formation/parcours_formation" disabled="#{session.getAttribute('parcours_formation') != 'parcours_formation' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/planning.png" height="150" width="180" alt="Parcours de formation" title="Gestion des parcours de formation" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/parcours_formation/parcours_formation" value="Gestion des parcours de formation" disabled="#{session.getAttribute('parcours_formation') != 'parcours_formation' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>           
+            </h:panelGrid>
+
+            <h:panelGrid columns="3" style="margin: 25px 0">
+                <p:panel id="activites_cours_semestre" header="Activités au cours du semestre" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; text-align: center">
+                    <h:link outcome="/activites_cours_semestre/cours_semestre" disabled="#{session.getAttribute('activites_cours_semestre') != 'activites_cours_semestre' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/etude.png" height="150" width="200" alt="Activités au cours du semestre" title="Gestion des activités du semestre" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/activites_cours_semestre/cours_semestre" value="Gestion des activités du semestre" disabled="#{session.getAttribute('activites_cours_semestre') != 'activites_cours_semestre' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+
+                <p:panel id="activites_fin_semestre" header="Activités de fin de semestre" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/activites_fin_semestre/fin_semestre" disabled="#{session.getAttribute('activites_fin_semestre') != 'activites_fin_semestre' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/diplome.png" height="150" alt="Activités de fin de semestre" title="Gestion des activités de fin de semestre" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/activites_fin_semestre/fin_semestre" value="Gestion des activités de fin de semestre" disabled="#{session.getAttribute('activites_fin_semestre') != 'activites_fin_semestre' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+
+                 <p:panel id="comptabilite_finances" header="Comptabilité et finances" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/finances/finances" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/finance.png" height="150" width="180" alt="Comptabilité et finances" title="Gestion de la comptabilité et des finances" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/finances/finances" value="Gestion de la comptabilité et des finances" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>           
+            </h:panelGrid>
+
+            <h:panelGrid columns="3">
+                <p:panel id="statistiques" header="Statistiques" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; text-align: center">
+                    <h:link outcome="/finances/finances" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/statistiques_finance.png" height="150" alt="Statistiques" title="Statistiques" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/finances/finances" value="Statistiques" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+                
+                <p:panel id="etude_formation" header="Etude et formation" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/formation/formation" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/formation.png" height="150" alt="Etude et formation" title="Etude et formation" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/formation/formation" value="Gestion d'étude et formation" disabled="#{session.getAttribute('finances') != 'finances' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+                
+                <p:panel id="scolarite" header="Scolarité" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/parametres/parametres" disabled="#{session.getAttribute('parametres') != 'parametres' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/scolarite.png" height="150" width="130" alt="Gestion de la scolarité" title="Gestion de la scolarité" style="margin-bottom: 5px; margin-left: 25px; margin-right: 15px"/>                            
+                    </h:link>
+                    <h:link outcome="/parametres/parametres" value="Gestion de la scolarité" disabled="#{session.getAttribute('parametres') != 'parametres' ? true : false}" style="color: orange; font-size: 12px;"/>
+                </p:panel>                                                            
+            </h:panelGrid>
+            
+            <h:panelGrid columns="3" style="margin: 25px 0">
+                <p:panel id="parametrage" header="Paramétrage" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; text-align: center">
+                    <h:link outcome="/parametres/parametres" disabled="#{session.getAttribute('parametres') != 'parametres' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/parametrage.png" height="150" alt="Paramétrage de l'application" title="Paramétrage de l'application" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/parametres/parametres" value="Paramétrage de l'application" disabled="#{session.getAttribute('parametres') != 'parametres' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+
+                <p:panel id="aministration" header="Administration" styleClass="panel_backg" style="width: 235px; height: 210px; padding: 5px; margin-left: 20px; text-align: center">
+                    <h:link outcome="/administration/administration" disabled="#{session.getAttribute('administrateur') != 'administrateur' ? true : false}">
+                        <h:graphicImage value="/resources/images/image_accueil/administration.png" height="150" alt="Administration des utilisateurs" title="Administration des utilisateurs" style="; margin-bottom: 5px"/>                            
+                    </h:link>
+                    <h:link outcome="/administration/administration" value="Administration des utilisateurs" disabled="#{session.getAttribute('administrateur') != 'administrateur' ? true : false}" style="color: orange; font-size: 12px"/>
+                </p:panel>
+               
+            </h:panelGrid>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

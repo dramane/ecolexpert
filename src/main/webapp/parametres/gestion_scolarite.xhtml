@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion frais scolarité</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des frais de scolarité</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_gestion_scol">   
+                        <p:growl id="growl_gestion_scol" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                           
+                            <h:panelGrid columns="4">
+                               <h:outputLabel for="myname" value="Etablissement :"/>
+                               <p:inputText id="myname" value="#{gestionScolariteBean.myInfo.myname}" readonly="true" size="42" style="height: 18px;margin: 5px 0px 0px 20px;border-radius: 4px;"/>
+                               <h:outputLabel for="anneeaca" value="Année académique :" style="margin: 5px 0px 0px 20px;"/>
+                               <p:inputText id="anneeaca" value="#{gestionScolariteBean.anneeAcademiq.anneeaca}" size="42" readonly="true" style="height: 18px;margin: 5px 0px 0px 20px;border-radius: 4px;"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="4">
+                                <h:outputLabel value="Frais : *"/>
+                                <p:selectOneMenu id="codeElementFrais" value="#{gestionScolariteBean.fraisScolarite.codeElementFrais}" disabled="#{gestionScolariteBean.champDesactive}" style="width: 235px; margin: 5px 0px 0px 55px;border-radius: 4px;">
+                                    <f:selectItem itemLabel="Veuillez selectionner le frais" itemValue=""/>
+                                    <f:selectItems value="#{elementFraisBean.listCodeElementFrais}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel for="codeFraisScolarite" value="Code frais : *" style="margin: 5px 0px 0px 65px;"/>
+                                <p:inputText id="codeFraisScolarite" value="#{gestionScolariteBean.fraisScolarite.codeFraisScolarite}" size="42" readonly="true" style="height: 18px;margin: 5px 0px 0px 12px;border-radius: 4px;"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="4">
+                                <h:outputLabel value="Cycle : *"/>
+                                <p:selectOneMenu id="codeCycle" value="#{gestionScolariteBean.fraisScolarite.codeCycle}" disabled="#{gestionScolariteBean.champDesactive}" style="width: 235px; margin: 5px 80px 0px 52px;border-radius: 4px;">
+                                    <p:ajax listener="#{gestionScolariteBean.onCycleChange}" update="codeNiveau" />
+                                    <f:selectItem itemLabel="Veuillez selectionner le cycle" itemValue=""/>
+                                    <f:selectItems value="#{cycleBean.listCodeCycle}"/>
+                                </p:selectOneMenu>                                
+                                <h:outputLabel for="codeNiveau" value="Niveau : * "/>
+                                <p:selectOneMenu id="codeNiveau" value="#{gestionScolariteBean.fraisScolarite.codeNiveau}" disabled="#{gestionScolariteBean.champDesactive}" style="width: 235px; margin: 5px 0px 0px 12px;border-radius: 4px;">
+                                    <p:ajax listener="#{gestionScolariteBean.onNiveauChange}" update="codeClasse" />
+                                    <f:selectItem itemLabel="Veuillez selectionner le niveau" itemValue=""/>
+                                    <f:selectItems value="#{gestionScolariteBean.listCodeNiveau}"/>                                    
+                                </p:selectOneMenu>                                                              
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="4">
+                                <h:outputLabel value="Classe : *" style="margin: 5px 0px 0px 0px;"/>
+                                <p:selectOneMenu id="codeClasse" value="#{gestionScolariteBean.fraisScolarite.codeClasse}" disabled="#{gestionScolariteBean.champDesactive}" style="width: 235px; margin: 5px 0px 0px 45px;border-radius: 4px;">
+                                    <f:selectItem itemLabel="Veuillez selectionner la classe" itemValue=""/>
+                                    <f:selectItems value="#{gestionScolariteBean.listCodeClasse}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Regime : *" style="margin-left: 78px"/>
+                                <p:selectOneMenu id="codeRegime" editable="false" value="#{gestionScolariteBean.fraisScolarite.codeRegime}" disabled="#{gestionScolariteBean.champDesactive}" style="width: 235px; margin: 5px 0px 0px 12px;border-radius: 4px;">                                    
+                                    <f:selectItem itemLabel="Veuillez selectionner le régime" itemValue=""/>
+                                    <f:selectItems value="#{regimeBean.listCodeRegime}"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="montantFrais" value="Montant : *" style="margin-right: 24px"/>
+                                <p:inputMask id="montantFrais" size="42" mask="?9999999" value="#{gestionScolariteBean.fraisScolarite.montantFrais}" readonly="#{gestionScolariteBean.champLectureSeul}" validatorMessage="Le montant doit être un nombre entier" style="height: 18px; text-align: right; font-weight: bold; background-color: #54FF72; margin: 5px 0px 0px 16px; border-radius: 4px">
+                                    <f:validateLongRange/> 
+                                    <f:convertNumber integerOnly="true"/>
+                                </p:inputMask>                                  
+                                <p:inputText id="codeFraisScolariteCache" value="#{gestionScolariteBean.codeFraisScolariteCache}" size="42" style="visibility: visible; margin-left: 145px"/>
+                            </h:panelGrid>    
+                        </p:panel>
+                               
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 60px">                                           
+                            <p:commandButton value="Nouveau" action="#{gestionScolariteBean.nouveau}" update="form_gestion_scol" icon="ui-icon-plus" style="width: 110px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{gestionScolariteBean.valider}" disabled="#{gestionScolariteBean.btnValiderDesactive}" update="form_gestion_scol" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{gestionScolariteBean.preparation_modifier}" disabled="#{gestionScolariteBean.btnModifierDesactive}" update="form_gestion_scol" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>        
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{gestionScolariteBean.supprimer}" disabled="#{gestionScolariteBean.btnSupprimerDesactive}" update="form_gestion_scol" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{gestionScolariteBean.annuler}" update="form_gestion_scol" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                    
+                        <p:dataTable value="#{gestionScolariteBean.listFraisScolarite}" var="item" paginator="true" rows="40" paginatorPosition="bottom" scrollable="true" scrollHeight="370" style="margin: 10px 0 10px 0">                                                         
+                            <p:column width="150">
+                                <f:facet name="header">
+                                    <h:outputText value=" Code frais scolarité"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeFraisScolarite}"/>
+                            </p:column>                            
+                            <p:column width="47">
+                                <f:facet name="header">
+                                    <h:outputText value="Id année"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idacademique}"/>
+                            </p:column>                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Frais"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeElementFrais}"/>
+                            </p:column> 
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Cycle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeCycle}"/>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Niveau"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeNiveau}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Classe"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeClasse}"/>
+                            </p:column>
+                            <p:column width="90">
+                                <f:facet name="header">
+                                    <h:outputText value="Regime"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeRegime}"/>
+                            </p:column>                             
+                            <p:column width="45">
+                                <f:facet name="header">
+                                    <h:outputText value="Montant"/>
+                                </f:facet>
+                                <h:outputText value="#{item.montantFrais}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_gestion_scol" action="#{gestionScolariteBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{gestionScolariteBean.fraisScolarite}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                           
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

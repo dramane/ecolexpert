@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:body>        
+        <ui:insert name="left">   
+            <div id="left">
+                <f:view>
+                    <h:form id="form_accueil">
+                        <p:growl id="messages" showDetail="true" />  
+                        <p:tieredMenu style="width:185px; margin: 5px 0 15px 2px;">                            
+
+                            <p:menuitem value="Accueil" outcome="/accueil" icon="ui-icon-home" styleClass="menu_link"/>                            
+                            <p:separator />                                               
+
+                            <p:submenu label="Admission / Inscription" icon="ui-icon-folder-open" rendered="#{session.getAttribute('admission_inscription') == 'admission_inscription' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Admission / Inscription" outcome="/admission_inscription/admission_inscription" styleClass="menu_link"/>                              
+                            </p:submenu>                             
+                            
+                            <p:submenu label="Activités début semestre" icon="ui-icon-calendar" rendered="#{session.getAttribute('activites_debut_semestre') == 'activites_debut_semestre' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Activités début semestre" outcome="/activites_debut_semestre/debut_semestre" styleClass="menu_link"/>                              
+                            </p:submenu>                             
+                            
+                            <p:submenu label="Parcours de formation" icon="ui-icon-note" rendered="#{session.getAttribute('parcours_formation') == 'parcours_formation' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Parcours de formation" outcome="/parcours_formation/parcours_formation" styleClass="menu_link"/>                              
+                            </p:submenu>                            
+                            
+                            <p:submenu label="Activité du semestre" icon="ui-icon-suitcase" rendered="#{session.getAttribute('activites_cours_semestre') == 'activites_cours_semestre' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Activité du semestre" outcome="/activites_cours_semestre/cours_semestre" styleClass="menu_link"/>                              
+                            </p:submenu>                             
+                            
+                            <p:submenu label="Activité fin semestre" icon="ui-icon-flag" rendered="#{session.getAttribute('activites_fin_semestre') == 'activites_fin_semestre' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Activité fin semestre" outcome="/activites_fin_semestre/fin_semestre" styleClass="menu_link"/>                              
+                            </p:submenu>                             
+                            <p:separator /> 
+                            
+                            <p:submenu label="Finances" icon="ui-icon-calculator" rendered="#{session.getAttribute('finances') == 'finances' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Finances" outcome="/finances/finances" styleClass="menu_link"/>
+                            </p:submenu> 
+                                                              
+                            <p:submenu label="Direction" icon="ui-icon-" rendered="#{session.getAttribute('direction') == 'direction' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Direction" outcome="/direction/direction" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/direction/sanctions" styleClass="menu_link"/>
+                            </p:submenu>                                                                                                                                                                                                      
+                            <p:separator />
+                            
+                            <p:submenu label="Encaisements" icon="ui-icon-calculator" rendered="false" style="font-size: 12px">
+                                <p:menuitem value="Encaissement" outcome="/encaissements/encaissements" styleClass="menu_link"/>
+                                <p:menuitem value="Editer session" outcome="/encaissements/edit_session" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/encaissements/sanctions_1" styleClass="menu_link"/>
+                                <p:submenu label="Versements" style="font-size: 12px">
+                                    <p:menuitem value="Par date" outcome="/encaissements/versement_date" styleClass="menu_link"/>
+                                    <p:menuitem value="Par jour" outcome="/encaissements/versement_jour" styleClass="menu_link"/>
+                                    <p:menuitem value="Par période" outcome="/encaissements/versement_periode" styleClass="menu_link"/>
+                                </p:submenu>
+                            </p:submenu>                                
+                            
+                            <p:submenu label="Formation" icon="ui-icon-clipboard" rendered="false" style="font-size: 12px">
+                                <p:menuitem value="Formation" outcome="/formation/formation" styleClass="menu_link"/>
+                            </p:submenu>
+
+                            <p:submenu label="Etudes" icon="ui-icon-document" rendered="false" style="font-size: 12px">
+                                <p:menuitem value="Etudes" outcome="/etudes/etudes" styleClass="menu_link"/>
+                                <p:submenu label="Enseignants" style="font-size: 12px">
+                                    <p:menuitem value="Dossiers" outcome="/etudes/dossiers_enseignants" styleClass="menu_link"/>
+                                    <p:menuitem value="Gestion" outcome="/etudes/gestion_enseignants" styleClass="menu_link"/>
+                                    <p:menuitem value="Photos" outcome="/etudes/photos_enseignants" styleClass="menu_link"/>
+                                </p:submenu>
+                                <p:menuitem value="Matières" outcome="/etudes/matieres" styleClass="menu_link"/>
+                                <p:menuitem value="Modules" outcome="/etudes/modules" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/etudes/sanctions" styleClass="menu_link"/>
+                                <p:menuitem value="Taux horaires" outcome="/etudes/taux_horaires" styleClass="menu_link"/>
+                                <p:menuitem value="Type de matiere" outcome="/etudes/type_matiere" styleClass="menu_link"/>
+                            </p:submenu>                            
+                            
+                            <p:submenu label="Scolarité" icon="ui-icon-suitcase" rendered="false" style="font-size: 12px">
+                                <p:menuitem value="Scolarité" outcome="/scolarite/scolarite" styleClass="menu_link"/>
+                                <p:submenu label="Cours" style="font-size: 12px">
+                                    <p:menuitem value="Absences" outcome="/scolarite/absences_aux_cours" styleClass="menu_link"/>
+                                    <p:menuitem value="Retards" outcome="/scolarite/retards_aux_cours" styleClass="menu_link"/>                                   
+                                </p:submenu>                                   
+                                <p:menuitem value="Attestation" outcome="/scolarite/attestation" styleClass="menu_link"/>
+                                <p:menuitem value="Carte d'accès" outcome="/scolarite/carte_accses" styleClass="menu_link"/>
+                                <p:menuitem value="Convocation" outcome="/scolarite/convocation" styleClass="menu_link"/>
+                                <p:submenu label="Dossiers" style="font-size: 12px">
+                                    <p:menuitem value="Affichage dossiers" outcome="/scolarite/affichage_dossier" styleClass="menu_link"/>
+                                    <p:menuitem value="Modification dossier" outcome="/scolarite/modification_dossier" styleClass="menu_link"/>                                                       
+                                </p:submenu>
+                                <p:menuitem value="Effectif classe" outcome="/scolarite/effectif_de_classes" styleClass="menu_link"/>
+                                <p:submenu label="Fiches" style="font-size: 12px">
+                                    <p:menuitem value="Présences" outcome="/scolarite/fiche_de_presence" styleClass="menu_link"/>
+                                    <p:menuitem value="Inscriptions" outcome="/scolarite/fiche_inscription" styleClass="menu_link"/>              
+                                    <p:menuitem value="Notes" outcome="/scolarite/fiche_pour_note" styleClass="menu_link"/>                            
+                                </p:submenu>
+                                <p:menuitem value="Infirmerie" outcome="/scolarite/infirmerie" styleClass="menu_link"/>
+                                <p:submenu label="Inscriptions" style="font-size: 12px">
+                                    <p:menuitem value="Inscription" outcome="/scolarite/inscription" styleClass="menu_link"/>   
+                                    <p:menuitem value="Réinscription" outcome="/scolarite/reinscription" styleClass="menu_link"/>
+                                </p:submenu>
+                                <p:menuitem value="Liste des étudiants" outcome="/scolarite/listes_des_etudiants" styleClass="menu_link"/>                                
+                                <p:menuitem value="Photos inscrites" outcome="/scolarite/photos_inscrites" styleClass="menu_link"/>
+                                <p:menuitem value="Prises en charges" outcome="/scolarite/prises_en_charges" styleClass="menu_link"/>
+                                <p:menuitem value="Recherche" outcome="/scolarite/recherche" styleClass="menu_link"/>
+                                <p:menuitem value="Reduction" outcome="/scolarite/reduction" styleClass="menu_link"/>                                
+                                <p:menuitem value="Relances" outcome="/scolarite/relances" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/scolarite/sanctions" styleClass="menu_link"/>                                
+                                <p:submenu label="Versements" style="font-size: 12px">
+                                    <p:menuitem value="Par classe" outcome="/scolarite/versements_classe" styleClass="menu_link"/>
+                                    <p:menuitem value="Par étudiant" outcome="/scolarite/versements_etudiant" styleClass="menu_link"/>              
+                                    <p:menuitem value="Formation" outcome="/scolarite/versements_formation" styleClass="menu_link"/>                            
+                                </p:submenu>
+                            </p:submenu>                                                     
+                            
+                            <p:submenu label="Paramètres" icon="ui-icon-gear" rendered="#{session.getAttribute('parametres') == 'parametres' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Paramètres" outcome="/parametres/parametres" styleClass="menu_link"/>
+                                <p:menuitem value="Echéances scolarité" outcome="/parametres/echeances_scolarite" styleClass="menu_link"/>
+                                <p:menuitem value="Eléments frais" outcome="/parametres/elements_frais" styleClass="menu_link"/>
+                                <p:submenu label="Gestion" style="font-size: 12px">
+                                    <p:menuitem value="Banques" outcome="/parametres/gestion_banques" styleClass="menu_link"/>
+                                    <p:menuitem value="Bâtiments" outcome="/parametres/gestion_batiments" styleClass="menu_link"/>
+                                    <p:menuitem value="Domaines de formation" outcome="/parametres/domaine_formation" styleClass="menu_link"/>
+                                    <p:menuitem value="Mention formation" outcome="/parametres/mention_formation" styleClass="menu_link"/>
+                                    <p:menuitem value="Spécialité formation" outcome="/parametres/specialite" styleClass="menu_link"/>
+                                    <p:menuitem value="Classes" outcome="/parametres/gestion_classes" styleClass="menu_link"/>
+                                    <p:menuitem value="Cycles" outcome="/parametres/gestion_cycles" styleClass="menu_link"/>
+                                    <p:menuitem value="Diplômes" outcome="/parametres/gestion_diplomes" styleClass="menu_link"/>
+                                    <p:menuitem value="Domaines de formation" outcome="/parametres/domaine_formation" styleClass="menu_link"/>
+                                    <p:menuitem value="Echéances" outcome="/parametres/gestion_echeances" styleClass="menu_link"/>
+                                    <p:menuitem value="Echéances étudiant" outcome="/parametres/gestion_echeances_etudiant" styleClass="menu_link"/>
+                                    <p:menuitem value="Mentions / Filières" outcome="/parametres/gestion_filieres" styleClass="menu_link"/>
+                                    <p:menuitem value="Formations" outcome="/parametres/gestion_formation" styleClass="menu_link"/>
+                                    <p:menuitem value="Frais scolarité" outcome="/parametres/gestion_scolarite" styleClass="menu_link"/>
+                                     <p:menuitem value="Mention diplômes" outcome="/parametres/mention_diplomes" styleClass="menu_link"/>
+                                    <p:menuitem value="Organismes" outcome="/parametres/gestion_organismes" styleClass="menu_link"/>
+                                    <p:menuitem value="Pays" outcome="/parametres/gestion_pays" styleClass="menu_link"/>
+                                    <p:menuitem value="Salles" outcome="/parametres/gestion_salles" styleClass="menu_link"/> 
+                                </p:submenu>
+                                <p:menuitem value="Régime de scolarité" outcome="/parametres/regime_scolarite" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/parametres/sanctions" styleClass="menu_link"/>
+                                <p:menuitem value="Système académique" outcome="/parametres/systeme_academique" styleClass="menu_link"/>
+                            </p:submenu>                             
+                            
+                            <p:submenu label="Administration" icon="ui-icon-person" rendered="#{session.getAttribute('administrateur') == 'administrateur' ? true : false}" style="font-size: 12px">
+                                <p:menuitem value="Administration" outcome="/administration/administration" styleClass="menu_link"/>
+                                <p:menuitem value="Activer année" outcome="/administration/activer_annee" styleClass="menu_link"/>
+                                <p:menuitem value="Utilisateur" outcome="/administration/admin_user" styleClass="menu_link"/>
+                                <p:menuitem value="Année académique" outcome="/administration/annee_academique" styleClass="menu_link"/>
+                                <p:menuitem value="Gestion période" outcome="/administration/gestion_periodes" styleClass="menu_link"/>
+                                <p:menuitem value="Info établissement" outcome="/administration/info_etablissement" styleClass="menu_link"/>
+                                <p:menuitem value="Journal connexion" outcome="/administration/journal_connexion" styleClass="menu_link"/>
+                                <p:menuitem value="Mentions bulletin" outcome="/administration/mentions_bul" styleClass="menu_link"/>
+                                <p:menuitem value="Sanctions" outcome="/administration/sanctions" styleClass="menu_link"/>
+                                <p:menuitem value="Système éducatif" outcome="/administration/systeme_educatif" styleClass="menu_link"/>
+                                <p:menuitem value="Type de paiement" outcome="/administration/type_paiement" styleClass="menu_link"/>                            
+                            </p:submenu>  
+                            <p:separator />
+                            
+                            <p:submenu label="Navigations" icon="ui-icon-help" style="font-size: 12px">
+                                <p:menuitem value="Vue d'ensemble" outcome="/vue_d_ensemble" styleClass="menu_link"/>
+                                <p:menuitem value="Support technique" outcome="/vue_d_ensemble" styleClass="menu_link"/>
+                                <p:menuitem value="A propos de ..." outcome="/vue_d_ensemble" styleClass="menu_link"/>
+                                <p:menuitem value="Références" outcome="/vue_d_ensemble" styleClass="menu_link"/>
+                                <p:menuitem value="Partenaires" outcome="/vue_d_ensemble" styleClass="menu_link"/>
+                                <p:menuitem value="PrimeFaces" url="http://www.primefaces.org" styleClass="menu_link"/>                                                                                                                                           
+                            </p:submenu>
+                            <p:separator />
+                                              
+                            <p:menuitem value="Deconnexion" action="#{connexionBean.deconnexionUtilisateur}" update="form_accueil"  ajax="false" icon="ui-icon-close" styleClass="menu_link"/>
+                        </p:tieredMenu>                                     
+                
+                        <p:separator />
+                
+                        <!--Ajout du calandrier-->
+                        <div  style="margin: 5px 0 5px 2px">
+                            <p:calendar id="inline" mode="inline"/>
+                        </div>
+                        
+                        <!--Ajout de l'image du contact du support technique
+                        <div  style="margin: 13px 0 15px 2px; border: none">-->
+                        <h:graphicImage style="" value="/resources/images/image_contact_support.png" height="207"  width="197" alt="Contact du support technique"/>
+                                       
+                    </h:form>
+                </f:view>
+            </div>
+        </ui:insert>        
+    </h:body>
+</html>

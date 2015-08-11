@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Spécialité</ui:define>
+
+            <ui:define name="left_content"> 
+                <div class="big_title_with_color">
+                    <h1>Spécialité de la formaition</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_specialite">   
+                        <p:growl id="growl_specialite" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="2" cellpadding="3">
+                                <p:outputLabel value="Code spécialité: * " for="codeSpecialite" />
+                                <p:inputText id="codeSpecialite" value="#{specialiteBean.specialite.codeSpecialite}" size="60" maxlength="50" title="Code spécialité" readonly="#{specialiteBean.champCleNonAuto}" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                <p:outputLabel value="Libellé: *" for="libelleSpecialite" />
+                                <p:inputText id="libelleSpecialite" value="#{specialiteBean.specialite.libelleSpecialite}" size="91" maxlength="50" title="Libellé spécialité" readonly="#{specialiteBean.champLectureSeul}" style="font-size: 12px; height: 18px; border-radius: 4px"/>
+                                <p:outputLabel value="Description:" for="descriptionSpecialite" />                                
+                                <p:inputTextarea id="descriptionSpecialite" value="#{specialiteBean.specialite.descriptionSpecialite}" title="Description" cols="65" rows="3" maxlength="70" autoResize="false" readonly="#{specialiteBean.champLectureSeul}" style="font-size: 12px; border-radius: 4px"/>                                                                                                
+                            </h:panelGrid> 
+                            
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Filière: *" for="codeFiliere" />                                
+                                <p:selectOneMenu id="codeFiliere" value="#{specialiteBean.specialite.codeFiliere}" style="margin-left: 45px; width: 290px; font-size: 12px;">
+                                    <f:selectItem itemLabel="Veuillez selectionner la filière" itemValue=""/>
+                                    <f:selectItems value="#{filiereBean.listCodeFiliere}"/>
+                                </p:selectOneMenu>
+                                <p:inputText id="codeSpecialiteCache" value="#{specialiteBean.codeSpecialiteCache}" size="30" style="visibility: hidden"/>                            
+                            </h:panelGrid> 
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                           
+                            <p:commandButton value="Nouveau" action="#{specialiteBean.nouveau}" update="form_specialite" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{specialiteBean.valider}" disabled="#{specialiteBean.btnValiderDesactive}" update="form_specialite" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{specialiteBean.preparation_modifier}" disabled="#{specialiteBean.btnModifierDesactive}" update="form_specialite" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{specialiteBean.supprimer}" disabled="#{specialiteBean.btnSupprimerDesactive}" update="form_specialite" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{specialiteBean.annuler}" update="form_specialite" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                     
+                        <p:dataTable value="#{specialiteBean.listSpecialite}" var="item" rows="15" paginatorPosition="bottom" scrollable="true" scrollHeight="340" style="margin: 10px 0 10px 0">
+                            <p:column width="160">
+                                <f:facet name="header">
+                                    <h:outputText value="Code spécialité"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeSpecialite}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Libellé"/>
+                                </f:facet>
+                                <h:outputText value="#{item.libelleSpecialite}"/>
+                            </p:column>                            
+                            <p:column width="160">
+                                <f:facet name="header">
+                                    <h:outputText value="Filière"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeFiliere}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_specialite" action="#{specialiteBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{specialiteBean.specialite}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>             
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

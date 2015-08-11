@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Inscription</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                 
+                <div class="big_title_with_color">
+                    <h1>Inscription</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_inscription" enctype="multipart/form-data">              
+                    <p:growl id="growl_inscription" globalOnly="false"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 0 0 0 5px; margin: 15px 0 10px 0">           
+                            <h:panelGrid columns="4">
+                               <h:outputLabel for="myname" value="Etablissement :"/>
+                               <p:inputText id="myname" value="#{inscriptionBean.myInfo.myname}" readonly="true" size="50" style="height: 18px;margin: 5px 0px 0px 20px; border-radius: 4px; font-size: 13px"/>
+                               <h:outputLabel for="anneeaca" value="Année académique :" style="margin: 5px 0px 0px 20px;"/>
+                               <p:inputText id="anneeaca" value="#{inscriptionBean.anneeAcademiq.anneeaca}" size="22" readonly="true" style="height: 18px;margin: 5px 0px 0px 20px; border-radius: 4px; font-size: 13px"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    
+                        <h:panelGrid columns="1">
+                            <p:panel styleClass="panel_backg" style="width: 790px">                        
+                                <f:facet name="header">
+                                    Identité
+                                </f:facet>
+                                <h:panelGrid columns="2" cellpadding="2">
+                                    <h:outputLabel for="nometu" value="Nom : *" title="Nom"/>
+                                    <p:inputText id="nometu" value="#{inscriptionBean.etudiant.nometu}" size="70" maxlength="30" required="true" requiredMessage="Le nom de l'étudiant est obligatoire" style="margin-right: 12px; height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                    <h:outputLabel for="prenetu" value="Prénom : *" title="Prénom" />
+                                    <p:inputText id="prenetu" value="#{inscriptionBean.etudiant.prenetu}" size="70" maxlength="70" required="true" requiredMessage="Le prénom de l'etudiant est obligatoire" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                    <h:outputText value="Date de naissance : *" title="Date de naissance"/>                                        
+                                    <p:calendar id="dtnaiss" value="#{inscriptionBean.etudiant.dtnaiss}" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" effect="slide" required="true" requiredMessage="La date de naissance est obligatoire">    
+                                        <!--<f:convertDateTime pattern="JJ/MM/yyyy"/>-->
+                                    </p:calendar>    
+
+                                    <h:outputLabel for="villeNaiss" value="Ville de naissance : *" title="Ville de naissance"/>
+                                    <p:inputText id="villeNaiss" value="#{inscriptionBean.etudiant.villeNaiss}" size="40" maxlength="70" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                    <h:outputText value="Civilité : *" title="Civilité"/>
+                                    <p:selectOneMenu id="civilite" value="#{inscriptionBean.etudiant.civilite}" required="true" requiredMessage="La civilité de l'étudiant est obligatoire" style="font-size: 12px">
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItems value="#{civiliteBean.listCivilite}"/>                                          
+                                    </p:selectOneMenu> 
+
+                                    <h:outputText value="pays : *" title="pays" style=""/>
+                                    <p:selectOneMenu id="pays" value="#{nationBean.pays}" required="true" requiredMessage="La nationalité de l'étudiant est obligatoire" style="width: 225px; font-size: 12px"> 
+                                         <f:selectItem itemLabel="Veillez sélectionner un pays" itemValue=""/>
+                                         <f:selectItems value="#{nationBean.listPays}"/>                                                                                        
+                                         <!--<a4j:ajax event="selectitem" render="nationalite" execute="@this"/> valueChangeListener="" -->
+                                         <p:ajax update="nationalite" listener="#{nationBean.valueChanged}"/>                                     
+                                     </p:selectOneMenu> 
+
+                                    <h:outputText value="Nationalité : " title="Nationalité"/>                                       
+                                    <p:inputText id="nationalite" value="#{inscriptionBean.etudiant.nationalite = nationBean.nationalite}" required="true" requiredMessage="Veuillez selectionner le pays" size="40" readonly="true" style="height: 18px; border-radius: 4px; font-size: 12px"/>                                               
+
+                                    <h:outputLabel for="titre" value="Situation matrimoniale : " title="Situation matrimoniale" style="margin-right: 15px"/>
+                                    <p:selectOneMenu id="titre" value="#{inscriptionBean.etudiant.titre}" style="width: 225px; font-size: 12px"> 
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItems value="#{matrimonialeBean.listCodeMatrimoniale}"/>     
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Photo étudiant : " title="Photo de l'étudiant"/>                                         
+                                    <h:panelGrid columns="1" style=" border: 1px solid #AFAFAF; margin: 10px 0 15px 0px">
+                                        <p:fileUpload id="photo" value="#{inscriptionBean.fichierPhoto}" mode="simple"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="1" style="width: 802px; margin-top: 10px">
+                            <p:tabView styleClass="panel_backg">
+                                <p:tab title="Contacts"> 
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey"> 
+                                        <h:panelGrid columns="2" cellspacing="4">
+                                            <h:outputLabel for="adresse" value="Adresse : " title="Adresse" style="margin-right: 82px"/>
+                                            <p:inputText id="adresse" value="#{inscriptionBean.etudiant.adresse}" size="60" style="height: 18px; border-radius: 4px; margin-right: 25px; font-size: 12px"/>
+
+                                            <h:outputLabel for="boitePostal" value="Boite postale : " title="Boite postale"/>
+                                            <p:inputText id="boitePostal" value="#{inscriptionBean.etudiant.boitePostal}" size="60" style="height: 18px; border-radius: 4px; font-size: 12px"/>                                    
+
+                                            <h:outputLabel for="telbur" value="Téléphone : " title="Téléphone"/>
+                                            <p:inputMask id="telbur" value="#{inscriptionBean.etudiant.telbur}" size="40" mask="(+999) 99 99 99 99" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="cell" value="Mobile : " title="Téléphone mobile de l'étudiant"/>
+                                            <p:inputMask id="cell" value="#{inscriptionBean.etudiant.cell}" size="40" mask="(+999) 99 99 99 99" required="true" requiredMessage="Le numéro du mobile de l'étudiant est obligatoire" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="email" value="Adresse Email : " title="Email"/>
+                                            <p:inputText id="email" value="#{inscriptionBean.etudiant.email}" size="60" validatorMessage="Email invalide" style="height: 18px; border-radius: 4px; font-size: 12px">  
+                                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                            </p:inputText>
+                                        </h:panelGrid>    
+                                    </p:panel>
+                                </p:tab>
+                                
+                                <p:tab title="Tuteur">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey"> 
+                                        <h:panelGrid columns="2" cellspacing="4">                                                                                                                              
+                                            <h:outputLabel for="nomtuteur" value="Nom : " title="Nom"/>
+                                            <p:inputText id="nomtuteur" value="#{inscriptionBean.tuteur.nomtuteur}" size="60" maxlength="30" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="prentuteur" value="Prénom : " title="Prénom" />
+                                            <p:inputText id="prentuteur" value="#{inscriptionBean.tuteur.prentuteur}" size="60" maxlength="70" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputText value="Statut du tuteur : " title="Statut du tuteur" style="margin-right: 50px"/>
+                                            <p:selectOneMenu id="statut" value="#{inscriptionBean.tuteur.statut}" style="width: 225px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="Veillez sélectionner le statut" itemValue=""/>
+                                                <f:selectItem itemLabel="Autre" itemValue="Autre"/>                                                                                       
+                                                <f:selectItem itemLabel="Frère" itemValue="Frere"/>       
+                                                <f:selectItem itemLabel="Mère" itemValue="Mere"/>  
+                                                <f:selectItem itemLabel="Oncle" itemValue="Oncle"/> 
+                                                <f:selectItem itemLabel="Père" itemValue="Pere"/>
+                                                <f:selectItem itemLabel="Soeur" itemValue="Soeur"/>
+                                                <f:selectItem itemLabel="Tante" itemValue="Tante"/>   
+                                            </p:selectOneMenu>  
+
+                                            <h:outputLabel for="professt" value="Profession : " title="Profession"/>
+                                            <p:inputText id="professt" value="#{inscriptionBean.tuteur.professt}" size="40" maxlength="25" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="tel_tuteur" value="Téléphone : " title="Téléphone"/>
+                                            <p:inputMask id="tel_tuteur" value="#{inscriptionBean.tuteur.telburt}" size="40" mask="(+999) 99 99 99 99" style="height: 18px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="teldomt" value="Mobile : " title="Téléphone mobile du tuteur"/>
+                                            <p:inputMask id="teldomt" value="#{inscriptionBean.tuteur.teldomt}" size="40" mask="(+999) 99 99 99 99" style="height: 18px; border-radius: 4px; font-size: 12px"/>                                               
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:tab>
+                                
+                                <p:tab title="Inscription">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">   
+                                        <h:panelGrid columns="4" cellpadding="2" styleClass="panel_backg">
+                                            <h:outputText value="Date d'inscription : *" title="Date d'inscription"/>
+                                            <p:calendar id="dtinscri" value="#{inscriptionBean.inscription.dtinscri}" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" effect="slide" required="true" requiredMessage="La date d'inscrition est obligatoire" style="margin-bottom: 5px"/>                                                 
+
+                                            <h:outputText value="Cours : *" style="margin-left: 20px"/>
+                                            <p:selectOneMenu id="Cours" value="#{inscriptionBean.inscription.cours}" required="true" requiredMessage="Veuillez selectionner le type de cours de l'étudiant" style="width: 225px; margin-bottom: 3px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItem itemLabel="Jour" itemValue="Jour"/>
+                                                <f:selectItem itemLabel="Soir" itemValue="Soir"/>                                                                                                                            
+                                            </p:selectOneMenu>                                                                                         
+
+                                            <h:outputText value="Système académique : *"/>
+                                            <p:selectOneMenu id="codeAcademique" value="#{inscriptionBean.inscription.codeAcademique}" required="true" requiredMessage="Le système académique est obligatoire" style="width: 225px; margin-bottom: 3px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{systemeAcademiqueBean.listCodeSystemeAcademiq}"/>                                                                                                                                   
+                                            </p:selectOneMenu> 
+
+                                            <h:outputText value="Domaine de formation : " style="margin-left: 20px"/>
+                                            <p:selectOneMenu id="codeDomaine-for" value="#{inscriptionBean.inscription.codeDomaine}" style="width: 225px; margin-bottom: 3px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{domaineFormationBean.listCodeDomaine}"/>                                                                                                                            
+                                            </p:selectOneMenu> 
+
+                                            <h:outputLabel value="Parcours/Cycle : *"/>
+                                            <p:selectOneMenu id="codeCycle" value="#{inscriptionBean.inscription.codeCycle}" required="true" requiredMessage="Le parcours/cycle est obligatoire" style="width: 225px; margin-bottom: 3px; font-size: 12px">                                                
+                                                <p:ajax listener="#{inscriptionBean.onCycleChange}" update="codeNiveau" />
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{cycleBean.listCodeCycle}"/>                                                
+                                            </p:selectOneMenu> 
+
+                                            <h:outputLabel for="codeNiveau" value="Niveau : * " style="margin-left: 20px"/>
+                                            <p:selectOneMenu id="codeNiveau" value="#{inscriptionBean.inscription.codeNiveau}" required="true" requiredMessage="Le niveau d'étude est obligatoire" style="width: 225px; margin-bottom: 3px">                                                
+                                                 <p:ajax listener="#{inscriptionBean.onNiveauChange}" update="codeClasse"/>
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{inscriptionBean.listCodeNiveau}"/>                                                      
+                                            </p:selectOneMenu>   
+
+                                            <h:outputLabel value="Classe : *" />
+                                            <p:selectOneMenu id="codeClasse" value="#{inscriptionBean.inscription.codeClasse}" required="true" requiredMessage="La classe de l'étudiant est obligatoire" style="width: 225px; margin-bottom: 3px; font-size: 12px">
+                                                <p:ajax listener="#{reinscriptionBean.onClasseChange}" update="codeRegime"/>
+                                                <p:ajax listener="#{reinscriptionBean.onClasseChange}" update="panel_montant"/>
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{inscriptionBean.listCodeClasse}"/>
+                                            </p:selectOneMenu>
+                                            
+                                            <h:outputLabel value="Regime : *" style="margin-left: 20px"/>
+                                            <p:selectOneMenu id="codeRegime" editable="false" value="#{inscriptionBean.inscription.codeRegime}" required="true" requiredMessage="Le regime de l'étudiant est obligatoire" style="width: 225px; margin-bottom: 3px; font-size: 12px">                                                
+                                                <p:ajax listener="#{inscriptionBean.onRegimeChange}" update="panel_montant" />
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{regimeBean.listCodeRegime}"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+                                    </p:panel>                                    
+                                    
+                                    <p:panel id="panel_montant" styleClass="panel_backg" style="border: 1px solid lightgrey; margin: 15px 0 0 0">                        
+                                        <p:outputLabel value="MONTANTS A PAYE" style="color: orange; font-size: 13px; margin-bottom: 10px"/>
+
+                                        <h:panelGrid columns="4" style="text-align: center; padding-right: 5px">
+                                            <h:panelGrid columns="1" >
+                                                <h:outputText value="Inscription : " title="Inscription"/>
+                                                <p:inputText id="montInscription" value="#{inscriptionBean.montInscription}" size="24" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="margin-left: 30px">
+                                                <h:outputLabel for="montFormation" value="Formation : " title="Formation"/>
+                                                <p:inputText id="montFormation" value="#{inscriptionBean.montFormation}"  size="24" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="margin-left: 30px">
+                                                <h:outputLabel for="montScolarté" value="Scolarité : " title="Scolarité"/>
+                                                <p:inputText id="montScolarté" value="#{inscriptionBean.montScolarte}"  size="24" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>                                    
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="margin-left: 30px">
+                                                <h:outputLabel for="autreMontant" value="Autres frais : " title="Autres frais"/>
+                                                <p:inputText id="autreMontant" value="#{inscriptionBean.inscription.somAutresFraisAPaye = inscriptionBean.autreMontant}"  size="24" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>                                                                                
+                                        </h:panelGrid>
+                                    </p:panel>                                                                
+                                </p:tab>
+                                
+                                <p:tab title="Accès à l'université">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">  
+                                        <p:outputLabel value="ACCES A L'UNIVERSITE" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="6" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="bac" value="Baccalauréat / Equivalence :" title="La série du baccalauréat"/>
+                                            <p:inputText id="bac" value="#{inscriptionBean.etudiant.serieBac}" size="15" maxlength="2" title="La série du baccalauréat" placeholder="Exemple : A" style="height: 16px; border-radius: 4px; margin-right: 10px; font-size: 12px"/>          
+                                            
+                                            <h:outputText value="Mention :"/>
+                                            <p:selectOneMenu id="mention" editable="false" value="#{inscriptionBean.etudiant.mentionBac}" style="width: 150px; margin-bottom: 3px; margin-right: 10px; font-size: 12px">                                                                                                
+                                                <f:selectItem itemLabel="" itemValue=""/> 
+                                                <f:selectItem itemLabel="Assez Bien" itemValue="Assez Bien"/>     
+                                                <f:selectItem itemLabel="Bien" itemValue="Bien"/>                                                 
+                                                <f:selectItem itemLabel="Passable" itemValue="Passable"/> 
+                                                <f:selectItem itemLabel="Très Bien" itemValue="Tres Bien"/>
+                                            </p:selectOneMenu>
+                                            
+                                            <h:outputLabel for="annee_obtention_bac" value="Année d'obtention :"/>
+                                            <p:inputMask id="annee_obtention_bac" value="#{inscriptionBean.etudiant.anneeBac}" size="10" mask="9999" style="height: 16px; border-radius: 4px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGrid columns="4" cellpadding="5">
+                                            <h:outputText value="pays : " title="Pays d'obtention du baccalauréat"/>
+                                            <p:selectOneMenu id="pays_obtention_bac" value="#{inscriptionBean.etudiant.paysBac}" style="width: 221px; margin-left: 100px; font-size: 12px"> 
+                                                 <f:selectItem itemLabel="Veillez sélectionner un pays" itemValue=""/>
+                                                 <f:selectItems value="#{nationBean.listPays2}"/>                                                                                                                                                                            
+                                             </p:selectOneMenu> 
+                                            
+                                            <h:outputLabel for="ville_obtention_bac" value="Ville :" title="Ville d'obtentien du baccalauréat" style="margin-left: 12px"/>
+                                            <p:inputText id="ville_obtention_bac" value="#{inscriptionBean.etudiant.villeBac}" size="40" maxlength="30" title="Ville d'obtentien du baccalauréat" style="height: 16px; border-radius: 4px; font-size: 12px"/>                                                                                     
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGrid columns="2" cellpadding="2">
+                                            <h:outputLabel for="etablissement_obtention_bac" value="Etablissement :" title="Etablissement d'obtentien du baccalauréat"/>
+                                            <p:inputText id="etablissement_obtention_bac" value="#{inscriptionBean.etudiant.etablissementBac}" size="97" maxlength="45" title="Etablissement d'obtentien du baccalauréat" style="height: 16px; border-radius: 4px; margin-left: 64px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                    </p:panel>                                    
+                                                 
+                                    <p:panel styleClass="panel_backg" style="margin: 15px 0 5px 0; border: 1px solid lightgrey">   
+                                        <p:outputLabel value="PREMIERE INSCRIPTION DANS UNE UNIVERSITE" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="4" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="annee_univers" value="Année universitaire :"/>
+                                            <p:inputMask id="annee_univers" value="#{inscriptionBean.etudiant.anneePremInscripUniversite}" size="14" mask="9999/9999" style="height: 16px; border-radius: 4px; font-size: 12px; margin-left: 40px"/>
+                                            <h:outputLabel for="universite" value="Université :" title="Université de la première inscription" style="margin-left: 10px"/>
+                                            <p:inputText id="universite" value="#{inscriptionBean.etudiant.universitePremInscrip}" size="61" maxlength="50" title="Université de la première inscription" style="height: 16px; border-radius: 4px; font-size: 12px"/>                                        
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:tab>
+                                                                                                                                                                
+                                <p:tab title="Diplôme obténu / Etablissement">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">  
+                                        <p:outputLabel value="DERNIER DIPLOME OBTENU APRES LE BACCALAUREAT" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="4" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="diplome_obtenu" value="Diplôme obtenu :" title="Dernier diplôme obtenu"/>
+                                            <p:inputText id="diplome_obtenu" value="#{inscriptionBean.etudiant.dernierDiplomeObtenu}" size="50" maxlength="60" title="Dernier diplôme obtenu" style="height: 16px; border-radius: 4px; margin-right: 30px; font-size: 12px"/>                                                                                                  
+                                            
+                                            <h:outputLabel for="annee_obtention_dip" value="Obtenu en :"/>
+                                            <p:inputMask id="annee_obtention_dip" value="#{inscriptionBean.etudiant.dateDernierDiplo}" size="14" mask="9999" style="height: 16px; border-radius: 4px; font-size: 12px"/>
+                                       
+                                            <h:outputLabel for="libelle_diplome" value="Libelle diplôme : " title="Le libellé du diplôme"/>
+                                            <p:inputText id="libelle_diplome" value="#{inscriptionBean.etudiant.libelleDernierDiplo}" size="50" maxlength="60" title="Le libellé du diplôme" style="height: 16px; border-radius: 4px; margin-right: 30px; font-size: 12px"/>                                                            
+                                            
+                                            <h:outputText value="pays d'obtention : " title="Pays d'obtention du diplôme"/>
+                                            <p:selectOneMenu id="pays_obtention_diplome" value="#{inscriptionBean.etudiant.paysDernierDiplo}" style="width: 185px; font-size: 12px"> 
+                                                 <f:selectItem itemLabel="Veillez sélectionner un pays" itemValue=""/>
+                                                 <f:selectItems value="#{nationBean.listPays2}"/>                                                                                                                                                                            
+                                             </p:selectOneMenu>
+                                            
+                                            <h:outputLabel for="ville_obtention_diplome" value="Ville :" title="Ville d'obtentien du diplôme"/>
+                                            <p:inputText id="ville_obtention_diplome" value="#{inscriptionBean.etudiant.villeDernierDiplo}" size="50" maxlength="30" title="Ville d'obtentien du dipmôme" style="height: 16px; border-radius: 4px; font-size: 12px"/>                                                                                     
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGrid columns="2" cellpadding="2">
+                                            <h:outputLabel for="etablissement_obtention_dipl" value="Etablissement :" title="Etablissement d'obtentien du baccalauréat"/>
+                                            <p:inputText id="etablissement_obtention_dipl" value="#{inscriptionBean.etudiant.etablissementDernierDiplo}" size="95" maxlength="70" title="Etablissement d'obtentien du baccalauréat" style="height: 16px; border-radius: 4px; margin-left: 8px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                    </p:panel>                                    
+                                                 
+                                    <p:panel styleClass="panel_backg" style="margin: 15px 0 5px 0; border: 1px solid lightgrey">   
+                                        <p:outputLabel value="DERNIER ETABLISSEMENT D'ENSEIGNEMENT FREQUENTE AVANT L'ANNEE COURANTE" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="4" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="annee_dernier_etablis" value="Année universitaire :"/>
+                                            <p:inputMask id="annee_dernier_etablis" value="#{inscriptionBean.inscription.anneeEtablisFreqte}" size="14" mask="9999/9999" title="Année du dernier établissement fréquenté" style="height: 16px; border-radius: 4px; font-size: 12px; margin-left: 40px"/>
+                                            <h:outputLabel for="dernier_etablis" value="Etablissement :" title="Dernier établissement fréquanté" style="margin-left: 10px"/>
+                                            <p:inputText id="dernier_etablis" value="#{inscriptionBean.inscription.dernierEtablisFreqte}" size="64" maxlength="70" title="Dernier établissement fréquanté" style="height: 16px; border-radius: 4px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:tab>
+                                
+                                <p:tab title="Situation sociale">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">  
+                                        <p:outputLabel value="SITUATION SOCIALE" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="2" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="statut_origine_ressource" value="Origine des resources :" title="Statut de la personne qui paie la scolarité de l'étudiant"/>                                                                                                                                                            
+                                            <p:selectOneMenu id="statut_origine_ressource" value="#{inscriptionBean.inscription.origineRessource}" style="width: 225px; margin-right: 30px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItem itemLabel="Autre" itemValue="Autre"/>
+                                                <f:selectItem itemLabel="Bourse" itemValue="Bourse"/>
+                                                <f:selectItem itemLabel="Etudiant" itemValue="Etudiant"/> 
+                                                <f:selectItem itemLabel="Frère" itemValue="Frere"/>       
+                                                <f:selectItem itemLabel="Mère" itemValue="Mere"/>  
+                                                <f:selectItem itemLabel="Oncle" itemValue="Oncle"/> 
+                                                <f:selectItem itemLabel="Père" itemValue="Pere"/>
+                                                <f:selectItem itemLabel="Soeur" itemValue="Soeur"/>
+                                                <f:selectItem itemLabel="Tante" itemValue="Tante"/>                                                                                                                                                                                           
+                                            </p:selectOneMenu>                                                                                
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGrid columns="1" style="padding: 15px 0 5px 0">
+                                            <h:outputText  value="Activité professionnelle exercée par l'étudiant pendant toute l'année académique :" style="color: orange; font-size: 13px; font-style: italic"/>                                            
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" cellpadding="2">
+                                            <h:outputLabel for="profession_etudiant" value="Profession : "/>
+                                            <p:inputText id="profession_etudiant" value="#{inscriptionBean.inscription.professionEtu}" size="60" maxlength="45" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="activite_etudiant" value="Activité : " />
+                                            <p:inputText id="activite_etudiant" value="#{inscriptionBean.inscription.activiteEtu}" size="60" maxlength="45" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="domaine__activite_etudiant" value="Domaine d'activité : " />
+                                            <p:inputText id="domaine__activite_etudiant" value="#{inscriptionBean.inscription.domaineAtiviteEtu}" size="30" maxlength="25" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                    </p:panel>                                                                                                                         
+                                </p:tab>
+                                
+                                <p:tab title="Divers">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">                                          
+                                        <p:outputLabel value="RENSEIGNEMENTS DIVERS" style="color: orange; font-size: 13px"/>
+                                        
+                                        <h:panelGrid columns="2" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="lv_obligatoire" value="Langue vivante obligatoire choisie :"/>                                          
+                                            <p:selectOneMenu id="lv_obligatoire" value="#{inscriptionBean.inscription.langueVivante}" style="width: 200px; font-size: 12px">
+                                                <f:selectItem itemLabel="" itemValue="" />
+                                                <f:selectItems value="#{langueBean.listCodeLangues}" />         
+                                            </p:selectOneMenu>
+                                            
+                                            <h:outputLabel for="demandeaur_emploi" value="Demandeur d'emploi :"/>                                                                             
+                                            <p:selectOneRadio id="demandeaur_emploi" value="#{inscriptionBean.inscription.demandeurEmploi}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                <f:selectItem itemLabel="NON" itemValue="NON" />                                       
+                                            </p:selectOneRadio>
+                                            
+                                            <h:outputLabel for="interruption_etude" value="Interruption des études :" />                                                                             
+                                            <h:panelGrid columns="4">
+                                                <p:selectOneRadio id="interruption_etude" value="#{inscriptionBean.inscription.interruptionEtude}" style="font-size: 12px; margin-left: -3px; margin-right: 20px">
+                                                    <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                    <f:selectItem itemLabel="NON" itemValue="NON" />                                       
+                                                </p:selectOneRadio>
+                                                <h:outputLabel for="duree_interruption_etude" value="Durée de l'interruption :"/>
+                                                <p:inputMask id="duree_interruption_etude" mask="?999" value="#{inscriptionBean.inscription.dureeInterruption}" size="10" style="height: 16px; border-radius: 4px; font-size: 12px; text-align: right"/>
+                                                <h:outputText value="Mois"/>
+                                            </h:panelGrid>
+                                            
+                                            <h:outputLabel for="sportif_haut_niveau" value="Sportif de haut niveau :"/>                                                                             
+                                            <p:selectOneRadio id="sportif_haut_niveau" value="#{inscriptionBean.inscription.sportifHautNivo}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                <f:selectItem itemLabel="NON" itemValue="NON"/>                                       
+                                            </p:selectOneRadio>
+                                            
+                                             <h:outputLabel for="service_national" value="Service national :"/>                                                                             
+                                             <p:selectOneRadio id="service_national" value="#{inscriptionBean.inscription.serviceNational}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="Non encore incorporable ou sursitaire" itemValue="Non encore incorporable"/>
+                                                <f:selectItem itemLabel="Sous les drapeaux" itemValue="Sous les drapeaux" />         
+                                                <f:selectItem itemLabel="Exempté" itemValue="Exempté" />
+                                                <f:selectItem itemLabel="Service accompli" itemValue="Service accompli"/>         
+                                            </p:selectOneRadio>
+                                        </h:panelGrid>                                
+                                    </p:panel>
+                                </p:tab>
+                            </p:tabView>
+                        </h:panelGrid>  
+                                            
+
+                        <p:panel styleClass="panel_backg" style="width: 788px; margin: 10px 3px">
+                            <h:panelGrid columns="2" cellspacing="7">
+                                <p:commandButton value="Valider l'inscription" ajax="false" actionListener="#{inscriptionBean.creer}" title="valder l'inscription" icon="ui-icon-disk" style="height: 30px; margin-left: 20px"/>                                
+                                <p:button outcome="inscription2" value="Nouveau" title="réinitialise le formulaire pour un nouvel enregistrement" icon="ui-icon-plus" style="height: 30px; width: 100px; margin-left: 20px; margin-right: 100px"/>
+                            </h:panelGrid>                            
+                        </p:panel>                                                
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

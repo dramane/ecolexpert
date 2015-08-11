@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="All Faces Configurations" version="2">
+    <Scope Scope="Faces Configuration Only">
+        <Node id="parametres/parametres.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="direction/direction.xhtml" x="8548" y="32" zoom="true"/>
+        <Node id="connexion.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="etudes/etudes.xhtml" x="11233" y="32" zoom="true"/>
+        <Node id="accueil.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="scolarite/versements_formation.xhtml" x="6146" y="32" zoom="true"/>
+        <Node id="scolarite/scolarite.xhtml" x="1957" y="32" zoom="true"/>
+        <Node id="connexion_test.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="finances/finances.xhtml" x="3995" y="32" zoom="true"/>
+        <Node id="accueil_test.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="administration/administration.xhtml" x="10554" y="32" zoom="true"/>
+        <Node id="encaissements/encaissements.xhtml" x="5395" y="32" zoom="true"/>
+        <Node id="scolarite/inscription.xhtml" x="6535" y="32" zoom="true"/>
+        <Node id="formation/formation.xhtml" x="6854" y="32" zoom="true"/>
+    </Scope>
+    <Scope Scope="Project">
+        <Node id="scolarite/convocation.xhtml" x="9211" y="32" zoom="true"/>
+        <Node id="etudes/gestion_enseignants.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="scolarite/recherche.xhtml" x="3677" y="32" zoom="true"/>
+        <Node id="parametres/systeme_academique.xhtml" x="400" y="1350" zoom="true"/>
+        <Node id="finances/finances.xhtml" x="3995" y="32" zoom="true"/>
+        <Node id="templates/adminTemplate.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="encaissements/sanctions_1.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="parametres/gestion_cycles.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="encaissements/encaissements.xhtml" x="5395" y="32" zoom="true"/>
+        <Node id="scolarite/fiche_de_presence.xhtml" x="11520" y="32" zoom="true"/>
+        <Node id="scolarite/sanctions.xhtml" x="12251" y="32" zoom="true"/>
+        <Node id="scolarite/effectif_de_classes.xhtml" x="4671" y="32" zoom="true"/>
+        <Node id="parametres/elements_frais.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="administration/mentions_bul.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="scolarite/retards_aux_cours.xhtml" x="4302" y="32" zoom="true"/>
+        <Node id="administration/gestion_periodes.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="templateTest/top.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="parametres/gestion_classes.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="etudes/etudes.xhtml" x="11233" y="32" zoom="true"/>
+        <Node id="templates/financeTemplate.xhtml" x="1150" y="1050" zoom="true"/>
+        <Node id="scolarite/versements_formation.xhtml" x="6146" y="32" zoom="true"/>
+        <Node id="scolarite/listes_des_etudiants.xhtml" x="2916" y="32" zoom="true"/>
+        <Node id="templateTest/bottom.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="scolarite/versements_etudiant.xhtml" x="8168" y="32" zoom="true"/>
+        <Node id="scolarite/infirmerie.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="etudes/sanctions.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="etudes/dossiers_enseignants.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="parametres/gestion_formation.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="scolarite/prises_en_charges.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="scolarite/modification_dossier.xhtml" x="546" y="32" zoom="true"/>
+        <Node id="templates/leftTemplate.xhtml" x="2266" y="32" zoom="true"/>
+        <Node id="administration/sanctions.xhtml" x="900" y="1200" zoom="true"/>
+        <Node id="scolarite/fiche_pour_note.xhtml" x="5043" y="32" zoom="true"/>
+        <Node id="templates/formationTemplate.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="templateTest/mon_template.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="accueil.xhtml" x="299" y="32" zoom="true"/>
+        <Node id="scolarite/reinscription_test.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="administration/administration.xhtml" x="10554" y="32" zoom="true"/>
+        <Node id="templates/directionTemplate.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="parametres/regime_scolarite.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="administration/annee_academique.xhtml" x="400" y="1500" zoom="true"/>
+        <Node id="administration/journal_connexion.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="parametres/mention_diplomes.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="scolarite/inscription.xhtml" x="6535" y="32" zoom="true"/>
+        <Node id="scolarite/versements_classe.xhtml" x="9873" y="32" zoom="true"/>
+        <Node id="direction/sanctions.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="administration/systeme_educatif.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="parametres/gestion_filieres.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="scolarite/carte_accses.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="connexion_test.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="etudes/type_matiere.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="templateTest/connexion_template.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="parametres/gestion_diplomes.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="encaissements/versement_periode.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="templates/etudesTemplate.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="connexion.xhtml" x="34" y="32" zoom="true"/>
+        <Node id="parametres/sanctions.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="administration/admin_user.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="templates/header_con.xhtml" x="9539" y="32" zoom="true"/>
+        <Node id="encaissements/versement_date.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="parametres/echeances_scolarite.xhtml" x="650" y="1350" zoom="true"/>
+        <Node id="templates/parametreTemplate.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="templateTest/top_connexion.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="encaissements/versement_jour.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="etudes/matieres.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="parametres/gestion_batiments.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="scolarite/affichage_dossier.xhtml" x="11889" y="32" zoom="true"/>
+        <Node id="scolarite/scolarite.xhtml" x="1957" y="32" zoom="true"/>
+        <Node id="parametres/gestion_scolarite.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="scolarite/fiche_inscription.xhtml" x="8857" y="32" zoom="true"/>
+        <Node id="parametres/gestion_echeances.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="templates/bottom.xhtml" x="12566" y="32" zoom="true"/>
+        <Node id="parametres/gestion_organismes.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="parametres/gestion_banques.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="administration/type_paiement.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="templateTest/left.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="parametres/parametres.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="scolarite/reinscription.xhtml" x="7837" y="32" zoom="true"/>
+        <Node id="scolarite/photos_inscrites.xhtml" x="1602" y="32" zoom="true"/>
+        <Node id="etudes/taux_horaires.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="templates/scolariteTemplate.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="administration/activer_annee.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="etudes/modules.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="scolarite/reduction.xhtml" x="2603" y="32" zoom="true"/>
+        <Node id="templates/header.xhtml" x="10927" y="32" zoom="true"/>
+        <Node id="formation/formation.xhtml" x="6854" y="32" zoom="true"/>
+        <Node id="parametres/gestion_pays.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="scolarite/attestation.xhtml" x="1282" y="32" zoom="true"/>
+        <Node id="parametres/gestion_salles.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="direction/direction.xhtml" x="8548" y="32" zoom="true"/>
+        <Node id="encaissements/affichephoto.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="templates/simpleTemplate.xhtml" x="925" y="32" zoom="true"/>
+        <Node id="scolarite/relances.xhtml" x="10245" y="32" zoom="true"/>
+        <Node id="encaissements/edit_session.xhtml" x="1400" y="900" zoom="true"/>
+        <Node id="accueil_test.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="scolarite/absences_aux_cours.xhtml" x="3294" y="32" zoom="true"/>
+        <Node id="etudes/photos_enseignants.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="administration/info_etablissement.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="templates/caisseTemplate.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="templates/leftRightTemplate.xhtml" x="5780" y="32" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations">
+        <Node id="connexion.xhtml" x="28" y="266" zoom="true"/>
+        <Node id="accueil.xhtml" x="381" y="117" zoom="true"/>
+    </Scope>
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project"/>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

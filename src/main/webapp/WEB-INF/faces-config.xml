@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <!-- Les lois de navigation -->
+   <navigation-rule>
+        <from-view-id>/connexion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Succes</from-outcome>
+            <to-view-id>/accueil.xhtml</to-view-id>
+        </navigation-case> 
+        <navigation-case>
+            <from-outcome>Echec</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>               
+    </navigation-rule>         
+    
+    <navigation-rule>          
+        <!--<from-view-id>/accueil.xhtml</from-view-id>  
+        <from-view-id>/scolarite/versements_formation.xhtml</from-view-id> 
+        <from-view-id>/scolarite/scolarite.xhtml</from-view-id>
+        <from-view-id>/scolarite/inscription.xhtml</from-view-id>
+        <from-view-id>/etudes/etudes.xhtml</from-view-id>  
+        <from-view-id>/direction/direction.xhtml</from-view-id> 
+        <from-view-id>/finances/finances.xhtml</from-view-id>        <from-view-id>/encaissements/encaissements.xhtml</from-view-id>
+        <from-view-id>/administration/administration.xhtml</from-view-id>
+        <from-view-id>/formation/formation.xhtml</from-view-id>-->
+
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <!--<navigation-rule>
+        <from-view-id>/accueil.xhtml</from-view-id>        
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/scolarite/scolarite.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/scolarite/inscription.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>          
+        <from-view-id>/scolarite/versements_formation.xhtml</from-view-id>      
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/formation/formation.xhtml</from-view-id>        
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/etudes/etudes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/direction/direction.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>        
+    
+    <navigation-rule>
+        <from-view-id>/finances/finances.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/encaissements/encaissements.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <from-view-id>/parametres/parametres.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administration/administration.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Deconnexion</from-outcome>
+            <to-view-id>/connexion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>-->
+   
+    
+    <!--<managed-bean>
+        <managed-bean-name>connexionBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.ecolexpert.bean.connexionBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>--> 
+</faces-config>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Domaines_formation</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Domaines de formation</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_domaines_formation">   
+                        <p:growl id="growl_domaines_formation" sticky="false" globalOnly="true"/> 
+                        
+                        <p:panel styleClass="panel_backg" style="padding: 10px 5px 10px 5px; margin: 15px 0px 15px 0px"> 
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel value="Code domaine : *" for="codeDomaine" />
+                                <p:inputText id="codeDomaine" value="#{domaineFormationBean.domaine.codeDomaine}" size="30" maxlength="10" readonly="#{domaineFormationBean.champCleNonAuto}" title="Code du domaine formation" style="height: 18px; border-radius: 4px; font-size: 12px; margin-left: 15px"/>
+                                <p:inputText id="codeDomaineFormationCache" value="#{domaineFormationBean.codeDomaineFormationCache}" size="20" style="visibility: hidden"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:outputLabel value="Libellé domaine : *" for="libelleDomaine" />
+                                <p:inputText id="libelleDomaine" value="#{domaineFormationBean.domaine.libelleDomaine}" size="65" maxlength="50" readonly="#{domaineFormationBean.champLectureSeul}" title="Libellé du domaine formation" style="height: 18px; border-radius: 4px; font-size: 12px; margin-left: 11px"/>                               
+                            </h:panelGrid>                         
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 30px 0 30px 0; padding:15px 0 15px 30px">                                           
+                            <p:commandButton value="Nouveau" action="#{domaineFormationBean.nouveau}" update="form_domaines_formation" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{domaineFormationBean.valider}" disabled="#{domaineFormationBean.btnValiderDesactive}" update="form_domaines_formation" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{domaineFormationBean.preparation_modifier}" disabled="#{domaineFormationBean.btnModifierDesactive}" update="form_domaines_formation" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{domaineFormationBean.supprimer}" disabled="#{domaineFormationBean.btnSupprimerDesactive}" update="form_domaines_formation" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{domaineFormationBean.annuler}" update="form_domaines_formation" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{domaineFormationBean.listDomaineFormation}" var="item" paginator="true" rows="20" paginatorPosition="bottom" scrollable="true" scrollHeight="360" style="margin: 10px 0 10px 0">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Code domaine"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeDomaine}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Libellé domaine"/>
+                                </f:facet>
+                                <h:outputText value="#{item.libelleDomaine}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_domaines_formation" action="#{domaineFormationBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{domaineFormationBean.domaine}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>                 
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

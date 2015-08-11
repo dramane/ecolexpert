@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Régime scolarité</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Régime de scolarité</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_regime_scol">   
+                        <p:growl id="growl_regime_scol" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="2">
+                               <h:outputLabel for="ecole" value="Etablissement :"/>
+                               <p:inputText value="#{inscriptionBean.myInfo.myname}" size="80" readonly="true" style="height: 22px;margin: 5px 0px 0px 28px;border-radius: 4px; font-size: 13px"/> 
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                             <h:panelGrid columns="3">
+                                <h:outputLabel for="codeRegime" value="Code régime : * "/>
+                                <p:inputText id="codeRegime" value="#{regimeBean.regime.codeRegime}" size="40" maxlength="50" title="Le code du régime" readonly="#{regimeBean.champCleNonAuto}" style="height: 18px; margin: 5px 0px 0px 35px;border-radius: 4px;"/>
+                                <p:inputText id="codeRegimeCache" value="#{regimeBean.codeRegimeCache}" size="20" style="visibility: hidden"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="regime" value="Régime : * "/>
+                                <p:inputText id="regime" value="#{regimeBean.regime.regime}" size="91" maxlength="50" readonly="#{regimeBean.champLectureSeul}" style="height: 22px;margin: 5px 0px 0px 55px;border-radius: 4px;"/>
+                                <h:outputLabel for="description" value="Description"/>
+                                <p:inputTextarea id="description" value="#{regimeBean.regime.description}" cols="65" rows="3" maxlength="255" autoResize="false" readonly="#{regimeBean.champLectureSeul}" style="margin: 5px 0px 0px 55px;border-radius: 4px;"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">                                           
+                            <p:commandButton value="Nouveau" action="#{regimeBean.nouveau}" update="form_regime_scol" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{regimeBean.valider}" disabled="#{regimeBean.btnValiderDesactive}" update="form_regime_scol" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{regimeBean.preparation_modifier}" disabled="#{regimeBean.btnModifierDesactive}" update="form_regime_scol" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{regimeBean.supprimer}" disabled="#{regimeBean.btnSupprimerDesactive}" update="form_regime_scol" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{regimeBean.annuler}" update="form_regime_scol" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                   
+                        <p:dataTable value="#{regimeBean.listRegime}" var="item" paginator="true" rows="6" paginatorPosition="bottom" style="margin: 10px 0 10px 0">                            
+                            <p:column width="180">
+                                <f:facet name="header">
+                                    <h:outputText value="Code régime"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeRegime}"/>
+                            </p:column>
+                            <p:column width="200">
+                                <f:facet name="header">
+                                    <h:outputText value="Regime"/>
+                                </f:facet>
+                                <h:outputText value="#{item.regime}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_regime_scol" action="#{regimeBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{regimeBean.regime}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

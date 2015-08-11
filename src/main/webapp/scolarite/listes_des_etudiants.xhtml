@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <!-- Rédefinition de la zone titre du template  -->
+            <ui:define name="titre"> Listes des étudiants </ui:define>
+
+            <ui:define name="left_content">
+                <div class="big_title_with_color">
+                    <h1>Listes des étudiants</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_listEtud">  
+                        <p:growl id="form_listEtud" globalOnly="false"/>
+                        <p:panel styleClass="panel_backg" style="height: 60px; border: 1px solid #99ccff; padding: 15px 0px 0px 5px; margin: 5px 3px 5px 5px">
+                            <h:panelGrid columns="6" style="padding: 0px 5px 0px 5px">
+                                <h:outputLabel value="Année académique :" style="margin: 0px 0px 0px 5px"/>
+                                <p:selectOneMenu value="#{etudiantBean.anneeAca}" style="width: 150px; margin: 0px 10px 0px 0px;border-radius: 4px;">
+                                    <p:ajax listener="#{etudiantBean.onAnneeAcaChange}" update="form_listEtud"/> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{etudiantBean.listAnneeAcademiq}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Cycle / Parcours :" style="margin: 0px 0px 0px 10px"/>
+                                <p:selectOneMenu value="#{etudiantBean.cycle}" style="width: 150px; margin: 0px 10px 0px 0px;border-radius: 4px;">
+                                    <p:ajax listener="#{etudiantBean.onCycleChange}" update="form_listEtud" />
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{etudiantBean.listCodeCycle}"/>     
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Classe / Groupe :" style="margin: 0px 0px 0px 0px"/>
+                                <p:selectOneMenu value="#{etudiantBean.classe}" style="width: 150px; margin: 0px 0px 0px 0px;border-radius: 4px;">
+                                    <p:ajax listener="#{etudiantBean.onClasseChange}" update="form_listEtud"/> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{etudiantBean.listCodeClasse}"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel >
+                        
+                        <p:panel id="panel_listEtud" styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 5px 5px 5px">
+                            <p:dataTable styleClass="panel_backg" value="#{etudiantBean.listViewListEtudiantInsc}" var="item" paginator="true" rows="60" paginatorPosition="bottom" scrollable="true" scrollHeight="500" style="border-radius: 4px">                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nom"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.nometu}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Prénom"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.prenetu}"/>
+                                </p:column>
+                                <p:column width="40">
+                                    <f:facet name="header">
+                                        <h:outputText value="Sexe"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.sexe}"/>
+                                </p:column>                                
+                                <p:column width="40">
+                                    <f:facet name="header">
+                                        <h:outputText value="Cours"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.cours}"/>                                       
+                                </p:column>                               
+                                <p:column width="80">
+                                    <f:facet name="header">
+                                        <h:outputText value="Matricule"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.matricule}"/>
+                                </p:column>   
+                                <p:column width="50">
+                                    <f:facet name="header">
+                                        <h:outputText value="Cycle"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codeCycle}"/>
+                                </p:column> 
+                                <p:column width="50">
+                                    <f:facet name="header">
+                                        <h:outputText value="Niveau"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codeNiveau}"/>
+                                </p:column> 
+                                <p:column width="85">
+                                    <f:facet name="header">
+                                        <h:outputText value="Classe"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codeClasse}"/>
+                                </p:column>   
+                            </p:dataTable>                         
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 15px 0 15px 0; padding:5px 0 5px 25px">
+                            <h:panelGrid columns="1">
+                                <p:commandButton value="Imprimer" action="#{etudiantBean.imprimer}" icon="ui-icon-print" style="width: 120px; height: 28px"/>          
+                            </h:panelGrid>                            
+                        </p:panel>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

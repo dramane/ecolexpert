@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Système academique</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Système academique</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_syst_acad">   
+                        <p:growl id="growl_syst_acad" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="3" cellpadding="3">                                                            
+                                <p:outputLabel value="Système académique : *" for="codeAcademique" />
+                                <p:inputText id="codeAcademique" value="#{systemeAcademiqueBean.systemeAcademiq.codeAcademique}" title="Code système académique" readonly="#{systemeAcademiqueBean.champCleNonAuto}" size="30" maxlength="10" style="height: 18px; border-radius: 4px; margin-left: 10px"/>                                                                
+                                <p:inputText id="codeAcademiqueCache" value="#{systemeAcademiqueBean.codeAcademiqueCache}" size="20" style="visibility: hidden"/>                            
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="4"> 
+                                <p:outputLabel value="Désignation : *" for="designation" />                                                              
+                                <p:inputText id="designation" value="#{systemeAcademiqueBean.systemeAcademiq.designation}" title="Désignation" readonly="#{systemeAcademiqueBean.champLectureSeul}" size="80" style="height: 18px; border-radius: 4px; margin-left: 55px"/>                               
+                                <p:outputLabel value="Description :" for="description" /> 
+                                <p:inputTextarea cols="57" rows="3" autoResize="false" maxlength="255" id="description" value="#{systemeAcademiqueBean.systemeAcademiq.description}" title="Description" readonly="#{systemeAcademiqueBean.champLectureSeul}" style="border-radius: 4px; margin-left: 55px"/>                                                                                                                          
+                            </h:panelGrid>                            
+                        </p:panel>
+                        
+                       <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">                                                            
+                            <p:commandButton value="Nouveau" action="#{systemeAcademiqueBean.nouveau}" update="form_syst_acad" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{systemeAcademiqueBean.valider}" disabled="#{systemeAcademiqueBean.btnValiderDesactive}" update="form_syst_acad" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{systemeAcademiqueBean.preparation_modifier}" disabled="#{systemeAcademiqueBean.btnModifierDesactive}" update="form_syst_acad" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{systemeAcademiqueBean.supprimer}" disabled="#{systemeAcademiqueBean.btnSupprimerDesactive}" update="form_syst_acad" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{systemeAcademiqueBean.annuler}" update="form_syst_acad" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                    
+                        <p:dataTable value="#{systemeAcademiqueBean.listSystemeAcademiq}" var="item" paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="360" style="margin: 10px 0 10px 0">
+                            <p:column width="125">
+                                <f:facet name="header">
+                                    <h:outputText value="Système académique"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeAcademique}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Designation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.designation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>                            
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_syst_acad" action="#{systemeAcademiqueBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{systemeAcademiqueBean.systemeAcademiq}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>        
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

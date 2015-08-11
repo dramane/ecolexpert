@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion échéances étudiant</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des échéances d'un étudiant</h1>
+                </div>
+                
+                <f:view>
+                    <h:form id="form_echeance-etud"> 
+                        <p:growl id="growl_echeance_etud" globalOnly="false"/>     
+                          
+                        <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray; margin: 20px 0 10px 2px">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="matricule" value="N° matricule de l'étudiant : *" title="Saisir le matricule de l'étudiant"/>
+                                <p:inputText id="matricule" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.matricule}" size="37" maxlength="14" title="Saisir le matricule de l'étudiant" style="text-transform: uppercase; margin-left: 5px; height: 18px; border-radius: 4px">                                        
+                                    <p:ajax event="blur" listener="#{echeance_etudiantBean.rechercheEtudiantInscripEcheanceParMatricule()}" update="form_echeance-etud"/>
+                                </p:inputText>                                                                           
+                                <p:commandButton value="Rechercher" icon="ui-icon-extlink" type="button" onclick="PF('dlg2').show();" title="Rechercher un étudiant" style="margin-left: 18px"/>                                            
+
+                                <p:dialog header="Récherche d'un étudiant" widgetVar="dlg2" modal="true">                                            
+                                    <p:outputPanel style="text-align: center">
+                                        <h:outputText value="Entrez le nom : " style="font-size: 13px"/>
+                                        <p:inputText id="globalFilter" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.nomEtPrenom}" placeholder="Ex coulibaly moussa" maxlength="100" size="38" style="text-transform: uppercase; height: 18px; border-radius: 4px">
+                                            <p:ajax event="keyup" update="table_Recherche" listener="#{echeance_etudiantBean.rechercheEtudiantInscripEcheanceParNomEtPrenom()}"/>
+                                        </p:inputText>
+                                    </p:outputPanel>    
+
+                                    <p:dataTable id="table_Recherche" value="#{echeance_etudiantBean.listRechercheEtudiantInscripEcheance}" var="item" paginator="true" rows="20" paginatorPosition="bottom" style="width: 820px; margin-top: 10px">                                                
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nom"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.nometu}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Prénom"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.prenetu}"/>
+                                        </p:column>                                                
+                                        <p:column width="80">
+                                            <f:facet name="header">
+                                                <h:outputText value="Matricule"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.matricule}"/>
+                                        </p:column>                                        
+                                        <p:column width="60">
+                                            <f:facet name="header" >
+                                                <h:outputText value="Année aca" title="Année académique"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.anneeaca}"/>
+                                        </p:column>   
+                                        <p:column width="60">
+                                            <f:facet name="header">
+                                                <h:outputText value="Cycle"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.codeCycle}"/>
+                                        </p:column>
+                                        <p:column width="60">
+                                            <f:facet name="header">
+                                                <h:outputText value="Niveau"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.codeNiveau}"/>
+                                        </p:column>
+                                        <p:column width="80">
+                                            <f:facet name="header">
+                                                <h:outputText value="Classe"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.codeClasse}"/>
+                                        </p:column>                                                                                            
+                                        <p:column style="width:6%;text-align: center">
+                                            <p:commandButton update=":form_echeance-etud" onclick="PF('dlg2').hide();" icon="ui-icon-search" title="Afficher l'étudiant dans le formulare">
+                                                <f:setPropertyActionListener value="#{item}" target="#{echeance_etudiantBean.viewEtudiantInscripEcheance}" />                                 
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>                                     
+                                </p:dialog>
+
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <h:panelGrid columns="2" style="margin: 20px 0">                             
+                            <p:panel style="padding: 15px 15px; border: 1px solid lightgray; background-color: #FAFAFC">                                    
+                                <p:panel id="panel_graphic" style="height: 130px; width: 140px; padding: 0px; margin: 0 auto; border: 1px solid #99ccff" >                                                                             
+                                    <h:graphicImage id="photo" value="/AffichePhotoServlet?numetu=#{echeance_etudiantBean.viewEtudiantInscripEcheance.numetu}" width="120" height="120" alt="Photo de l'étudiant"/>
+                                </p:panel>                                                                                                      
+                            </p:panel>    
+                            
+                            <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray; width: 570px; margin-left: 19px">
+                                <h:panelGrid columns="2" cellspacing="9">
+                                    <h:outputLabel for="nom" value="Nom : "/>
+                                    <p:inputText id="nom" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.nometu}" size="55" readonly="true" style="text-transform: uppercase; margin-left: 20px; margin-right: 10px; height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="prenom" value="Prénom : "/>
+                                    <p:inputText id="prenom" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.prenetu}" size="55" readonly="true" style="text-transform: capitalize; margin-left: 19px; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Date de Naissance:" for="dtnaiss" />
+                                    <p:calendar id="dtnaiss" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.dtnaiss}" disabled="true" pattern="dd-MM-yyyy" mask="true" size="28" style="font-size: 13px; margin-left: 19px"/>                                       
+                                    <p:outputLabel value="Année académique :" for="anneeaca"/>   
+                                    <p:inputText id="anneeaca" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.anneeaca}" size="23" readonly="true" style="font-size: 13px; height: 18px; margin-left: 19px; border-radius: 4px"/>                                                                                                                                                                                                    
+                                </h:panelGrid>                                
+                            </p:panel>                            
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="2">                              
+                            <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 5px 0px 0px 0px">
+                                <h:panelGrid columns="2" cellspacing="7" style="padding: 0 15px 0 0px"> 
+                                    <p:outputLabel value="Cycle:" for="codeCycle" />
+                                    <p:inputText id="codeCycle" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.codeCycle}" size="28" readonly="true" style="font-size: 13px; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Niveau:" for="codeNiveau" />
+                                    <p:inputText id="codeNiveau" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.codeNiveau}" size="28" readonly="true" style="font-size: 13px; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Classe:" for="codeClasse" />
+                                    <p:inputText id="codeClasse" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.codeClasse}" size="28" readonly="true" style="font-size: 13px; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Regime:" for="codeRegime" />                                    
+                                    <p:inputText id="codeRegime" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.codeRegime}" size="28" readonly="true" style="font-size: 13px; height: 18px; border-radius: 4px"/>
+                                        
+                                    <p:outputLabel value="Droit d'inscription" for="drtinscri" />
+                                    <p:inputMask id="drtinscri" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.inscriptionAPaye}" mask="?9999999" size="28" readonly="true" style="font-size: 13px; text-align: right; font-weight: bold; background-color: orange; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Droit de formation :" for="drtforma" />
+                                    <p:inputMask id="drtforma" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.formationAPaye}" mask="?9999999" size="28" readonly="true" style="font-size: 13px; text-align: right; font-weight: bold; background-color: orange; height: 18px; border-radius: 4px"/>                                                                  
+                                    
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel id="pannel_vers" styleClass="panel_backg" style="padding: 5px 15px 5px 5px; margin: 5px 0px 0px 32px">
+                                <h:panelGrid columns="2" cellspacing="8">  
+                                    <p:outputLabel value="Prémier versement :" for="vers1" />
+                                    <p:inputMask id="vers1" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers1}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Deuxième versement :" for="vers2" />
+                                    <p:inputMask id="vers2" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers2}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Troisième versement :" for="vers3" />
+                                    <p:inputMask id="vers3" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers3}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Quatrième versement :" for="vers4" />
+                                    <p:inputMask id="vers4" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers4}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Cinquième versement :" for="vers5" />
+                                    <p:inputMask id="vers5" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers5}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Sixième versement :" for="vers6" />
+                                    <p:inputMask id="vers6" value="#{echeance_etudiantBean.viewEtudiantInscripEcheance.vers6}" mask="?9999999" size="28" style="margin-left: 10px; font-size: 13px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px"/>                            
+                                </h:panelGrid>
+                            </p:panel>
+                                            
+                        </h:panelGrid>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 30px 0 30px 0; padding:15px 0 15px 20px">                                           
+                            <p:commandButton value="Nouveau" action="#{echeance_etudiantBean.nouveau}" update="form_echeance-etud" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{echeance_etudiantBean.valider}" update="form_echeance-etud" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                                                       
+                            <p:commandButton value="Annuler" action="#{echeance_etudiantBean.annuler}" update="form_echeance-etud" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>                                                    
+                    </h:form>
+                </f:view>
+
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Unité d'enseignement</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Unité d'enseignement (UE)</h1>
+                </div>
+                <f:view>
+                    <h:form id="form_ue">   
+                        <p:growl id="growl_ue" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Code UE: *" for="codeUe" />
+                                <p:inputText id="codeUe" value="#{ueBean.ue.codeUe}" title="Code de l'unité d'enseignement" size="50" maxlength="50" readonly="#{ueBean.champCleNonAuto}" style="margin-left: 10px; font-size: 12px; height: 18px; border-radius: 4px;"/>
+                                <p:inputText id="codeUeCache" value="#{ueBean.codeUeCache}" size="30" style="visibility: hidden"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" cellspacing="5">
+                                <p:outputLabel value="Libellé: *" for="libelleUe" />
+                                <p:inputText id="libelleUe" value="#{ueBean.ue.libelleUe}" title="Libellé de l'unité d'enseignement" size="90" maxlength="45" readonly="#{ueBean.champLectureSeul}" style="font-size: 12px; height: 18px; border-radius: 4px;"/>
+                                <p:outputLabel value="Description:" for="descriptionUe" />
+                                <p:inputTextarea id="descriptionUe" value="#{ueBean.ue.descriptionUe}" title="Description de l'unité d'enseignement" cols="65" rows="3" maxlength="70" autoResize="false" readonly="#{ueBean.champLectureSeul}" style="font-size: 12px; border-radius: 4px"/>                                              
+                            </h:panelGrid>     
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                           
+                            <p:commandButton value="Nouveau" action="#{ueBean.nouveau}" update="form_ue" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{ueBean.valider}" disabled="#{ueBean.btnValiderDesactive}" update="form_ue" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{ueBean.preparation_modifier}" disabled="#{ueBean.btnModifierDesactive}" update="form_ue" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{ueBean.supprimer}" disabled="#{ueBean.btnSupprimerDesactive}" update="form_ue" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{ueBean.annuler}" update="form_ue" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{ueBean.listUe}" var="item" rows="15" paginatorPosition="bottom" scrollable="true" scrollHeight="340" style="margin: 10px 0 10px 0">
+                            <p:column width="130">
+                                <f:facet name="header">
+                                    <h:outputText value="Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeUe}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Libelle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.libelleUe}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descriptionUe}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_ue" action="#{ueBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{ueBean.ue}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion types paiement</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des types de paiement</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_type_paiement">
+                        <p:growl id="growl1" sticky="false" globalOnly="true"/>
+                        
+                        <p:panel id="panel_type_paiement" styleClass="panel_backg" style="height: 180px; padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="1" cellpadding="3">
+                                <h:panelGrid columns="3">
+                                    <h:outputLabel for="type_paiement" value="Type de Paiement : " />
+                                    <p:inputText id="type_paiement" value="#{typePaiementBean.typePaiement.typePaiement}" size="45" maxlength="10" readonly="#{typePaiementBean.champLectureSeul}" style="height: 20px; border-radius: 4px; margin: 0 15px 0 15px"/>
+                                    <p:inputText value="#{typePaiementBean.typePaiement.idTypePaiement}" style="visibility: hidden"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="4">
+                                    <h:outputLabel for="code_paiement" value="Code Paiement : "/>
+                                    <p:inputText id="code_paiement" value="#{typePaiementBean.typePaiement.codeTypePaiement}" size="45" maxlength="3" readonly="#{typePaiementBean.champLectureSeul}" style="height: 20px; border-radius: 4px; margin: 0 25px 0 27px"/>                                   
+                                    <h:outputText value="Actif" style="margin-right: 25px"/>
+                                    <p:selectOneMenu id="actif" value="#{typePaiementBean.typePaiement.actif}" disabled="#{typePaiementBean.champLectureSeul}">                     
+                                        <f:selectItem itemLabel="Non" itemValue="Non" />
+                                        <f:selectItem itemLabel="Oui" itemValue="Oui" />
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="description" value="Description : "/>
+                                    <p:inputTextarea id="description" value="#{typePaiementBean.typePaiement.description}" rows="3" cols="75" maxlength="250" readonly="#{typePaiementBean.champLectureSeul}" counterTemplate="{0} characters remaining." autoResize="false" style="border-radius: 4px; margin-left: 47px"/>                                                                                              
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel> 
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 25px 0 25px 0; padding:10px 0 10px 35px">                               
+                            <p:commandButton value="Nouveau" action="#{typePaiementBean.nouveau}" update="form_type_paiement" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{typePaiementBean.valider}" disabled="#{typePaiementBean.btnValiderDesactive}" update="form_type_paiement" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{typePaiementBean.preparation_modifier}" disabled="#{typePaiementBean.btnModifierDesactive}" update="form_type_paiement" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                        
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{typePaiementBean.supprimer}" disabled="#{typePaiementBean.btnSupprimerDesactive}" update="form_type_paiement" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{typePaiementBean.annuler}" update="form_type_paiement" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                                                                             
+                        </p:panel>
+                        
+                        <!-- data table d'affichage des des types de paiement                      
+                        <h1><h:outputText value="List"/></h1>-->
+                        <p:dataTable value="#{typePaiementBean.listeTypePaiement}" var="item" paginator="true" paginatorPosition="bottom" rows="10" scrollable="true" scrollHeight="170" style="margin: 10px 0 10px 0">                                                 
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Code type"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeTypePaiement}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Type Paiement"/>
+                                </f:facet>
+                                <h:outputText value="#{item.typePaiement}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_type_paiement" action="#{typePaiementBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{typePaiementBean.typePaiement}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>          
+                    </h:form>
+                </f:view>                               
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <a href="gestion_formation.xhtml"></a>
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion formations</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des formations</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_formation">   
+                        <p:growl id="growl_formation" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                                                                           
+                            <h:panelGrid columns="2" cellpadding="3">                                       
+                                <p:outputLabel value="Formation : * " for="formation" />
+                                <p:inputText id="formation" value="#{formationBean.formation.formation}" title="Formation" size="80" maxlength="255" readonly="#{formationBean.champLectureSeul}" style="height: 18px; margin-left: 40px; border-radius: 4px"/>
+                                <p:outputLabel value="Description:" for="description" />
+                                <p:inputTextarea id="description" value="#{formationBean.formation.description}" cols="57" rows="3" autoResize="false" title="Description de la formation" maxlength="255" readonly="#{formationBean.champLectureSeul}" style="margin-left: 40px; border-radius: 4px"/>                                
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Code formation : * " for="codeFormation" />
+                                <p:inputText id="codeFormation" value="#{formationBean.formation.codeFormation}" title="Code formation" size="20" maxlength="1" readonly="#{formationBean.champCleNonAuto}" style="height: 18px; margin-left: 14px; border-radius: 4px"/>
+                                <p:inputText id="codeFormationCache" value="#{formationBean.codeFormationCache}" size="20" style="visibility: hidden"/>                            
+                                <p:outputLabel value="Actif:" for="actif" />
+                                <p:selectOneMenu id="actif" value="#{formationBean.formation.actif}" style="width: 80px; margin-left: 14px; border-radius: 4px">
+                                    <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                    <f:selectItem itemLabel="NON" itemValue="NON" />
+                                </p:selectOneMenu>                                                                       
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                           
+                            <p:commandButton value="Nouveau" action="#{formationBean.nouveau}" update="form_formation" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{formationBean.valider}" disabled="#{formationBean.btnValiderDesactive}" update="form_formation" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{formationBean.preparation_modifier}" disabled="#{formationBean.btnModifierDesactive}" update="form_formation" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{formationBean.supprimer}" disabled="#{formationBean.btnSupprimerDesactive}" update="form_formation" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{formationBean.annuler}" update="form_formation" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{formationBean.listFormation}" var="item" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">                            
+                            <p:column width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="Code formation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeFormation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Formation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.formation}"/>
+                            </p:column>                                                        
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column> 
+                            <p:column width="70">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_formation" action="#{formationBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{formationBean.formation}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

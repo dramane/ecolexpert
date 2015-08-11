@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Mention formation</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des mentions de formation</h1>
+                </div>
+                <f:view>
+                    <h:form>
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Code :" style="margin: 0px 0px 0px 0px;"/>
+                                <p:inputText value="" size="45" style="height: 22px; border-radius: 4px; margin: 0px 0px 0px 0px"/>
+                                <h:outputLabel value="Libellé :" style="margin: 0px 0px 0px 0px;"/>
+                                <p:inputText value="" size="90" style="height: 22px; border-radius: 4px;margin: 0px 0px 0px 0px"/>
+                                <h:outputLabel value="Description :" style="margin: 0px 0px 0px 0px;"/>
+                                <p:inputTextarea cols="2" style="width: 470px; height: 54px; border-radius: 4px;margin: 0px 0px 0px 0px"/>
+                                
+                                <h:outputLabel value="Domaine :" style="margin: 0px 0px 0px 0px;"/>
+                                <p:selectOneMenu value="#{mentionFormationBean.domaineFormation.codeDomaine}" style="width: 480px; height: 22px; border-radius: 4px;margin: 0px 0px 0px 0px">
+                                    <f:selectItem itemLabel="Veuillez choisir le domaine de formation" itemValue=""/>
+                                    <f:selectItems value="#{domaineFormationBean.listCodeDomaine}"/>
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel value="Actif :" style="margin: 0px 0px 0px 0px;"/>
+                                <p:selectOneMenu id="actif" style="width: 80px; margin: 0px 0px 0px 0px;border-radius: 4px;">
+                                    <f:selectItem itemLabel="OUI" itemValue="OUI"/>
+                                    <f:selectItem itemLabel="NON" itemValue="NON"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">
+                            <p:commandButton value="Nouveau" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>
+                            <p:commandButton value="Valider" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>
+                            <p:commandButton value="Modifier" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>
+                            <p:commandButton value="Supprimer" icon="ui-icon-trash" style="width: 110px; margin-left: 25px"/>
+                            <p:commandButton value="Annuler" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>
+                        </p:panel>
+
+                        <p:dataTable value="#{mentionFormationBean.listMentionFormation}" var="item" paginator="true" rows="20" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">
+                            <p:column width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="N°"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idMentionFormation}"/>
+                            </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <h:outputText value="Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeMentionFormation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Libelle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.libelleMentionFormation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descriptionMention}"/>
+                            </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <h:outputText value="Domaine"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeDomaine}"/>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

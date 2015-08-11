@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion pays</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des pays</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_gestion_pays">   
+                        <p:growl id="growl_gestion_pays" sticky="false" globalOnly="true"/>      
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                                           		                                
+                            <h:panelGrid columns="2">
+                                <h:panelGrid columns="2" cellpadding="3">
+                                    <h:outputLabel for="pays" value="Pays : "/>
+                                    <p:inputText id="pays" value="#{nationBean.nation.nomFr}" size="45" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="capitale" value="Capitale : "/>
+                                    <p:inputText id="capitale" value="#{nationBean.nation.capitale}" size="45" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="nationalite" value="Nationalité : "/>
+                                    <p:inputText id="nationalite" value="#{nationBean.nation.nationalite}" size="45" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="continent" value="Continent : "/>
+                                    <p:inputText id="continent" value="#{nationBean.nation.continent}" size="45" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                </h:panelGrid>
+                                
+                                <h:panelGrid style=" padding-left: 20px">
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel for="country" value="Country : "/>
+                                        <p:inputText id="country" value="#{nationBean.nation.nomUs}" size="45" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 8px"/>
+                                        <p:inputText value="" size="3" style="height: 18px; border-radius: 4px"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="4">
+                                        <h:outputLabel for="code" value="Code : " />
+                                        <p:inputText id="code" value="#{nationBean.nation.code}" size="18" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 22px"/>                                  
+                                        <h:outputLabel for="slash" value="/ " style=" margin-left: 26px"/>
+                                        <p:inputText id="slash" value="#{nationBean.nation.code2}" size="18" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 26px"/>
+                                    </h:panelGrid>
+                                    
+                                    <h:panelGrid columns="4">
+                                        <h:outputLabel for="indicatif" value="Indicatif : "/>
+                                        <p:inputText id="indicatif" value="#{nationBean.nation.indicatif}" size="18" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 11px"/>                                   
+                                        <h:outputLabel for="zone" value="Zone : " style=" margin-left: 12px"/>
+                                        <p:inputText id="zone" value="#{nationBean.nation.zones}" size="18" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 12px"/>
+                                    </h:panelGrid>
+                                    
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel for="actif" value="Actif : "/>
+                                        <p:inputText id="actif" value="#{nationBean.nation.actif}" size="18" readonly="#{nationBean.champLectureSeul}" style="height: 18px; border-radius: 4px; margin-left: 25px"/>  
+                                        <p:inputText value="#{nationBean.nation.idnation}" size="10" style="height: 18px; border-radius: 4px; margin-left: 25px; visibility: visible"/>  
+                                    </h:panelGrid>
+                                </h:panelGrid>			 
+                            </h:panelGrid>                                                                       
+                        </p:panel> 
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">                                                            
+                            <p:commandButton value="Nouveau" action="#{nationBean.nouveau}" update="form_gestion_pays" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{nationBean.valider}" disabled="#{nationBean.btnValiderDesactive}" update="form_gestion_pays" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{nationBean.preparation_modifier}" disabled="#{nationBean.btnModifierDesactive}" update="form_gestion_pays" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{nationBean.supprimer}" disabled="#{nationBean.btnSupprimerDesactive}" update="form_gestion_pays" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{nationBean.annuler}" update="form_gestion_pays" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <!--affichage de la liste des nations dans une data table                   -->
+                        <p:dataTable value="#{nationBean.listeNation}" var="item" rows="50" paginator="true" paginatorPosition="bottom" scrollable="true" scrollHeight="400" style="margin: 10px 0 10px 0">
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Idnation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idnation}"/>
+                            </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Capitale"/>
+                                </f:facet>
+                                <h:outputText value="#{item.capitale}"/>
+                            </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.code}"/>
+                            </p:column>
+                            <p:column width="30">
+                                <f:facet name="header">
+                                    <h:outputText value="Code2"/>
+                                </f:facet>
+                                <h:outputText value="#{item.code2}"/>
+                            </p:column>                            
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Indicatif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.indicatif}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nationalite"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nationalite}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NomFr"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nomFr}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NomUs"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nomUs}"/>
+                            </p:column>
+                            <p:column width="35">
+                                <f:facet name="header">
+                                    <h:outputText value="Zones"/>
+                                </f:facet>
+                                <h:outputText value="#{item.zones}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_gestion_pays" action="#{nationBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{nationBean.nation}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>                      
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

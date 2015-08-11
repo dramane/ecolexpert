@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Informations de l'établissement</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Informations de l'établissement</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_etablissement">   
+                        <p:growl id="growl_etablissement" globalOnly="true" sticky="false"/> 
+                        <h:panelGrid columns="1">                            
+                            <p:panel style="width: 790px; height: 393px; border-radius: 6px; padding: 5px 2px 5px 2px; margin: 5px 0px 15px 0px">                        
+                                <f:facet name="header">
+                                    Etablissement
+                                </f:facet>
+                                <h:panelGrid columns="2">
+                                    <p:panel styleClass="panel_backg" style="height: 340px; border: 1px solid lightgray">
+                                        <!--<h:panelGrid columns="3" class="rowBottomSpace">
+                                            <h:outputLabel for="categorie" value="Catégorie : "/>
+                                            <p:inputText id="categorie" value="" size="5" style="height: 18px; border-radius: 4px"/>
+                                            <p:inputText value="" size="60" style="height: 18px; border-radius: 4px"/>
+                               
+                                        </h:panelGrid>-->
+                                        <h:panelGrid columns="4" class="rowBottomSpace">
+                                            <h:outputLabel for="codeMyinfo" value="Code : *"/>
+                                            <p:inputText id="codeMyinfo" value="#{etablissementBean.myInfo.codeMyinfo}" size="17" readonly="#{etablissementBean.champCleNonAuto}" style="margin-left: 31px; margin-right: 10px; height: 18px; border-radius: 4px"/>
+                                            <h:outputLabel for="mysigle" value="Abbréviation : *"/>
+                                            <p:inputText id="mysigle" value="#{etablissementBean.myInfo.mysigle}" size="25" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 16px; height: 18px; border-radius: 4px"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" class="rowBottomSpace">
+                                            <h:outputLabel for="myname" value="Nom : *"/>
+                                            <p:inputText id="myname" value="#{etablissementBean.myInfo.myname}" size="69" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 35px; margin-bottom: 2px; height: 18px; border-radius: 4px" />
+                                            <h:outputLabel for="mystatut" value="Statut : "/>
+                                            <p:inputText id="mystatut" value="#{etablissementBean.myInfo.mystatut}" size="69" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 35px; height: 18px; border-radius: 4px"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4" class="rowBottomSpace">
+                                            <h:outputLabel for="mycountry" value="Pays : *"/>
+                                            <p:inputText id="mycountry" value="#{etablissementBean.myInfo.mycountry}" size="25" readonly="#{etablissementBean.champLectureSeul}" style=" margin-left: 6px; margin-right: 13px; margin-bottom: 3px; height: 18px; border-radius: 4px"/>
+                                            <h:outputLabel value="Couleur : "/>
+                                            <!--<p:colorPicker id="Couleur" value="" style="margin-bottom: 3px; height: 18px; border-radius: 4px"/>-->
+                                            
+                                            <h:outputLabel for="myville" value="Ville : *"/>
+                                            <p:inputText id="myville" value="#{etablissementBean.myInfo.myville}" size="25" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 6px; margin-bottom: 3px; height: 18px; border-radius: 4px"/>                                            
+                                            <h:outputLabel for="mypostal" value="Code postal : *"/>
+                                            <p:inputText id="mypostal" value="#{etablissementBean.myInfo.mypostal}" size="20" readonly="#{etablissementBean.champLectureSeul}" style=" margin-left: 0; margin-bottom: 3px; height: 18px; border-radius: 4px"/>
+                                            
+                                            <h:outputLabel for="myphone" value="Téléphone : *"/>
+                                            <p:inputText id="myphone" value="#{etablissementBean.myInfo.myphone}" size="25" readonly="#{etablissementBean.champLectureSeul}" style=" margin-left: 6px; margin-bottom: 3px; height: 18px; border-radius: 4px"/>
+                                            <h:outputLabel for="myfax" value="Fax : "/>
+                                            <p:inputText id="myfax" value="#{etablissementBean.myInfo.myfax}" size="20" readonly="#{etablissementBean.champLectureSeul}" style="margin-bottom: 3px; height: 18px; border-radius: 4px"/>                                                                                                                                
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" cellpadding="4">
+                                            <h:outputLabel for="myadresse" value="Adresse : *"/>
+                                            <p:inputText id="myadresse" value="#{etablissementBean.myInfo.myadresse}" size="69" readonly="#{etablissementBean.champLectureSeul}" style=" margin-left: 10px; height: 18px; border-radius: 4px"/>                                            
+                                            <h:outputLabel for="mymail" value="E-mail : "/>
+                                            <p:inputText id="mymail" value="#{etablissementBean.myInfo.mymail}" size="69" readonly="#{etablissementBean.champLectureSeul}" style=" margin-left: 10px; height: 18px; border-radius: 4px"/>
+                                            <h:outputLabel for="mysite" value="Site : "/>
+                                            <p:inputText id="mysite" value="#{etablissementBean.myInfo.mysite}" size="69" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 10px; height: 18px; border-radius: 4px"/>   
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    
+                                    <p:panel styleClass="panel_backg" style="width: 250px; height: 340px; margin-left: 10px; border: 1px solid lightgray">
+                                        <p:panel>
+                                            <f:facet name="header">
+                                                Logo
+                                            </f:facet>                                            
+                                            <h:panelGrid columns="2">
+                                                <h:panelGrid style="padding: 0 ;border: 1px solid lightgray">
+                                                    <h:graphicImage value="../resources/images/logo_ECG_litle.png" width="65" height="65" alt="Logo"/>           
+                                                </h:panelGrid>
+                                                <p:panel style="border: 1px solid lightgray; padding-left: 5px">
+                                                    <p:commandButton value="Changer" action="dd" style="width: 80px; margin-bottom: 7px" icon="ui-icon-folder-open"/>                                                    
+                                                    <p:commandButton value="Effacer" action="dd" style="width: 80px" icon="ui-icon-close"/>
+                                                </p:panel>                                                
+                                            </h:panelGrid>                                            
+                                        </p:panel>
+                                        
+                                        <p:panel style="margin-top: 20px">
+                                            <f:facet name="header">
+                                                Chronologie
+                                            </f:facet>
+                                            <p:inputText id="codeMyInfoCache" value="#{etablissementBean.codeMyInfoCache}" size="20" style="visibility: hidden"/>
+                                           <!-- <h:panelGrid columns="2">
+                                                <h:outputLabel for="type_chrono" value="Type : "/>
+                                                <p:inputText id="type_chrono" value="" size="36" style="margin-left: 19px; height: 18px; border-radius: 4px"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="4">
+                                                <h:outputLabel for="division" value="Division : " />
+                                                <p:inputText id="division" value="" size="14" style=" margin-left: 6px; margin-right: 6px; height: 18px; border-radius: 4px"/>
+                                                <h:outputLabel for="nbre" value="Nbre : "/>
+                                                <p:inputText id="nbre" value="" size="6" style="margin-left: 6px; height: 18px; border-radius: 4px"/>   
+                                            </h:panelGrid>-->
+                                        </p:panel>                                     
+                                    </p:panel>
+                                </h:panelGrid>
+                            </p:panel>
+                           
+                            <p:panel styleClass="panel_backg">
+                                <f:facet name="header">
+                                    Dirigeants
+                                </f:facet>
+                                <h:panelGrid columns="4" cellspacing="7" style="padding-left: 10px">
+                                    <h:outputLabel for="mymanagerTitle" value="Responsable : *"/>
+                                    <p:inputText id="mymanagerTitle" value="#{etablissementBean.myInfo.mymanagerTitle}" size="46" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 25px; margin-right: 40px; height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="mymanager" value="Nom : *"/>
+                                    <p:inputText id="mymanager" value="#{etablissementBean.myInfo.mymanager}" size="50" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 20px; height: 18px; border-radius: 4px"/>   
+                             
+                                    <h:outputLabel for="mystudytitle" value="Directeur d'étude : " />
+                                    <p:inputText id="mystudytitle" value="#{etablissementBean.myInfo.mystudytitle}" size="46" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 25px; height: 18px; border-radius: 4px"/>
+                                    <h:outputLabel for="mystudymanager" value="Nom : "/>
+                                    <p:inputText id="mystudymanager" value="#{etablissementBean.myInfo.mystudymanager}" size="50" readonly="#{etablissementBean.champLectureSeul}" style="margin-left: 20px; height: 18px; border-radius: 4px"/>                                       
+                                </h:panelGrid>                                    
+                            </p:panel>                                
+                             
+                        </h:panelGrid>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 15px 0 15px 0; padding:10px 0 10px 5px">                                           
+                            <p:commandButton value="Nouveau" action="#{etablissementBean.nouveau}" update="form_etablissement" icon="ui-icon-plus" style="width: 110px;  margin-left: 40px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{etablissementBean.valider}" disabled="#{etablissementBean.btnValiderDesactive}" update="form_etablissement" icon="ui-icon-disk" style="width: 110px;  margin-left: 40px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{etablissementBean.preparation_modifier}" disabled="#{etablissementBean.btnModifierDesactive}" update="form_etablissement" icon="ui-icon-pencil" style="width: 110px; margin-left: 40px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{etablissementBean.supprimer}" disabled="#{etablissementBean.btnSupprimerDesactive}" update="form_etablissement" icon="ui-icon-trash" style="width: 110px; margin-left: 40px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{etablissementBean.annuler}" update="form_etablissement" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{etablissementBean.listMyInfo}" var="item" paginator="true" rows="5" paginatorPosition="bottom" style="margin: 15px 0 10px 0">                                                                                  
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Abréviation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mysigle}"/>
+                            </p:column>
+                            <p:column width="190">
+                                <f:facet name="header">
+                                    <h:outputText value="Etablissement"/>
+                                </f:facet>
+                                <h:outputText value="#{item.myname}"/>
+                            </p:column>                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ville"/>
+                                </f:facet>
+                                <h:outputText value="#{item.myville}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Pays"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mycountry}"/>
+                            </p:column>                                                     
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Téléphone"/>
+                                </f:facet>
+                                <h:outputText value="#{item.myphone}"/>
+                            </p:column>  
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Responsable"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mymanager}"/>
+                            </p:column> 
+                                                
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_etablissement" action="#{etablissementBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{etablissementBean.myInfo}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>                                              
+                    </h:form>                           
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

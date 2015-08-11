@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion bâtiments</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des bâtiments</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_batiment">   
+                        <p:growl id="growl_batiment" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="2">
+                               <h:outputLabel for="etablissement" value="Etablissement :"/>
+                               <p:inputText id="etablissement" value="#{inscriptionBean.myInfo.myname}" size="91" readonly="true" style="height: 22px; margin: 5px 0px 0px 40px; border-radius: 4px; font-size: 13px"/> 
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="codeBatiment" value="Code bâtiment : * "/>
+                                <p:inputText id="codeBatiment" value="#{batimentBean.batiment.codeBatiment}" size="40" maxlength="8" readonly="#{batimentBean.champCleNonAuto}" style="height: 22px; margin: 5px 0px 0px 40px; border-radius: 4px;"/>
+                                <p:inputText id="codeBatimentCache" value="#{batimentBean.codeBatimentCache}" size="20" style="visibility: hidden"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="nomBatiment" value="Nom batiment : * "/>
+                                <p:inputText id="nomBatiment" value="#{batimentBean.batiment.nomBatiment}" size="91" maxlength="50" readonly="#{batimentBean.champLectureSeul}" style="height: 22px; margin: 5px 0px 0px 40px; border-radius: 4px;"/>
+                                <h:outputLabel for="description" value="Description"/>
+                                <p:inputTextarea id="description" value="#{batimentBean.batiment.description}" cols="65" rows="3" maxlength="255" autoResize="false" readonly="#{batimentBean.champLectureSeul}" style="margin: 5px 0px 0px 40px;border-radius: 4px;"/>                                
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">                                           
+                            <p:commandButton value="Nouveau" action="#{batimentBean.nouveau}" update="form_batiment" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{batimentBean.valider}" disabled="#{batimentBean.btnValiderDesactive}" update="form_batiment" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{batimentBean.preparation_modifier}" disabled="#{batimentBean.btnModifierDesactive}" update="form_batiment" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{batimentBean.supprimer}" disabled="#{batimentBean.btnSupprimerDesactive}" update="form_batiment" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{batimentBean.annuler}" update="form_batiment" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <p:dataTable value="#{batimentBean.listBatiment}" var="item" paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CodeBatiment"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeBatiment}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NomBatiment"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nomBatiment}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_batiment" action="#{batimentBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{batimentBean.batiment}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                           
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

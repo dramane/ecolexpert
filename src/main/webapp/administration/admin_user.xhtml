@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion utilisateurs</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des utilisateurs</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="formUser"> 
+                        <p:growl id="formUser" sticky="false" globalOnly="true"/>      
+                        <p:panel style="border-radius: 8px; padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="2">
+                                <p:panel header="UTILISATEUR" styleClass="panel_backg" style="height: 250px">                                
+                                    <h:panelGrid columns="2" cellspacing="5">                                                                                                              
+                                        <p:outputLabel value="Nom :" for="nomUtilisateur" />
+                                        <p:inputText id="nomUtilisateur" value="#{utilisateurBean.user.nom}" title="Nom utilisateur" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>                                                                                
+                                        <p:outputLabel value="Prénom:" for="prenomUtilisateur" />
+                                        <p:inputText id="prenomUtilisateur" value="#{utilisateurBean.user.prenom}" title="Prénom utilisateur" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>
+                                        <p:outputLabel value="E-mail:" for="emailUtilisateur" />
+                                        <p:inputText id="emailUtilisateur" value="#{utilisateurBean.user.email}" title="E-mail" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>
+                                        <p:outputLabel value="Login:" for="login" />
+                                        <p:inputText id="login" value="#{utilisateurBean.user.login}" title="Login" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>
+                                        <p:outputLabel value="Mot de passe:" for="motDePasse" />                                       
+                                        <p:inputText id="motDePasse" value="#{utilisateurBean.user.motDePasse}" title="Mot de passe" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>
+                                        <p:outputLabel value="Confirmation passe:" for="motDePasse2" />
+                                        <p:inputText id="motDePasse2" value="#{utilisateurBean.user.motDePasse}" title="Mot de passe" readonly="#{utilisateurBean.champLectureSeul}" size="45" style="height: 18px; border-radius: 4px"/>                                                                                                                                                                                                      
+                                    </h:panelGrid>     
+                                    <!--<p:messages id="message" for="motDePasse"/>  -->
+                                </p:panel>    
+
+                                <h:panelGrid columns="2" style="padding-left: 20px">
+                                    <p:panel  header="PROFILS" styleClass="panel_backg" style="height: 250px; width: 350px; text-align: center" >          
+                                        <p:selectManyCheckbox id="profil" value="#{utilisateurBean.selectedProfils}" layout="grid" columns="3" style="padding: 5px; text-align: justify">                                            
+                                            <f:selectItems value="#{utilisateurBean.listProfil}"/>                                           
+                                        </p:selectManyCheckbox>
+                                        <br/>          
+                                        <p:inputText id="idUtilisateur2" value="#{utilisateurBean.user.idUtilisateur}" title="Id utilisateur" style="visibility: hidden" size="8"/>                                  
+                                    </p:panel>
+                                </h:panelGrid>
+                            </h:panelGrid>                            
+                        </p:panel>                           
+                                
+                        <p:panel styleClass="panel_backg" style="margin: 15px 0 15px 0; padding:10px 0 10px 25px">                                                            
+                            <p:commandButton value="Nouveau" action="#{utilisateurBean.nouveau}" update="formUser" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{utilisateurBean.valider}" disabled="#{utilisateurBean.btnValiderDesactive}" update="formUser" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{utilisateurBean.preparation_modifier}" disabled="#{utilisateurBean.btnModifierDesactive}" update="formUser" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{utilisateurBean.supprimer}" disabled="#{utilisateurBean.btnSupprimerDesactive}" update="formUser" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{utilisateurBean.annuler}" update="formUser" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <!-- DataTable affichant la liste des utilisateurs-->                                                
+                        <p:dataTable value="#{utilisateurBean.listUser}" var="item" paginator="true" rows="15" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nom"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nom}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Prénom"/>
+                                </f:facet>
+                                <h:outputText value="#{item.prenom}"/>
+                            </p:column>                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Login"/>
+                                </f:facet>
+                                <h:outputText value="#{item.login}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Mot de passe"/>
+                                </f:facet>
+                                <h:outputText value="#{item.motDePasse}"/>
+                            </p:column> 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="E-mail"/>
+                                </f:facet>
+                                <h:outputText value="#{item.email}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":formUser" action="#{utilisateurBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{utilisateurBean.user}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>                        
+                       
+                    </h:form>
+                </f:view>               
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

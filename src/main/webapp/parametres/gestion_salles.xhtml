@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion classes</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des classes</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_salle">   
+                        <p:growl id="growl_salle" sticky="false"/> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                            
+                            <h:panelGrid columns="2">
+                               <h:outputLabel for="etablissement" value="Etablissement :"/>
+                               <p:inputText id="etablissement" value="#{inscriptionBean.myInfo.myname}"  size="91" readonly="true" style="height: 22px; margin: 5px 0px 0px 25px; border-radius: 4px; font-size: 13px"/> 
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="1">                                                             
+                                <h:panelGrid columns="3">
+                                    <h:outputLabel for="nomSalle" value="Salle : * "/>
+                                    <p:inputText id="nomSalle" value="#{salleBean.salle.nomSalle}" size="40" maxlength="50" title="Exemple : Salle A1..." readonly="#{salleBean.champCleNonAuto}" style="height: 18px; margin: 5px 0px 0px 60px;border-radius: 4px;"/>
+                                    <p:inputText id="codeSalleCache" value="#{salleBean.codeSalleCache}" size="20" style="visibility: hidden"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="capacite" value="Capacité : * "/>
+                                    <p:inputText id="capacite" value="#{salleBean.salle.capacite}" size="40" maxlength="3" title="Capacité d'accueil en chiffre..." readonly="#{salleBean.champLectureSeul}" style="height: 18px; margin: 5px 0px 0px 40px; border-radius: 4px;">
+                                        <f:validateLongRange/>                                       
+                                    </p:inputText>
+                                    <h:outputLabel for="codeBatiment" value="Bâtiment : * "/>
+                                    <p:selectOneMenu id="codeBatiment" value="#{salleBean.salle.codeBatiment}" style="width: 225px;margin: 5px 0px 0px 40px;border-radius: 4px;">
+                                        <f:selectItem itemLabel="Veuillez selectionner le bâtiment" itemValue=""/>
+                                        <f:selectItems value="#{batimentBean.listCodeBatiment}"/>
+                                    </p:selectOneMenu>                                                                      
+                                </h:panelGrid>
+                                
+                                <h:panelGrid columns="3">
+                                    <h:outputLabel for="" value="Actif :"/>
+                                    <p:selectOneMenu id="actif" value="#{salleBean.salle.actif}" style="width: 80px; margin: 0px 10px 0px 69px; border-radius: 4px;">                                        
+                                        <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                        <f:selectItem itemLabel="NON" itemValue="NON" />
+                                    </p:selectOneMenu>
+                                    <!--<p:inputText value="#{salleBean.salle.idSalle}" style="visibility: visible"/>-->
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 40px">
+                            <p:commandButton value="Nouveau" action="#{salleBean.nouveau}" update="form_salle" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{salleBean.valider}" disabled="#{salleBean.btnValiderDesactive}" update="form_salle" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{salleBean.preparation_modifier}" disabled="#{salleBean.btnModifierDesactive}" update="form_salle" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{salleBean.supprimer}" disabled="#{salleBean.btnSupprimerDesactive}" update="form_salle" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{salleBean.annuler}" update="form_salle" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+          
+                        <p:dataTable value="#{salleBean.listSalle}" var="item" paginator="true" rows="15" paginatorPosition="bottom" scrollable="true" scrollHeight="300" style="margin: 10px 0 10px 0">                             
+                            <p:column width="120">
+                                <f:facet name="header">
+                                    <h:outputText value="Nom de la salle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nomSalle}"/>
+                            </p:column>                                                                                 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Bâtiment"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeBatiment}"/>
+                            </p:column>
+                            <p:column width="50">
+                                <f:facet name="header">
+                                    <h:outputText value="Capacité"/>
+                                </f:facet>
+                                <h:outputText value="#{item.capacite}"/>
+                            </p:column>  
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column> 
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_salle" action="#{salleBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{salleBean.salle}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Paramètres</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Paramètres</h1>
+                </div>
+
+                <f:view>
+                    <h:form>                                    
+                        <h:panelGrid columns="2" style="margin-top: 0">                                         
+                            <p:panel style="height: 236px; margin-right: 30px">                        
+                                <f:facet name="header">
+                                    Calenrier
+                                </f:facet>                        
+                                <p:calendar mode="inline" />                                                                              
+                            </p:panel>
+
+                            <div id="cont_b69c38e828d619bfaa7d28cb992baea9">
+                                <span id="h_b69c38e828d619bfaa7d28cb992baea9"><a id="a_b69c38e828d619bfaa7d28cb992baea9" href="http://www.tameteo.com/meteo_Abidjan-Afrique-Cote+dIvoire-Abidjan-DIAP-1-8908.html" target="_blank" rel="nofollow" style="color:#656565;font-family:Arial;font-size:14px;">Meteo Abidjan</a></span>
+                                <script type="text/javascript" src="http://www.tameteo.com/wid_loader/b69c38e828d619bfaa7d28cb992baea9"></script>
+                            </div>                      
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="1" width="800px"> 
+                            <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                        
+                                <f:facet name="header">
+                                    Evénements
+                                </f:facet>                        
+                                <h3 style="color: #036fab">Evénements du jour : </h3>
+                                <p> </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                
+                                <h3 style="color: #aece5b"> Devoirs sur table du jour : </h3>
+                                <p> </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </p:panel>
+
+                            <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                        
+                                <f:facet name="header">
+                                    Actualités de l'établissement
+                                </f:facet>                        
+                                
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </p:panel>
+                        </h:panelGrid>                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

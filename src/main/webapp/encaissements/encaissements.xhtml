@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Encaissement</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Encaissement</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_encaissement" target="blank"> 
+                        <p:growl id="growl" globalOnly="false"/>              
+                        <p:panel id="panel1" style="border: 1px solid lightgray; margin: 10px 0; padding: 10px 0">  
+                            <h:panelGrid columns="2" >
+                                <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray">
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel for="matricule" value="N° matricule de l'étudiant : *" title="Saisir le matricule de l'étudiant"/>
+                                        <p:inputText id="matricule" value="#{encaissementBean.viewEtudiantInscription.matricule}" size="37" maxlength="14" title="Saisir le matricule de l'étudiant" style="text-transform: uppercase; margin-left: 5px; height: 18px; border-radius: 4px">                                        
+                                            <p:ajax event="blur" listener="#{encaissementBean.rechercheEtudiantParMatricule}" update="form_encaissement"/>
+                                        </p:inputText>                                                                           
+                                        <p:commandButton value="Rechercher" icon="ui-icon-extlink" type="button" onclick="PF('dlg2').show();" title="Rechercher un étudiant" style="margin-left: 18px"/>                                            
+                                        
+                                        <p:dialog header="Récherche d'un étudiant" widgetVar="dlg2" modal="true">                                            
+                                            <p:outputPanel style="text-align: center">
+                                                <h:outputText value="Entrez le nom : " style="font-size: 13px"/>
+                                                <p:inputText id="globalFilter" value="#{encaissementBean.viewEtudiantInscription.nomEtPrenom}" placeholder="Ex coulibaly moussa" maxlength="100" size="38" style="text-transform: uppercase; height: 18px; border-radius: 4px">
+                                                    <p:ajax event="keyup" update="table_Recherche" listener="#{encaissementBean.rechercheEtudiantInscriptionParNomEtPrenom}"/>
+                                                </p:inputText>
+                                            </p:outputPanel>    
+                                           
+                                            <p:dataTable id="table_Recherche" value="#{encaissementBean.listRechercheEtudiantInscription}" var="item" paginator="true" rows="20" paginatorPosition="bottom" style="width: 820px; margin-top: 10px">                                                
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nom"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.nometu}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Prénom"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.prenetu}"/>
+                                                </p:column>                                                
+                                                <p:column width="80">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Matricule"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.matricule}"/>
+                                                </p:column>
+                                                <p:column width="90">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Date inscription"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.dtinscri}">
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+                                                <p:column width="60">
+                                                    <f:facet name="header" >
+                                                        <h:outputText value="Année aca" title="Année académique"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.anneeaca}"/>
+                                                </p:column>   
+                                                <p:column width="60">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cycle"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.codeCycle}"/>
+                                                </p:column>
+                                                <p:column width="60">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Niveau"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.codeNiveau}"/>
+                                                </p:column>
+                                                <p:column width="80">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Classe"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.codeClasse}"/>
+                                                </p:column>                                                                                            
+                                                <p:column style="width:6%;text-align: center">
+                                                    <p:commandButton update=":form_encaissement" onclick="PF('dlg2').hide();" icon="ui-icon-search" title="Afficher l'étudiant dans le formulare">
+                                                        <f:setPropertyActionListener value="#{item}" target="#{encaissementBean.viewEtudiantInscription}" />                                 
+                                                    </p:commandButton>
+                                                </p:column>
+                                            </p:dataTable>                                     
+
+                                        </p:dialog>
+                                        
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray; margin-left: 5px">
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel for="num_recu" value=" Reçu N° : "/>
+                                        <p:inputText id="num_recu" value="" size="26" readonly="true" style="margin-left: 2px; height: 18px; border-radius: 4px"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                                
+                                <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray">
+                                    <h:panelGrid columns="4">
+                                        <h:outputLabel for="nom" value="Nom : "/>
+                                        <p:inputText id="nom" value="#{encaissementBean.viewEtudiantInscription.nometu}" size="22" readonly="true" style="text-transform: uppercase; margin-left: 12px; margin-right: 10px; height: 18px; border-radius: 4px"/>
+                                        <h:outputLabel for="prenom" value="Prénom : "/>
+                                        <p:inputText id="prenom" value="#{encaissementBean.viewEtudiantInscription.prenetu}" size="39" readonly="true" style="text-transform: capitalize; margin-left: 10px; height: 18px; border-radius: 4px"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="6">
+                                        <h:outputLabel for="classe" value="Classe : "/>
+                                        <p:inputText id="classe" value="#{encaissementBean.viewEtudiantInscription.codeClasse}" size="22" readonly="true" style="margin-right: 9px; height: 18px; border-radius: 4px"/>
+                                        <h:outputLabel for="cycle" value="Cycle : " />
+                                        <p:inputText id="cycle" value="#{encaissementBean.viewEtudiantInscription.codeCycle}" size="20" readonly="true" style="margin-left: 20px; height: 18px; border-radius: 4px"/>
+                                        <h:outputText  value="Cours du : " style="margin-left: 5px"/>
+                                        <h:outputText value="#{encaissementBean.viewEtudiantInscription.cours}" style="color: blue; font-weight: bold; margin-left: 5px; height: 18px; border-radius: 4px"/>
+                                    </h:panelGrid> 
+                                </p:panel>
+                                <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray;  margin-left: 5px; height: 80px">  
+                                    <f:facet name="header">
+                                        Montant *
+                                    </f:facet>
+                                    <p:inputMask id="mont_versement" value="#{encaissementBean.versement.montant}" size="30" mask="?9999999" style="font-size: 13px; margin-top: 6px; text-align: right; font-weight: bold; background-color: #aece5b; height: 18px; border-radius: 4px">  
+                                        <p:ajax event="blur" update="mont_a_payer"/>
+                                        <f:convertNumber/>
+                                    </p:inputMask>
+                                </p:panel>                                                                                               
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="3" style="margin-top: 10px">
+                                <p:panel style="width: 250px; border: 1px solid lightgray; background-color: #FAFAFC">                                    
+                                    <p:panel id="panel_graphic" style="height: 130px; width: 140px; padding: 0px; margin-left: 40px; margin-bottom: 7px; border: 1px solid #99ccff" >                                                                             
+                                        <h:graphicImage id="photo" value="/AffichePhotoServlet?numetu=#{encaissementBean.viewEtudiantInscription.numetu}" width="120" height="120" alt="Photo de l'étudiant"/>
+                                    </p:panel>                                                                      
+                                    <h:outputText value="Résumé" style="margin-left: 80px; font-weight: bold"/>
+                                    <p:separator/>
+                                    <h:panelGrid columns="2" cellspacing="3">
+                                        <h:outputText value="Scolarité : "/>
+                                        <p:inputText id="scolariteAPaye" value="#{encaissementBean.viewEtudiantInscription.scolariteAPaye} F" size="16" readonly="true" style="margin-left: 10px; color: blue; text-align: right; font-weight: bold; font-size: 13px; height: 18px; border-radius: 4px"/>
+                                        <h:outputText value="Somme payée : "/>
+                                        <p:inputText id="som_payee" value="#{encaissementBean.viewEtudiantInscription.scolaritePaye} F" size="16" readonly="true" style="margin-left: 10px; color: green; text-align: right; font-weight: bold; font-size: 13px; height: 18px; border-radius: 4px"/>
+                                        <h:outputText value="Reste à payer : "/>
+                                        <p:inputText id="reste_a_payer" value="#{encaissementBean.viewEtudiantInscription.scolariteAPaye - encaissementBean.viewEtudiantInscription.scolaritePaye} F" size="16" readonly="true" style="margin-left: 10px; color: red; text-align: right; font-weight: bold; font-size: 13px; height: 18px; border-radius: 4px"/>
+                                    </h:panelGrid>
+                                </p:panel>    
+                             
+                                <p:panel style="width: 238px; height: 270px; border: 1px solid lightgray; margin-left: 5px; padding-top: 10px">
+                                    <p:panel style="border: 1px solid lightgray; background-color: #FAFAFC">                        
+                                        <f:facet name="header">
+                                            Date de versement *
+                                        </f:facet>
+                                        <p:calendar id="date_versement" value="#{encaissementBean.versement.dateReglement}" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" effect="slide" required="false" requiredMessage="#{msg['caisse.validation.required.date_vers']}">    
+                                            <!--<f:convertDateTime pattern="yyyy/MM/JJ"/>-->                                         
+                                        </p:calendar>
+                                    </p:panel>
+                                    <p:panel style="background-color: #FAFAFC; border: 1px solid lightgray; margin-top: 20px">                        
+                                        <f:facet name="header">
+                                            Mode de versement
+                                        </f:facet>                                       
+                                        <p:selectOneRadio id="mode_versement" value="#{encaissementBean.mode_versement}" layout="grid" columns="1">
+                                            <f:selectItem itemLabel="Espèce" itemValue="Espèce"/>
+                                            <f:selectItem itemLabel="Chèque" itemValue="Chèque" /> 
+                                            <f:selectItem itemLabel="Virement" itemValue="Virement"/>
+                                            <f:selectItem itemLabel="Banque" itemValue="Banque" />
+                                            <p:ajax update="panel_reglement" listener="#{encaissementBean.modeVersementValueChanged}"/>
+                                        </p:selectOneRadio>                                        
+                                    </p:panel>
+                                </p:panel>
+                                
+                                <p:panel id="panel_reglement" style="height: 263px; border: 1px solid lightgray; margin-left: 3px; padding-top: 9px; padding-bottom: 10px">
+                                    <p:panel style="border: 1px solid lightgray; background-color: #FAFAFC">  
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Règlement pour : * "/>
+                                            <p:selectOneMenu id="pays" value="#{encaissementBean.versement.motifReglement}" style="width: 130px; margin-left: 5px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{elementFraisBean.listCodeElementFrais}"/>                                             
+                                            </p:selectOneMenu> 
+                                        </h:panelGrid>
+                                    </p:panel> 
+                                    
+                                    <p:panel id="panel_reglement_espece" rendered="#{encaissementBean.visibilite_reglement_espece}" style="background-color: #FAFAFC; border: 1px solid lightgray; margin-top: 15px">                        
+                                        <f:facet name="header">
+                                            Règlement espèce
+                                        </f:facet>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Montant à payer : "/>
+                                            <p:inputText id="mont_a_payer" value="#{encaissementBean.montApayer = encaissementBean.versement.montant}" size="16" readonly="true" disabled="#{!encaissementBean.visibilite_reglement_espece}" style="text-align: right; font-weight: bold; font-size: 13px; margin-top: 10px; height: 18px; border-radius: 4px"/>                                                  
+                                            <h:outputLabel for="mont_recu" value="Montant reçu : * "/>
+                                            <p:inputMask id="mont_recu" value="#{encaissementBean.montRecu}" size="16" mask="?9999999" disabled="#{!encaissementBean.visibilite_reglement_espece}" style="text-align: right; font-weight: bold; font-size: 13px; margin-top: 15px; margin-bottom: 15px; background-color: orange; height: 18px; border-radius: 4px">
+                                                <p:ajax event="blur" update="mont_a_rendre" listener="#{encaissementBean.calculMontantArendre}"/>
+                                                <p:ajax event="blur" update="growl"/>
+                                                <f:convertNumber/>
+                                            </p:inputMask>
+                                            <h:outputText value="Montant à rendre : "/>
+                                            <p:inputText id="mont_a_rendre" value="#{encaissementBean.montArendre} F" size="16" readonly="true" disabled="#{!encaissementBean.visibilite_reglement_espece}" style="text-align: right; font-weight: bold; font-size: 13px; margin-top: 10px; height: 18px; border-radius: 4px"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    
+                                    <p:panel id="panel_reglement_cheq" rendered="#{encaissementBean.visibilite_reglement_cheq}" style="background-color: #FAFAFC; border: 1px solid lightgray; margin-top: 10px">                        
+                                        <f:facet name="header">
+                                            Règlement cheque
+                                        </f:facet>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Banque : * "/>
+                                            <p:selectOneMenu id="banque_cheq" value="#{encaissementBean.versement.banque}" disabled="#{!encaissementBean.visibilite_reglement_cheq}" required="true" requiredMessage="Veuillez sélectionner la banque d'émission du chèque" style="width: 130px; font-weight: bold"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{banqueBean.getlistSigleBanq()}"/>                                                
+                                            </p:selectOneMenu> 
+                                            <h:outputText  value="Date du cheque : * "/>
+                                            <p:calendar id="date_cheq" value="#{encaissementBean.versement.dateChq}" pattern="dd-MM-yyyy" mask="true" showOn="button" effect="slide" size="15" disabled="#{!encaissementBean.visibilite_reglement_cheq}" required="true" requiredMessage="Veuillez saisir la date d'émission du chèque" style="font-weight: bold">    
+                                                <!--<f:convertDateTime pattern="yyyy/MM/JJ"/>-->                                               
+                                            </p:calendar>                    
+                                            <h:outputLabel for="numero_cheq" value="Numero : * "/>                                                
+                                            <p:inputMask id="numero_cheq" value="#{encaissementBean.versement.numChq}" mask="?9999999" disabled="#{!encaissementBean.visibilite_reglement_cheq}" required="true" requiredMessage="Veuillez saisir le numéro du chèque" style="text-align: right ;font-weight: bold; height: 18px; border-radius: 4px"/>                                                 
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="1" style="margin-top: 8px">
+                                            <h:outputLabel for="emetteur_cheq" value="Emetteur du cheque : * "/>
+                                            <p:inputText id="emetteur_cheq" value="#{encaissementBean.versement.emetteur}" size="37" disabled="#{!encaissementBean.visibilite_reglement_cheq}" required="true" requiredMessage="Veuillez saisir le nom de l'émetteur du chèque du chèque" style="font-weight: bold; height: 18px; border-radius: 4px"/>                           
+                                        </h:panelGrid>                                     
+                                    </p:panel>
+                                    
+                                    <p:panel id="panel_reglement_virement" rendered="#{encaissementBean.visibilite_reglement_virement}" style="background-color: #FAFAFC; border: 1px solid lightgray; margin-top: 10px">                        
+                                        <f:facet name="header">
+                                                Règlement virement
+                                        </f:facet>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Banque de depart :"/>
+                                            <p:selectOneMenu id="banque_depart" value="#{encaissementBean.versement.bqDepartVirem}" disabled="#{!encaissementBean.visibilite_reglement_virement}" required="true" requiredMessage="Veuillez sélectionner la banque de départ du virement" style="width: 130px; font-weight: bold"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{banqueBean.getlistSigleBanq()}"/>                                                
+                                            </p:selectOneMenu> 
+                                            <h:outputText value="Banque d'arriver :"/>
+                                            <p:selectOneMenu id="banque_arriver" value="#{encaissementBean.versement.bqArriveVirem}" disabled="#{!encaissementBean.visibilite_reglement_virement}" required="true" requiredMessage="Veuillez sélectionner la banque d'arriver du virement" style="width: 130px; font-weight: bold"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{banqueBean.getlistSigleBanq()}"/>                                                
+                                            </p:selectOneMenu>   
+                                            <h:outputLabel for="numero_virement" value="N° Virement : * "/>                                                
+                                            <p:inputMask id="numero_virement" value="#{encaissementBean.versement.numVersViremBq}" mask="?*****************" disabled="#{!encaissementBean.visibilite_reglement_virement}" required="true" requiredMessage="Veuillez saisir le numéro du virement" style="font-weight: bold; height: 18px; border-radius: 4px"/>                   
+                                        </h:panelGrid> 
+                                        <h:panelGrid columns="1" style="margin-top: 8px">
+                                            <h:outputLabel for="emetteur_virement" value="Effectué par : * "/>
+                                            <p:inputText id="emetteur_virement" value="#{encaissementBean.versement.emetteur}" size="37" disabled="#{!encaissementBean.visibilite_reglement_virement}" required="true" requiredMessage="Veuillez saisir le nom de l'émetteur du virement" style="font-weight: bold; height: 18px; border-radius: 4px"/>                                           
+                                        </h:panelGrid>  
+                                    </p:panel>
+
+                                    <p:panel id="panel_reglement_banq" rendered="#{encaissementBean.visibilite_reglement_banq}" style="background-color: #FAFAFC; border: 1px solid lightgray; margin-top: 10px">                        
+                                        <f:facet name="header">
+                                            Règlement bancaire
+                                        </f:facet>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Banque : * "/>
+                                            <p:selectOneMenu id="banque_virement" value="#{encaissementBean.versement.banque}" disabled="#{!encaissementBean.visibilite_reglement_banq}" required="true" requiredMessage="Veuillez sélectionner la banque du versement" style="width: 130px; font-weight: bold"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{banqueBean.getlistSigleBanq()}"/>                                                
+                                            </p:selectOneMenu> 
+                                            <h:outputLabel for="numero_versement" value="N° Versement : * "/>                                                
+                                            <p:inputMask id="numero_versement" value="#{encaissementBean.versement.numVersViremBq}" mask="?*****************" disabled="#{!encaissementBean.visibilite_reglement_banq}" required="true" requiredMessage="Veuillez saisir le numéro du versement" style="font-weight: bold; height: 18px; border-radius: 4px"/>                                                                                             
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="1" style="margin-top: 8px">
+                                            <h:outputLabel for="emetteur_regle_banque" value="Effectué par : * "/>
+                                            <p:inputText id="emetteur_regle_banque" value="#{encaissementBean.versement.emetteur}" size="37" disabled="#{!encaissementBean.visibilite_reglement_banq}" required="true" requiredMessage="Veuillez saisir le nom de l'émetteur du versement" style="font-weight: bold; height: 18px; border-radius: 4px"/>                                           
+                                        </h:panelGrid>                                                                          
+                                    </p:panel>
+                                    
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>   
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 30px 0 30px 0; padding:15px 0 15px 25px">
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:commandButton value="Enregistrer" update="form_encaissement" action="#{encaissementBean.creer}" icon="ui-icon-disk" style="width: 100px; height: 28px"/>        
+                                <h:commandButton action="#{encaissementBean.afficheRecu}" immediate="true" rendered="#{encaissementBean.versement.matriEtu != null ? true : false}" image="/resources/images/bouton_imprimer.png"/>                                 
+                                <p:button outcome="encaissements" value="Nouveau" title="réinitialiser le formulaire pour un nouvel enregistrement" icon="ui-icon-plus" style="width: 100px; height: 28px"/>
+                            </h:panelGrid>                            
+                        </p:panel>
+                    </h:form>
+                </f:view>             
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

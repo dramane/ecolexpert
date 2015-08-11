@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Système educatif</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Système educatif</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_syst_educ">   
+                        <p:growl id="growl_syst_educ" sticky="false" globalOnly="true"/> 
+                        <p:panel styleClass="panel_backg" style="height: 200px; padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                                                              
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Code éducatif : * " for="codeEducatif" />
+                                <p:inputText id="codeEducatif" value="#{systemeEducatifBean.systemeEducatif.codeEducatif}" title="Code système éducatif" readonly="#{systemeEducatifBean.champCleNonAuto}" size="45" maxlength="3" style="height: 18px; border-radius: 4px"/>
+                                <p:inputText id="codeEducatifCache" value="#{systemeEducatifBean.codeEducatifCache}" size="20" style="visibility: hidden"/>                                                            
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="3">
+                                <p:outputLabel value="Libellé : * " for="libelle" />
+                                <p:inputText id="libelle" value="#{systemeEducatifBean.systemeEducatif.libelle}" title="Libellé" readonly="#{systemeEducatifBean.champLectureSeul}" size="45" maxlength="12" style="height: 18px; margin-left: 11px; border-radius: 4px"/>
+                                <p:outputLabel value="Description : * " for="description" />
+                                <p:inputTextarea rows="3" cols="32" autoResize="false" maxlength="50" id="description" value="#{systemeEducatifBean.systemeEducatif.description}" title="Description" readonly="#{systemeEducatifBean.champLectureSeul}" style="margin-left: 11px; border-radius: 4px"/>                                 
+                                <p:outputLabel value="Actif :" for="actif" />                                        
+                                <p:selectOneMenu id="actif" value="#{systemeEducatifBean.systemeEducatif.actif}" style="width: 80px; margin-left: 11px; border-radius: 4px">                                       
+                                    <f:selectItem itemLabel="OUI" itemValue="OUI"/>
+                                    <f:selectItem itemLabel="NON" itemValue="NON"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>                           
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 35px">                                                            
+                            <p:commandButton value="Nouveau" action="#{systemeEducatifBean.nouveau}" update="form_syst_educ" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{systemeEducatifBean.valider}" disabled="#{systemeEducatifBean.btnValiderDesactive}" update="form_syst_educ" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{systemeEducatifBean.preparation_modifier}" disabled="#{systemeEducatifBean.btnModifierDesactive}" update="form_syst_educ" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{systemeEducatifBean.supprimer}" disabled="#{systemeEducatifBean.btnSupprimerDesactive}" update="form_syst_educ" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{systemeEducatifBean.annuler}" update="form_syst_educ" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <!-- DataTable affichant la liste des Système éducatif-->                             
+                        <p:dataTable value="#{systemeEducatifBean.listSystEducatif}" var="item" paginator="true" rows="4" paginatorPosition="bottom" scrollable="true" scrollHeight="170" style="margin: 10px 0 10px 0">
+                            <p:column width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="Code éducatif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codeEducatif}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Libellé"/>
+                                </f:facet>
+                                <h:outputText value="#{item.libelle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Actif"/>
+                                </f:facet>
+                                <h:outputText value="#{item.actif}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_syst_educ" action="#{systemeEducatifBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{systemeEducatifBean.systemeEducatif}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>        
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

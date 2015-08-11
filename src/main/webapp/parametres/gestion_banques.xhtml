@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Gestion banques</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Gestion des banques et établissements financiers</h1>
+                </div>
+
+                <f:view>
+                    <h:form id="form_banque">   
+                        <p:growl id="growl_banque" sticky="false" globalOnly="true"/>      
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">                          
+                            <h:panelGrid columns="2">
+                                <h:panelGrid columns="2" cellpadding="3">                                                                           
+                                    <p:outputLabel value="Code :" for="cdBq" />
+                                    <p:inputText id="cdBq" value="#{banqueBean.banque.cdBq}" title="Code" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Banque :" for="banque" />
+                                    <p:inputText id="banque" value="#{banqueBean.banque.banque}" title="Banque" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Sigle :" for="sigleBq" />
+                                    <p:inputText id="sigleBq" value="#{banqueBean.banque.sigleBq}" title="Sigle banque" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Adrs postale :" for="postalBq" />
+                                    <p:inputText id="postalBq" value="#{banqueBean.banque.postalBq}" title="Adresse postale" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Adresse :" for="adresseBq" />
+                                    <p:inputTextarea rows="4" cols="32" id="adresseBq" value="#{banqueBean.banque.adresseBq}" title="Adresse" readonly="#{banqueBean.champLectureSeul}" style="border-radius: 4px"/>                                                                                                        
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" cellpadding="4" style="padding-left: 60px; padding-top: 5px">                                                                       
+                                    <p:outputLabel value="Téléphone :" for="phoneBq" />
+                                    <p:inputText id="phoneBq" value="#{banqueBean.banque.phoneBq}" title="Téléphone" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Fax :" for="faxBq" />
+                                    <p:inputText id="faxBq" value="#{banqueBean.banque.faxBq}" title="Fax" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Telex :" for="telex" />
+                                    <p:inputText id="telex" value="#{banqueBean.banque.telex}" title="Telex" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="E-mail :" for="emailBq" />
+                                    <p:inputText id="emailBq" value="#{banqueBean.banque.emailBq}" title="E-mail" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <p:outputLabel value="Site web :" for="webSite" />
+                                    <p:inputText id="webSite" value="#{banqueBean.banque.webSite}" title="Site web" size="45" readonly="#{banqueBean.champLectureSeul}" style="height: 18px; border-radius: 4px"/>
+                                    <!--<p:outputLabel value="Idbanque:" for="idbanque" />-->
+                                    <p:inputText id="idbanque" value="#{banqueBean.banque.idbanque}" title="Id banque" style="visibility: hidden"/>                       
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">                                                            
+                            <p:commandButton value="Nouveau" action="#{banqueBean.nouveau}" update="form_banque" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px"/>                                
+                            <p:commandButton id="btValider" value="Valider" action="#{banqueBean.valider}" disabled="#{banqueBean.btnValiderDesactive}" update="form_banque" icon="ui-icon-disk" style="width: 110px;  margin-left: 25px"/>                           
+                            <p:commandButton id="btModifier" value="Modifier" action="#{banqueBean.preparation_modifier}" disabled="#{banqueBean.btnModifierDesactive}" update="form_banque" icon="ui-icon-pencil" style="width: 110px; margin-left: 25px"/>                                                       
+                            <p:commandButton id="btSupprimer" value="Supprimer" action="#{banqueBean.supprimer}" disabled="#{banqueBean.btnSupprimerDesactive}" update="form_banque" icon="ui-icon-trash" style="width: 110px; margin-left: 25px">
+                                <p:confirm header="Confirmation" message="Etes-vous sûr de supprimer cet enregistrement?" icon="ui-icon-alert" />                                                       
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />                                   
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:commandButton value="Annuler" action="#{banqueBean.annuler}" update="form_banque" icon="ui-icon-close" style="width: 110px; margin-left: 25px"/>                                                                                                                                     
+                        </p:panel>
+                        
+                        <!-- DataTable affichant la liste des banques-->     
+                        <p:dataTable value="#{banqueBean.listeBanque}" var="item" paginator="true" rows="20" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">                   
+                            <p:column width="65">
+                                <f:facet name="header">
+                                    <h:outputText value="Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cdBq}"/>
+                            </p:column>
+                            <!--<p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Banque"/>
+                                </f:facet>
+                                <h:outputText value="#{item.banque}"/>
+                            </p:column>-->
+                            <p:column width="80">
+                                <f:facet name="header">
+                                    <h:outputText value="Sigle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sigleBq}"/>
+                            </p:column>
+                            <!--<p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="AdresseBq"/>
+                                </f:facet>
+                                <h:outputText value="#{item.adresseBq}"/>
+                            </p:column>-->
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Boîte Postale"/>
+                                </f:facet>
+                                <h:outputText value="#{item.postalBq}"/>
+                            </p:column>
+                            <p:column width="85">
+                                <f:facet name="header">
+                                    <h:outputText value="Téléphone"/>
+                                </f:facet>
+                                <h:outputText value="#{item.phoneBq}"/>
+                            </p:column>
+                            <p:column width="70">
+                                <f:facet name="header">
+                                    <h:outputText value="Fax"/>
+                                </f:facet>
+                                <h:outputText value="#{item.faxBq}"/>
+                            </p:column>
+                            <!--<p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Telex"/>
+                                </f:facet>
+                                <h:outputText value="#{item.telex}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="EmailBq"/>
+                                </f:facet>
+                                <h:outputText value="#{item.emailBq}"/>
+                            </p:column>-->
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Site Web"/>
+                                </f:facet>
+                                <h:outputText value="#{item.webSite}"/>
+                            </p:column>
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton update=":form_banque" action="#{banqueBean.selectionner}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{item}" target="#{banqueBean.banque}" />                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>            
+                    </h:form>
+                </f:view>  
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

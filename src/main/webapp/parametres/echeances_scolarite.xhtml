@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Echeances scolarités</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Echeances des scolarités</h1>
+                </div>
+                
+                <f:view>
+                    <h:form> 
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            
+                            <h:panelGrid columns="4">
+                                <h:outputLabel value="Etablissement :"/>
+                                <p:inputText size="40" style="margin: 3px 0px 0px 20px; height: 18px; border-radius: 4px;"/>
+                                <h:outputLabel value="Année académique :" style="margin: 0px 0px 0px 25px;"/>
+                                <p:inputText size="40" style="margin: 3px 0px 0px 20px;height: 18px; border-radius: 4px;"/>
+                            
+                                <h:outputLabel value="Cycle :"/>
+                                <p:selectOneMenu style="height: 20px;width: 225px;margin: 5px 25px 0px 20px;border-radius: 4px;">
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Classe :" style="margin: 0px 0px 0px 25px;"/>
+                                <p:selectOneMenu style="height: 20px;width: 225px;margin: 5px 0px 0px 20px;border-radius: 4px;">
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel value="Scolarité :"/>
+                                <p:inputText size="40" style="margin: 5px 0px 0px 20px;height: 18px; border-radius: 4px;"/>
+                                <h:outputLabel value="Echeance :" style="padding-left: 25px"/>
+                                <p:selectOneMenu style="height: 20px;width: 225px;margin: 5px 0px 0px 20px;border-radius: 4px;">
+                                </p:selectOneMenu>
+                          
+                                <h:outputLabel value="Montant :"/>
+                                <p:inputText value="" size="40" style="margin: 5px 0px 0px 20px; height: 18px; border-radius: 4px;"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">
+                            <p:commandButton value="Nouveau" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px;"/>
+                            <p:commandButton value="Valider" icon="ui-icon-disk" style="width: 110px; margin-left: 30px;"/>
+                            <p:commandButton value="Modifier" icon="ui-icon-pencil" style="width: 110px; margin-left: 30px;"/>
+                            <p:commandButton value="Supprimer" icon="ui-icon-trash" style="width: 110px; margin-left: 30px;"/>
+                            <p:commandButton value="Annuler" icon="ui-icon-close" style="width: 110px; margin-left: 30px;"/>
+                        </p:panel>
+                        
+                        <p:dataTable var="item" paginator="true" rows="30" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">
+                        
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

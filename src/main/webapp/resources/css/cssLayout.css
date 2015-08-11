@@ -1,0 +1,74 @@
+#container{
+    width: 1055px;
+    background-color: #FFFFFF;
+    margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+}
+
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 5px 0px;
+}
+
+#bottom {
+    position: relative;
+    background-image:linear-gradient(#aece5b, white);
+    /*background-image: linear-gradient(#c2dfef, white);*/
+    padding: 15px;
+    margin: 10px 0px 0px 0px;
+    /*clear: both;*/
+}
+
+#left {
+    float: left;
+    /*background-color: #d6e3b2;*/
+    padding: 5px;
+    margin-bottom: 5px;
+    width: 195px;
+    border-top: solid 10px #aece5b;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 170px;
+    border-top: solid 10px #aece5b;
+}
+
+.center_content {
+    position: relative;
+    height: 600px;
+    background-color: #FFFFFF;
+    padding: 5px;
+    border-top: solid 10px #aece5b;
+}
+
+.left_content {
+    background-color: #FFFFFF;
+    padding: 5px;
+    margin-left: 215px;
+    border-top: solid 10px rgb(147,176,218);
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/mon_template.xhtml">
+
+            <ui:define name="titre">Elements frais</ui:define>
+
+            <ui:define name="left_content">
+                <!--grand titre colore-->                
+                <div class="big_title_with_color">
+                    <h1>Elements des frais à payer par les éleves/étudiants</h1>
+                </div>
+
+                <f:view>
+                    <h:form>   
+                        <p:growl id="formUser" sticky="false" globalOnly="true"/>   
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="2">
+                               <h:outputLabel for="ecole" value="Etablissement :"/>
+                               <p:inputText value="" size="91" style="height: 22px;margin: 5px 0px 0px 35px;border-radius: 4px;"/> 
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="padding: 5px 5px 5px 5px; margin: 15px 0px 15px 0px">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="abreviation" value="Abréviation :"/>
+                                <p:inputText value="" size="91" style="height: 22px;margin: 5px 0px 0px 40px;border-radius: 4px;"/>
+                                <h:outputLabel value="Nom :"/>
+                                <p:inputText size="91" style="height: 22px;margin: 5px 0px 0px 40px;border-radius: 4px;"/>
+                                <h:outputLabel value="Mode :"/>
+                                <p:selectOneMenu style="width: 200px;margin: 5px 0px 0px 40px;"></p:selectOneMenu>
+                                <h:outputLabel value="Actif :"/>
+                                <p:selectOneMenu style="width: 200px;margin: 5px 0px 0px 40px;border-radius: 4px;"></p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:panel styleClass="panel_backg" style="margin: 20px 0 20px 0; padding:10px 0 10px 30px">
+                            <p:commandButton value="Nouveau" icon="ui-icon-plus" style="width: 110px;  margin-left: 20px;"/>
+                            <p:commandButton value="Valider" icon="ui-icon-disk" style="width: 110px; margin-left: 20px;"/>
+                            <p:commandButton value="Modifier" icon="ui-icon-pencil" style="width: 110px; margin-left: 20px;"/>
+                            <p:commandButton value="Supprimer" icon="ui-icon-trash" style="width: 110px; margin-left: 20px;"/>
+                            <p:commandButton value="Annuler" icon="ui-icon-close" style="width: 110px; margin-left: 20px;"/>
+                        </p:panel>
+                        <p:dataTable var="item" rows="30" paginatorPosition="bottom" scrollable="true" scrollHeight="250" style="margin: 10px 0 10px 0">
+                        </p:dataTable>
+                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

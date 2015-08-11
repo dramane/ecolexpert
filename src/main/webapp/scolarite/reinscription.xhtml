@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+  
+
+    <ui:composition template="/template/mon_template.xhtml">
+
+        <ui:define name="titre">Réinscription</ui:define>
+
+        <ui:define name="left_content">
+            
+            <!--grand titre colore-->                 
+            <div class="big_title_with_color">
+                <h1>Réinscription</h1>
+            </div>
+            
+            <f:view>
+                <h:form id="form_reinscription">
+                    <p:growl id="growl_reinscription" globalOnly="false"/> 
+
+                    <p:panel styleClass="panel_backg" style="padding: 0 0 0 5px; margin: 15px 0 10px 0">           
+                        <h:panelGrid columns="4">
+                           <h:outputLabel for="myname" value="Etablissement :"/>
+                           <p:inputText id="myname" value="#{reinscriptionBean.myInfo.myname}" readonly="true" size="50" style="height: 18px;margin: 5px 0px 0px 20px; border-radius: 4px; font-size: 13px"/>
+                           <h:outputLabel for="anneeaca" value="Année académique :" style="margin: 5px 0px 0px 20px;"/>
+                           <p:inputText id="anneeaca" value="#{reinscriptionBean.anneeAcademiq.anneeaca}" size="22" readonly="true" style="height: 18px;margin: 5px 0px 0px 20px; border-radius: 4px; font-size: 13px"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid columns="3">                            
+                        <p:panel id="panel_encienne_info" styleClass="panel_backg" style="width: 285px; height: 340px; border: 1px solid #99ccff; margin: 15px 5px 10px 0">                        
+                            <f:facet name="header">
+                                Anciennes informations
+                            </f:facet>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="matricule" value="Ancien matricule : *" title="Saisir l'ancien matricule de l'étuiant"/>                                    
+                                <p:inputText id="matricule" value="#{reinscriptionBean.viewEtudiantInscription.matricule}" size="25" maxlength="14" title="Saisir l'ancien matricule de l'étuiant" style="text-transform: uppercase; height: 18px; border-radius: 4px">                                        
+                                    <p:ajax event="blur" listener="#{reinscriptionBean.rechercheEtudiantParMatricule}" update="form_reinscription"/>
+                                </p:inputText>  
+
+                                <h:outputText value="Cycle : " />
+                                <p:inputText id="cycl" value="#{reinscriptionBean.viewEtudiantInscription.codeCycle}" size="25" readonly="true" style="height: 18px; border-radius: 4px"/>
+
+                                <h:outputText value="Classe : " title="Classe"/>
+                                <p:inputText id="classe" value="#{reinscriptionBean.viewEtudiantInscription.codeClasse}" size="25" readonly="true" style="height: 18px; border-radius: 4px"/>
+
+                                <h:outputText value="Moyenne obtenue : " title="Moyenne obtenue"/>
+                                <p:inputText id="moyObtenue" value="" size="25" readonly="true" style="height: 18px; border-radius: 4px"/>
+                            </h:panelGrid>
+
+                            <br/>
+
+                            <h:panelGrid columns="1">
+                                <h:outputText  value="Decision du conseil de classe : "/>
+                                <p:inputText id="decisionConseilClass" value="" size="44" readonly="true" style="height: 18px; border-radius: 4px"/>
+                            </h:panelGrid>                     
+
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Scolarité : "/>
+                                <p:inputText id="scolarite" value="#{reinscriptionBean.viewEtudiantInscription.scolariteAPaye} F" size="19" readonly="true" style="color: blue; text-align: right; font-weight: bold; font-size: 13px; margin-left: 12px; height: 18px; border-radius: 4px"/>
+
+                                <h:outputText value="Montant payé : "/>
+                                <p:inputText id="montantPaye" value="#{reinscriptionBean.viewEtudiantInscription.scolaritePaye} F" size="19" readonly="true" style="color: green; text-align: right; font-weight: bold; font-size: 13px; margin-left: 12px; height: 18px; border-radius: 4px"/>
+
+                                <h:outputText value="Reste à payé : "/>
+                                <p:inputText id="reste_a_payer" value="#{reinscriptionBean.viewEtudiantInscription.scolariteAPaye - reinscriptionBean.viewEtudiantInscription.scolaritePaye} F" size="19" readonly="true" style="color: red; text-align: right; margin-left: 12px; font-weight: bold; font-size: 13px; height: 18px; border-radius: 4px"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <h:panelGrid columns="1">
+                            <p:commandButton value="Rechercher" icon="ui-icon-extlink" type="button" onclick="PF('dlg2').show();" title="Rechercher un étudiant" style="margin-left: 40px; margin-bottom: 10px"/>                                            
+
+                            <p:dialog header="Récherche d'un étudiant" widgetVar="dlg2" modal="true" >                                            
+                                <p:outputPanel style="text-align: center">
+                                    <h:outputText value="Entrez le nom : " style="font-size: 13px"/>
+                                    <p:inputText id="globalFilter" value="#{reinscriptionBean.viewEtudiantInscription.nomEtPrenom}" placeholder="Ex coulibaly moussa" maxlength="100" size="38" style="text-transform: uppercase; height: 18px; border-radius: 4px">
+                                        <p:ajax event="keyup" update="table_Recherche" listener="#{reinscriptionBean.rechercheEtudiantInscriptionParNomEtPrenom}"/>
+                                    </p:inputText>
+                                </p:outputPanel>    
+
+                                <p:dataTable id="table_Recherche" value="#{reinscriptionBean.listRechercheEtudiantInscription}" var="item" paginator="true" rows="20" paginatorPosition="bottom" style="width: 820px; margin-top: 10px">                                                
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nometu}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Prénom"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.prenetu}"/>
+                                    </p:column>                                                
+                                    <p:column width="80">
+                                        <f:facet name="header">
+                                            <h:outputText value="Matricule"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.matricule}"/>
+                                    </p:column>
+                                    <p:column width="90">
+                                        <f:facet name="header">
+                                            <h:outputText value="Date inscription"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dtinscri}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column width="60">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cycle"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codeCycle}"/>
+                                    </p:column>
+                                    <p:column width="60">
+                                        <f:facet name="header">
+                                            <h:outputText value="Niveau"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codeNiveau}"/>
+                                    </p:column>
+                                    <p:column width="80">
+                                        <f:facet name="header">
+                                            <h:outputText value="Classe"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codeClasse}"/>
+                                    </p:column>
+
+                                    <p:column style="width:6%;text-align: center">
+                                        <p:commandButton update=":form_reinscription" actionListener="#{reinscriptionBean.selectEtudiantInscription(item)}" onclick="PF('dlg2').hide();" icon="ui-icon-search" title="Afficher l'étudiant dans le formulaire">
+                                            <f:setPropertyActionListener value="#{item}" target="#{reinscriptionBean.viewEtudiantInscription}" />                                 
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>                                     
+
+                            </p:dialog>
+
+                            <p:panel id="panel_encienne_photo" style="width: 175px; height: 280px; background-color: #FAFAFC; border: 1px solid #99ccff">                        
+                                <f:facet name="header">
+                                    Photo étudiant
+                                </f:facet>
+                                <h:panelGrid columns="1">
+                                    <p:panel style="height: 145px; width: 145px; padding-left: 0px; border: 1px solid #99ccff" >                                     
+                                        <!--<h:graphicImage value="/resources/images/Dramane.jpg" style="" width="130" height="135" alt="Photo de l'étudiant"/> -->
+                                        <h:graphicImage id="photo" value="/AffichePhotoServlet?numetu=#{reinscriptionBean.viewEtudiantInscription.numetu}" width="130" height="135" alt="Photo de l'étudiant"/>
+                                    </p:panel>
+                                    <br/>                                    
+                                    <p:inputText id="nometu" value="#{reinscriptionBean.viewEtudiantInscription.nometu}" size="25" readonly="true" style="height: 18px; border-radius: 4px; margin-bottom: 3px"/>
+                                    <p:inputText id="prenetu" value="#{reinscriptionBean.viewEtudiantInscription.prenetu}" size="25" readonly="true" style="height: 18px; border-radius: 4px"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+
+                        <p:panel id="panel_nouvel_info" styleClass="panel_backg" style="width: 290px; height: 340px; border: 1px solid #99ccff; margin: 15px 0px 10px 5px ">                        
+                            <f:facet name="header">
+                                Nouvelles informations
+                            </f:facet>
+
+                            <h:panelGrid columns="2" cellpadding="2">
+                                <h:outputText value="Nouveau matricule : "/>
+                                <p:inputText id="nouveau_matricule" value="#{reinscriptionBean.inscription.matricule}" size="25" readonly="true" style="height: 18px; border-radius: 4px; margin-bottom: 3px"/>
+
+                                <h:outputText value="Date d'inscription : *" title="Date d'inscription"/>
+                                <p:calendar id="dtinscri" value="#{reinscriptionBean.inscription.dtinscri}" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" effect="slide" size="20" style="margin-bottom: 3px"/>                                                 
+
+                                <h:outputText value="Cours : *" style=""/>
+                                <p:selectOneMenu id="Cours" value="#{reinscriptionBean.inscription.cours}" style="width: 150px"> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItem itemLabel="Jour" itemValue="Jour"/>
+                                    <f:selectItem itemLabel="Soir" itemValue="Soir"/>                                                                                                                            
+                                </p:selectOneMenu>                                                                                                                                                                                                                
+
+                                <h:outputText value="Système : *" title="Système académiqie"/>
+                                <p:selectOneMenu id="codeAcademique" value="#{reinscriptionBean.inscription.codeAcademique}" style="width: 150px; margin-bottom: 3px"> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{systemeAcademiqueBean.listCodeSystemeAcademiq}"/>                                                                                                                                   
+                                </p:selectOneMenu> 
+
+                                <h:outputText value="Domaine : " title="Domaine de formation"/>
+                                <p:selectOneMenu id="codeDomaine-for" value="#{reinscriptionBean.inscription.codeDomaine}" style="width: 150px; margin-bottom: 3px"> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{domaineFormationBean.listCodeDomaine}"/>                                                                                                                            
+                                </p:selectOneMenu> 
+
+                                <h:outputLabel value="Parcours/Cycle : *"/>
+                                <p:selectOneMenu id="codeCycle" value="#{reinscriptionBean.inscription.codeCycle}" style="width: 150px; margin-bottom: 3px">                                                
+                                    <p:ajax listener="#{reinscriptionBean.onCycleChange}" update="codeNiveau" />
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{cycleBean.listCodeCycle}"/>                                                
+                                </p:selectOneMenu> 
+
+                                <h:outputLabel for="codeNiveau" value="Niveau : * "/>
+                                <p:selectOneMenu id="codeNiveau" value="#{reinscriptionBean.inscription.codeNiveau}" style="width: 150px; margin-bottom: 3px">                                                
+                                    <p:ajax listener="#{reinscriptionBean.onNiveauChange}" update="nouveau_matricule"/>
+                                    <p:ajax listener="#{reinscriptionBean.onNiveauChange}" update="codeClasse"/>                                        
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{reinscriptionBean.listCodeNiveau}"/>                                                      
+                                </p:selectOneMenu>   
+
+                                <h:outputLabel value="Classe : *" />
+                                <p:selectOneMenu id="codeClasse" value="#{reinscriptionBean.inscription.codeClasse}" style="width: 150px; margin-bottom: 3px">
+                                    <p:ajax listener="#{reinscriptionBean.onClasseChange}" update="codeRegime"/>
+                                    <p:ajax listener="#{reinscriptionBean.onClasseChange}" update="panel_montant"/> 
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{reinscriptionBean.listCodeClasse}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Regime : *"/>
+                                <p:selectOneMenu id="codeRegime" editable="false" value="#{reinscriptionBean.inscription.codeRegime}" style="width: 150px; margin-bottom: 3px">                                                                                        
+                                    <p:ajax listener="#{reinscriptionBean.onRegimeChange}" update="panel_montant"/>
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{regimeBean.listCodeRegime}"/>
+                                </p:selectOneMenu>                                                                        
+                            </h:panelGrid>
+                        </p:panel>                                
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="1" style="width: 802px; margin-top: 10px">
+                        <p:tabView styleClass="panel_backg" id="panel_montant">
+                            <p:tab title="Montant"> 
+                                <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey"> 
+                                    <h:panelGrid columns="1">                                   
+                                        <h:panelGrid columns="4" style="text-align: center;">
+                                            <h:panelGrid columns="1" style="padding-right: 40px">
+                                                <h:outputText value="Inscription : " title="Inscription"/>
+                                                <p:inputText id="montInscription" value="#{reinscriptionBean.montInscription}" size="22" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="padding-right: 40px">
+                                                <h:outputLabel for="montFormation" value="Formation : " title="Formation"/>
+                                                <p:inputText id="montFormation" value="#{reinscriptionBean.montFormation}"  size="22" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="padding-right: 40px">
+                                                <h:outputLabel for="montScolarté" value="Scolarité : " title="Scolarité"/>
+                                                <p:inputText id="montScolarté" value="#{reinscriptionBean.montScolarte}"  size="22" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>                                    
+                                            </h:panelGrid>
+
+                                            <h:panelGrid columns="1" style="padding-right: 5px">
+                                                <h:outputLabel for="autreMontant" value="Autres frais : " title="Autres frais"/>
+                                                <p:inputText id="autreMontant" value="#{reinscriptionBean.inscription.somAutresFraisAPaye = reinscriptionBean.autreMontant}"  size="22" readonly="true" style="height: 18px; border-radius: 4px; text-align: right; font-weight: bold; background-color: orange; font-size: 12px"/>
+                                            </h:panelGrid>                                                                                
+                                        </h:panelGrid>                             
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+                            
+                            <p:tab title="Situation sociale">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">  
+                                        <p:outputLabel value="SITUATION SOCIALE" style="color: orange; font-size: 13px"/>
+                                        <h:panelGrid columns="2" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="statut_origine_ressource" value="Origine des resources :" title="Statut de la personne qui paie la scolarité de l'étudiant"/>                                                                                                                                                            
+                                            <p:selectOneMenu id="statut_origine_ressource" value="#{reinscriptionBean.viewEtudiantInscription.origineRessource}" style="width: 225px; margin-right: 30px; font-size: 12px"> 
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItem itemLabel="Autre" itemValue="Autre"/>
+                                                <f:selectItem itemLabel="Bourse" itemValue="Bourse"/>
+                                                <f:selectItem itemLabel="Etudiant" itemValue="Etudiant"/> 
+                                                <f:selectItem itemLabel="Frère" itemValue="Frere"/>       
+                                                <f:selectItem itemLabel="Mère" itemValue="Mere"/>  
+                                                <f:selectItem itemLabel="Oncle" itemValue="Oncle"/> 
+                                                <f:selectItem itemLabel="Père" itemValue="Pere"/>
+                                                <f:selectItem itemLabel="Soeur" itemValue="Soeur"/>
+                                                <f:selectItem itemLabel="Tante" itemValue="Tante"/>                                                                                                                                                                                           
+                                            </p:selectOneMenu>                                                                                
+                                        </h:panelGrid>
+                                        
+                                        <h:panelGrid columns="1" style="padding: 15px 0 5px 0">
+                                            <h:outputText  value="Activité professionnelle exercée par l'étudiant pendant toute l'année académique :" style="color: orange; font-size: 13px; font-style: italic"/>                                            
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" cellpadding="2">
+                                            <h:outputLabel for="profession_etudiant" value="Profession : "/>
+                                            <p:inputText id="profession_etudiant" value="#{reinscriptionBean.viewEtudiantInscription.professionEtu}" size="60" maxlength="45" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="activite_etudiant" value="Activité : " />
+                                            <p:inputText id="activite_etudiant" value="#{reinscriptionBean.viewEtudiantInscription.activiteEtu}" size="60" maxlength="45" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+
+                                            <h:outputLabel for="domaine__activite_etudiant" value="Domaine d'activité : " />
+                                            <p:inputText id="domaine__activite_etudiant" value="#{reinscriptionBean.viewEtudiantInscription.domaineAtiviteEtu}" size="30" maxlength="25" style="height: 16px; margin-left: 20px; border-radius: 4px; font-size: 12px"/>
+                                        </h:panelGrid>
+                                    </p:panel>                                                                                                                         
+                                </p:tab>
+                                
+                                <p:tab title="Divers">
+                                    <p:panel styleClass="panel_backg" style="margin: 5px 0px; border: 1px solid lightgrey">                                          
+                                        <p:outputLabel value="RENSEIGNEMENTS DIVERS" style="color: orange; font-size: 13px"/>                                                                                
+                                        
+                                        <h:panelGrid columns="2" cellpadding="2" styleClass="panel_backg" style="margin-top: 10px">
+                                            <h:outputLabel for="lv_obligatoire" value="Langue vivante obligatoire choisie :"/>                                          
+                                            <p:selectOneMenu id="lv_obligatoire" value="#{reinscriptionBean.viewEtudiantInscription.langueVivante}" style="width: 200px; font-size: 12px">
+                                                <f:selectItem itemLabel="" itemValue="" />
+                                                <f:selectItems value="#{langueBean.listCodeLangues}" />         
+                                            </p:selectOneMenu>
+                                            
+                                            <h:outputLabel for="demandeaur_emploi" value="Demandeur d'emploi :"/>                                                                             
+                                            <p:selectOneRadio id="demandeaur_emploi" value="#{reinscriptionBean.viewEtudiantInscription.demandeurEmploi}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                <f:selectItem itemLabel="NON" itemValue="NON" />                                       
+                                            </p:selectOneRadio>
+                                            
+                                            <h:outputLabel for="interruption_etude" value="Interruption des études :" />                                                                             
+                                            <h:panelGrid columns="4">
+                                                <p:selectOneRadio id="interruption_etude" value="#{reinscriptionBean.viewEtudiantInscription.interruptionEtude}" style="font-size: 12px; margin-left: -3px; margin-right: 20px">
+                                                    <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                    <f:selectItem itemLabel="NON" itemValue="NON" />                                       
+                                                </p:selectOneRadio>
+                                                <h:outputLabel for="duree_interruption_etude" value="Durée de l'interruption :"/>
+                                                <p:inputMask id="duree_interruption_etude" mask="?999" value="#{reinscriptionBean.viewEtudiantInscription.dureeInterruption}" size="10" style="height: 16px; border-radius: 4px; font-size: 12px; text-align: right"/>
+                                                <h:outputText value="Mois"/>
+                                            </h:panelGrid>
+                                            
+                                            <h:outputLabel for="sportif_haut_niveau" value="Sportif de haut niveau :"/>                                                                             
+                                            <p:selectOneRadio id="sportif_haut_niveau" value="#{reinscriptionBean.viewEtudiantInscription.sportifHautNivo}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="OUI" itemValue="OUI" />
+                                                <f:selectItem itemLabel="NON" itemValue="NON"/>                                       
+                                            </p:selectOneRadio>
+                                            
+                                             <h:outputLabel for="service_national" value="Service national :"/>                                                                             
+                                             <p:selectOneRadio id="service_national" value="#{reinscriptionBean.viewEtudiantInscription.serviceNational}" style="font-size: 12px">
+                                                <f:selectItem itemLabel="Non encore incorporable ou sursitaire" itemValue="Non encore incorporable"/>
+                                                <f:selectItem itemLabel="Sous les drapeaux" itemValue="Sous les drapeaux" />         
+                                                <f:selectItem itemLabel="Exempté" itemValue="Exempté" />
+                                                <f:selectItem itemLabel="Service accompli" itemValue="Service accompli"/>         
+                                            </p:selectOneRadio>
+                                             
+                                            <h:outputLabel for="dernier_etablis" value="Dernier établissement fréquanté :" title="Dernier établissement fréquanté" style=""/>
+                                            <p:inputText id="dernier_etablis" value="#{reinscriptionBean.viewEtudiantInscription.dernierEtablisFreqte}" size="64" maxlength="70" title="Dernier établissement fréquanté avant l'année courante" style="height: 16px; border-radius: 4px; font-size: 12px"/>
+                                            
+                                            <h:outputLabel for="annee_dernier_etablis" value="Année universitaire :"/>
+                                            <p:inputMask id="annee_dernier_etablis" value="#{reinscriptionBean.viewEtudiantInscription.anneeEtablisFreqte}" size="14" mask="9999/9999" title="Année du dernier établissement fréquenté avant l'année courante" style="height: 16px; border-radius: 4px; font-size: 12px"/>                                                                                
+                                        </h:panelGrid>                                
+                                    </p:panel>
+                                </p:tab>
+                        </p:tabView>
+                    </h:panelGrid>
+                    
+                    
+                    <p:panel styleClass="panel_backg" style="margin: 30px 0 20px 0">
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Valider la réinscription" ajax="false" action="#{reinscriptionBean.creer}" icon="ui-icon-disk" style="height: 30px"/>
+                            <p:button value="Nouveau" outcome="reinscription" icon="ui-icon-plus" title="réinitialise le formulaire pour un nouvel enregistrement" style="width: 110px; height: 30px; margin-left: 10px"/>
+                        </h:panelGrid>                            
+                    </p:panel>
+
+                </h:form>
+            </f:view>                
+        </ui:define>
+
+    </ui:composition>
+
+</html>
