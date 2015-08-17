@@ -7,12 +7,14 @@ package com.mycompany.ecolexpert.bean;
 
 import com.mycompany.ecolexpert.ejb.EcoEcueFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoEquipePedagogiqueFacadeLocal;
+import com.mycompany.ecolexpert.ejb.EcoNiveauFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoParcoursFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoSemetreFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoTypeUeFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoUeParcoursFacadeLocal;
 import com.mycompany.ecolexpert.jpa.EcoEcue;
 import com.mycompany.ecolexpert.jpa.EcoEquipePedagogique;
+import com.mycompany.ecolexpert.jpa.EcoNiveau;
 import com.mycompany.ecolexpert.jpa.EcoParcours;
 import com.mycompany.ecolexpert.jpa.EcoSemetre;
 import com.mycompany.ecolexpert.jpa.EcoTypeUe;
@@ -58,6 +60,8 @@ public class ParcoursBean implements Serializable{
     private EcoEquipePedagogique equipePedagogiq;
     private List<EcoEquipePedagogique> listEquipePedagogiq = new ArrayList<>();
     
+    private List listCodeNiveau;   
+    
     // Injection de notre EJB (Session Bean Stateless)
     @EJB private EcoParcoursFacadeLocal  parcoursFacadeL;
     @EJB private EcoUeParcoursFacadeLocal  parcours_UeFacadeL;
@@ -65,6 +69,7 @@ public class ParcoursBean implements Serializable{
     @EJB private EcoTypeUeFacadeLocal typeUeFacadeL;
     @EJB private EcoEcueFacadeLocal  ecueFacadeL;
     @EJB private EcoEquipePedagogiqueFacadeLocal equipePedagogiqFacadeL;
+    @EJB private EcoNiveauFacadeLocal  niveauFacadeL;
 
     /**
      * Creates a new instance of ParcoursBean
@@ -295,5 +300,31 @@ public class ParcoursBean implements Serializable{
         
         //réinitialisation de tous les champs du formulaire
         nouveau();
+    }
+    
+    
+    //Action ajax lors de la selection du cycle
+    public void onCycleChange() {
+        listCodeNiveau = new ArrayList();
+        if(parcours.getCodeCycle() != null && !"".equals(parcours.getCodeCycle())){            
+            List<EcoNiveau> data ;
+            data = niveauFacadeL.findByCodeCycle(parcours.getCodeCycle());
+            for(EcoNiveau niv : data){          
+              listCodeNiveau.add(new SelectItem(niv.getCodeNiveau(), niv.getCodeNiveau()));
+            }  
+        }else listCodeNiveau = new ArrayList();        
+    }
+    
+    //getter de la liste a aficher dans le combobox niveau
+    public List getListCodeNiveau(){           
+        listCodeNiveau = new ArrayList();
+        if((parcours.getCodeCycle()) != null && !"".equals(parcours.getCodeCycle())){   
+            for(EcoNiveau niv : niveauFacadeL.findAll()){   
+                if (parcours.getCodeCycle().equals(niv.getCodeCycle())) {
+                    listCodeNiveau.add(new SelectItem(niv.getCodeNiveau(), niv.getCodeNiveau()));
+                }              
+            }
+            return listCodeNiveau;
+        }else return new ArrayList();
     }
 }
