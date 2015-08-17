@@ -32,6 +32,7 @@
                                             <p:inputTextarea id="descriptionParcours" value="#{parcoursBean.parcours.descriptionParcours}" title="Description du parcours" cols="65" rows="3" maxlength="70" autoResize="false" style="font-size: 12px; border-radius: 4px"/>                                                                                       
                                             <p:outputLabel value="Cycle:" for="codeCycle" />
                                             <p:selectOneMenu id="codeCycle" value="#{parcoursBean.parcours.codeCycle}" style="font-size: 12px; width: 250px; border-radius: 4px">
+                                                <p:ajax listener="#{parcoursBean.onCycleChange}" update="codeNiveau" />
                                                 <f:selectItem itemLabel="Veuillez selectionner le cycle" itemValue=""/>
                                                 <f:selectItems value="#{cycleBean.listCodeCycle}"/>
                                             </p:selectOneMenu>
@@ -68,8 +69,8 @@
                                                 <h:panelGrid columns="2" style="margin-top: 10px">                                                    
                                                     <p:outputLabel value="Niveau:*" for="codeNiveau" />                                              
                                                     <p:selectOneMenu id="codeNiveau" value="#{parcoursBean.parcours_Ue.codeNiveau}" style="font-size: 12px; width: 250px; border-radius: 4px">
-                                                        <f:selectItem itemLabel="Veuillez selectionner le niveau" itemValue=""/>
-                                                        <f:selectItems value="#{niveauBean.listCodeNiveau}"/>
+                                                        <f:selectItem itemLabel="Veuillez selectionner le niveau" itemValue=""/>                                                     
+                                                        <f:selectItems value="#{parcoursBean.listCodeNiveau}"/>  
                                                     </p:selectOneMenu>
                                                     <p:outputLabel value="Semetre:*" for="codeSemetre" />      
                                                     <p:selectOneMenu id="codeSemetre" value="#{parcoursBean.parcours_Ue.codeSemetre}" style="font-size: 12px; width: 250px; border-radius: 4px">
