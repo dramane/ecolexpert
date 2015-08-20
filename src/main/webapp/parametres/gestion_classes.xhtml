@@ -47,8 +47,17 @@
                                 <h:panelGrid columns="2">
                                     <h:outputLabel for="codeFiliere" value="Filière : * "/>
                                     <p:selectOneMenu id="codeFiliere" value="#{classeBean.classe.codeFiliere}" style="width: 225px;margin: 3px 0px 0px 73px;border-radius: 4px;">
+                                        <p:ajax listener="#{classeBean.onFiliereChange}" update="codeSpecialite" />
                                         <f:selectItem itemLabel="Veuillez selectionner la filière" itemValue=""/>
                                         <f:selectItems value="#{filiereBean.listCodeFiliere}"/>                                    
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                                
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="codeSpecialite" value="Spécialité : * "/>
+                                    <p:selectOneMenu id="codeSpecialite" value="#{classeBean.classe.codeSpecialite}" style="width: 225px;margin: 3px 0px 0px 57px;border-radius: 4px;">
+                                        <f:selectItem itemLabel="Veuillez selectionner la spécialité" itemValue=""/>
+                                        <f:selectItems value="#{classeBean.listCodeSpecialite}"/>                                    
                                     </p:selectOneMenu>
                                 </h:panelGrid>
                                 
