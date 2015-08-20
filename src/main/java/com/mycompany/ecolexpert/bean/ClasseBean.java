@@ -8,9 +8,11 @@ package com.mycompany.ecolexpert.bean;
 import com.mycompany.ecolexpert.ejb.EcoClasseFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoCycleFacadeLocal;
 import com.mycompany.ecolexpert.ejb.EcoNiveauFacadeLocal;
+import com.mycompany.ecolexpert.ejb.EcoSpecialiteFacadeLocal;
 import com.mycompany.ecolexpert.jpa.EcoClasse;
 import com.mycompany.ecolexpert.jpa.EcoCycle;
 import com.mycompany.ecolexpert.jpa.EcoNiveau;
+import com.mycompany.ecolexpert.jpa.EcoSpecialite;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
     private EcoClasse classe;
     private List<EcoClasse> listClasse;
     private List listCodeClasse; 
+    
+    private EcoSpecialite specialite;
+    private List listCodeSpecialite; 
 
     private EcoNiveau niveau;
     private List listCodeNiveau; 
@@ -43,18 +48,17 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
     private String codeClasseCache;
     
     // Injection de notre EJB (Session Bean Stateless)
-    @EJB
-    private EcoClasseFacadeLocal  classeFacadeL;
-    @EJB
-    private EcoCycleFacadeLocal cycleFacadeL;
-    @EJB
-    private EcoNiveauFacadeLocal  niveauFacadeL;
+    @EJB private EcoClasseFacadeLocal  classeFacadeL;
+    @EJB private EcoSpecialiteFacadeLocal  specialiteFacadeL;
+    @EJB private EcoCycleFacadeLocal cycleFacadeL;
+    @EJB private EcoNiveauFacadeLocal  niveauFacadeL;
 
     /**
      * Creates a new instance of ClasseBean
      */
     public ClasseBean() {
         classe = new EcoClasse();
+        specialite = new EcoSpecialite();
         niveau = new EcoNiveau();
         cycle = new EcoCycle();
     }       
@@ -75,6 +79,14 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
     public void setClasse(EcoClasse classe) {
         this.classe = classe;
     }
+
+    public EcoSpecialite getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(EcoSpecialite specialite) {
+        this.specialite = specialite;
+    }        
 
     public EcoNiveau getNiveau() {
         return niveau;
@@ -122,6 +134,10 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
         return listCodeClasse;
     }
 
+    public List getListCodeSpecialite() {        
+        return listCodeSpecialite;                
+    }    
+    
     public List getListCodeNiveau() {
         listCodeNiveau = new ArrayList();
         if((classe.getCodeCycle()) != null && !"".equals(classe.getCodeCycle())){   
@@ -150,6 +166,7 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
             classe.setNomclasse(null);
             classe.setDescription(null);
             classe.setCodeFiliere(null);
+            classe.setCodeSpecialite(null);
             classe.setCodeCycle(null);
             classe.setCodeNiveau(null);
             classe.setFormation(null);
@@ -174,6 +191,7 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
             classe.setNomclasse(null);
             classe.setDescription(null);
             classe.setCodeFiliere(null);
+            classe.setCodeSpecialite(null);
             classe.setCodeCycle(null);
             classe.setCodeNiveau(null);
             classe.setFormation(null);
@@ -316,6 +334,18 @@ public class ClasseBean extends BoutonActiveBean implements Serializable{
         setBtnValiderDesactive(true);  
         setChampLectureSeul(true);  
         setChampCleNonAuto(true);
+    }
+    
+    //Action ajax lors de la selection du filière
+    public void onFiliereChange() {
+        listCodeSpecialite = new ArrayList();
+        if(classe.getCodeFiliere() != null && !"".equals(classe.getCodeFiliere())){            
+            List<EcoSpecialite> data ;
+            data = specialiteFacadeL.findByCodeFiliere(classe.getCodeFiliere());
+            for(EcoSpecialite spec : data){          
+              listCodeSpecialite.add(new SelectItem(spec.getCodeSpecialite(), spec.getLibelleSpecialite()));
+            }  
+        }else listCodeNiveau = new ArrayList();
     }
     
     //Action ajax lors de la selection du cycle
